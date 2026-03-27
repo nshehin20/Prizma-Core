@@ -1,0 +1,393 @@
+/* ============================================
+   PRIZMA DESIGN SYSTEM — TOKENS
+   Auto-generated from Figma variables
+   ============================================ */
+
+:root {
+
+  /* --- PRIMITIVES: Color/Gray --- */
+  --color-gray-0: #ffffff;
+  --color-gray-50: #fcfcfd;
+  --color-gray-100: #ebecef;
+  --color-gray-150: #d9dae1;
+  --color-gray-200: #c6c8d2;
+  --color-gray-250: #b5b8c5;
+  --color-gray-300: #a3a8b8;
+  --color-gray-400: #82879a;
+  --color-gray-500: #60667c;
+  --color-gray-600: #4d5264;
+  --color-gray-700: #3a3e4b;
+  --color-gray-750: #30333e;
+  --color-gray-800: #262831;
+  --color-gray-900: #14151a;
+  --color-gray-1000: #000000;
+  --color-gray-0-80: rgba(255,255,255,0.8);
+  --color-gray-900-80: rgba(20,21,26,0.8);
+  --color-gray-1000-80: rgba(0,0,0,0.8);
+
+  /* --- PRIMITIVES: Color/Brand --- */
+  --color-brand-50: #e5f0ff;
+  --color-brand-100: #bfdfff;
+  --color-brand-200: #99ceff;
+  --color-brand-300: #66a6ff;
+  --color-brand-400: #3388ff;
+  --color-brand-500: #006aff;
+  --color-brand-600: #0055cc;
+  --color-brand-900: #21273b;
+
+  /* --- PRIMITIVES: Color/Brand Secondary --- */
+  --color-brand-secondary-50: #f2e2fe;
+  --color-brand-secondary-500: #820ad1;
+
+  /* --- PRIMITIVES: Color/Focus --- */
+  --color-focus-400: #0099ff;
+  --color-focus-500: #006aff;
+
+  /* --- PRIMITIVES: Color/Warning --- */
+  --color-warning-50: #fff7eb;
+  --color-warning-400: #ffb647;
+  --color-warning-500: #ff9900;
+  --color-warning-750: #523100;
+  --color-warning-950: #271400;
+
+  /* --- PRIMITIVES: Color/Negative --- */
+  --color-negative-50: #fff0f0;
+  --color-negative-400: #ff5a5f;
+  --color-negative-500: #e71111;
+  --color-negative-950: #240001;
+
+  /* --- PRIMITIVES: Color/Positive --- */
+  --color-positive-50: #e4fbf0;
+  --color-positive-400: #45b380;
+  --color-positive-500: #189f60;
+  --color-positive-750: #0c5030;
+  --color-positive-950: #03190e;
+
+  /* --- PRIMITIVES: Typography --- */
+  --font-family-rethink: 'Rethink Sans', sans-serif;
+  --font-family-dm: 'DM Sans', sans-serif;
+
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-24: 24px;
+  --font-size-32: 32px;
+  --font-size-40: 40px;
+  --font-size-48: 48px;
+  --font-size-80: 80px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --letter-spacing-neg-15: -1.5px;
+  --letter-spacing-neg-1: -1px;
+  --letter-spacing-neg-05: -0.5px;
+  --letter-spacing-0: 0px;
+  --letter-spacing-2: 2px;
+
+  /* --- PRIMITIVES: Scale (Spacing) --- */
+  --scale-0: 0px;
+  --scale-2: 2px;
+  --scale-4: 4px;
+  --scale-8: 8px;
+  --scale-12: 12px;
+  --scale-16: 16px;
+  --scale-20: 20px;
+  --scale-24: 24px;
+  --scale-32: 32px;
+  --scale-40: 40px;
+  --scale-48: 48px;
+  --scale-56: 56px;
+  --scale-64: 64px;
+  --scale-72: 72px;
+  --scale-80: 80px;
+  --scale-88: 88px;
+  --scale-96: 96px;
+  --scale-104: 104px;
+  --scale-120: 120px;
+  --scale-128: 128px;
+  --scale-200: 200px;
+
+  /* --- PRIMITIVES: Border --- */
+  --border-width-0: 0px;
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+
+  --border-radius-0: 0px;
+  --border-radius-4: 4px;
+  --border-radius-8: 8px;
+  --border-radius-16: 16px;
+  --border-radius-24: 24px;
+  --border-radius-40: 40px;
+  --border-radius-64: 64px;
+  --border-radius-full: 9999px;
+
+  /* ============================================
+     SEMANTIC TOKENS
+     ============================================ */
+
+  /* --- Surface --- */
+  --surface-bg: var(--color-gray-0);
+  --surface-neutral-0: var(--color-gray-0);
+  --surface-neutral-50: var(--color-gray-50);
+  --surface-neutral-100: var(--color-gray-100);
+  --surface-neutral-800: var(--color-gray-800);
+  --surface-brand-50: var(--color-brand-50);
+  --surface-brand-500: var(--color-brand-500);
+  --surface-status-warning-50: var(--color-warning-50);
+  --surface-status-negative-50: var(--color-negative-50);
+  --surface-status-positive-50: var(--color-positive-50);
+
+  /* --- Text --- */
+  --text-primary: var(--color-gray-800);
+  --text-secondary: var(--color-gray-500);
+  --text-tertiary: var(--color-gray-300);
+  --text-link-default: var(--color-brand-500);
+  --text-link-hover: var(--color-brand-300);
+  --text-status-warning: var(--color-warning-500);
+  --text-status-negative: var(--color-negative-500);
+  --text-status-positive: var(--color-positive-500);
+
+  /* --- Border --- */
+  --border-neutral-100: var(--color-gray-100);
+  --border-neutral-200: var(--color-gray-200);
+  --border-neutral-300: var(--color-gray-300);
+  --border-neutral-400: var(--color-gray-400);
+  --border-brand-500: var(--color-brand-500);
+  --border-status-focus: var(--color-focus-500);
+  --border-status-warning: var(--color-warning-500);
+  --border-status-negative: var(--color-negative-500);
+  --border-status-positive: var(--color-positive-500);
+
+  /* --- Icon --- */
+  --icon-neutral-0: var(--color-gray-0);
+  --icon-neutral-300: var(--color-gray-300);
+  --icon-neutral-500: var(--color-gray-500);
+  --icon-neutral-800: var(--color-gray-800);
+  --icon-brand-500: var(--color-brand-500);
+  --icon-status-warning: var(--color-warning-500);
+  --icon-status-negative: var(--color-negative-500);
+  --icon-status-positive: var(--color-positive-500);
+
+  /* --- Button --- */
+  --font-button: var(--font-family-dm);
+  --font-size-button-m: var(--font-size-18);
+  --font-size-button-s: var(--font-size-14);
+  --radius-button: var(--border-radius-16);
+  --radius-card: var(--border-radius-16);
+
+  /* Button Primary */
+  --btn-primary-surface-default: var(--color-brand-500);
+  --btn-primary-surface-hover: var(--color-brand-400);
+  --btn-primary-surface-pressed: var(--color-brand-600);
+  --btn-primary-surface-disabled: var(--color-gray-100);
+  --btn-primary-text-default: var(--color-gray-0);
+  --btn-primary-text-disabled: var(--color-gray-500);
+
+  /* Button Secondary */
+  --btn-secondary-border-default: var(--color-brand-500);
+  --btn-secondary-border-hover: var(--color-brand-400);
+  --btn-secondary-border-pressed: var(--color-brand-600);
+  --btn-secondary-border-disabled: var(--color-gray-100);
+  --btn-secondary-text-default: var(--color-brand-500);
+  --btn-secondary-text-disabled: var(--color-gray-500);
+
+  /* Button Tertiary */
+  --btn-tertiary-text-default: var(--color-brand-500);
+  --btn-tertiary-text-disabled: var(--color-gray-500);
+
+  /* --- Input --- */
+  --input-surface-default: var(--color-gray-50);
+  --input-surface-focused: var(--color-gray-50);
+  --input-surface-disabled: var(--color-gray-100);
+  --input-border-default: var(--color-gray-400);
+  --input-border-focused: var(--color-brand-500);
+  --input-border-disabled: var(--color-gray-100);
+  --input-border-negative: var(--color-negative-500);
+  --input-text-default: var(--color-gray-800);
+  --input-text-placeholder: var(--color-gray-400);
+  --input-text-disabled: var(--color-gray-400);
+
+  /* --- Checkbox --- */
+  --checkbox-surface-default: #fcfcfd;
+  --checkbox-surface-selected: var(--color-brand-500);
+  --checkbox-surface-disabled: #82879a;
+  --checkbox-border-default: #82879a;
+  --checkbox-border-disabled: #82879a;
+  --checkbox-border-focused: var(--color-focus-500);
+  --checkbox-border-radius: 8px;
+  --checkbox-icon-default: #ffffff;
+  --checkbox-text-default: #262831;
+  --checkbox-text-disabled: #60667c;
+  --checkbox-font-family: 'DM Sans', sans-serif;
+  --checkbox-font-size-m: 16px;
+  --checkbox-font-size-s: 14px;
+
+  /* --- Checkbox dark --- (overridden in [data-theme="dark"]) */
+
+  /* --- Dropdown --- */
+  --dropdown-label-color: var(--color-gray-800);
+  --dropdown-surface-field: var(--input-surface-default);
+  --dropdown-border-default: var(--input-border-default);
+  --dropdown-item-surface-selected: var(--color-gray-100);
+  --dropdown-list-shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+  /* --- Toggle --- */
+  --toggle-surface-on: var(--color-brand-500);
+  --toggle-surface-off: var(--color-gray-400);
+  --toggle-surface-disabled: var(--color-gray-200);
+  --toggle-knob-on: var(--color-gray-0);
+  --toggle-knob-off: var(--color-gray-0);
+
+  /* --- Snackbar --- */
+  --snackbar-surface-neutral: var(--color-brand-50);
+  --snackbar-surface-warning: var(--color-warning-50);
+  --snackbar-surface-negative: var(--color-negative-50);
+  --snackbar-surface-positive: var(--color-positive-50);
+  --snackbar-border-neutral: var(--color-brand-500);
+  --snackbar-border-warning: var(--color-warning-500);
+  --snackbar-border-negative: var(--color-negative-500);
+  --snackbar-border-positive: var(--color-positive-500);
+
+  /* --- Radio Button --- */
+  --radio-surface-default: var(--color-gray-50);
+  --radio-border-default: var(--color-gray-400);
+  --radio-border-selected: var(--color-brand-500);
+  --radio-knob-selected: var(--color-brand-500);
+  --radio-surface-disabled: var(--color-gray-100);
+  --radio-border-disabled: var(--color-gray-200);
+  --radio-text-default: var(--text-primary);
+  --radio-text-disabled: var(--text-secondary);
+
+  /* --- Timer --- */
+  --timer-surface: #14151a;
+  --timer-border: var(--color-gray-100);
+  --timer-text: #ffffff;
+
+  /* --- Tooltip --- */
+  --tooltip-surface: #14151a;
+  --tooltip-text: #ffffff;
+
+  /* --- Stepper --- */
+  --stepper-track-active: var(--color-brand-500);
+  --stepper-track-inactive: var(--color-gray-200);
+
+  /* --- Separator --- */
+  --separator-line: var(--color-gray-200);
+  --separator-text: var(--text-tertiary);
+
+  /* --- Logo --- */
+  --logo-color: var(--color-brand-500);
+}
+
+/* ============================================
+   DARK MODE — from Figma Light/Dark Modes
+   ============================================ */
+[data-theme="dark"] {
+
+  /* Surface */
+  --surface-bg: #14151a;
+  --surface-neutral-0: #000000;
+  --surface-neutral-50: #14151a;
+  --surface-neutral-100: #262831;
+  --surface-neutral-800: #fcfcfd;
+  --surface-brand-50: #21273b;
+  --surface-brand-500: var(--color-brand-500);
+
+  /* Text */
+  --text-primary: #fcfcfd;
+  --text-secondary: #a3a8b8;
+  --text-tertiary: #60667c;
+  --text-link-default: var(--color-brand-500);
+  --text-link-hover: var(--color-brand-300);
+
+  /* Border */
+  --border-neutral-100: #262831;
+  --border-neutral-200: #3a3e4b;
+  --border-neutral-300: #4d5264;
+  --border-neutral-400: #60667c;
+
+  /* Icon */
+  --icon-neutral-0: #000000;
+  --icon-neutral-300: #60667c;
+  --icon-neutral-500: #a3a8b8;
+  --icon-neutral-800: #fcfcfd;
+
+  /* Button Primary — same surface, different disabled */
+  --btn-primary-surface-default: var(--color-brand-500);
+  --btn-primary-surface-hover: var(--color-brand-400);
+  --btn-primary-surface-pressed: var(--color-brand-600);
+  --btn-primary-surface-disabled: #262831;
+  --btn-primary-text-default: #ffffff;
+  --btn-primary-text-disabled: #a3a8b8;
+
+  /* Button Secondary */
+  --btn-secondary-border-default: var(--color-brand-500);
+  --btn-secondary-border-hover: var(--color-brand-400);
+  --btn-secondary-border-pressed: var(--color-brand-600);
+  --btn-secondary-border-disabled: #262831;
+  --btn-secondary-text-default: var(--color-brand-500);
+  --btn-secondary-text-disabled: #a3a8b8;
+
+  /* Button Tertiary */
+  --btn-tertiary-text-default: var(--color-brand-500);
+  --btn-tertiary-text-disabled: #a3a8b8;
+
+  /* Checkbox */
+  --checkbox-surface-default: #262831;
+  --checkbox-surface-disabled: #3a3e4b;
+  --checkbox-border-default: #60667c;
+  --checkbox-border-disabled: #3a3e4b;
+  --checkbox-text-default: #fcfcfd;
+  --checkbox-text-disabled: #a3a8b8;
+
+  /* Input */
+  --input-surface-default: #262831;
+  --input-surface-focused: #262831;
+  --input-surface-disabled: #14151a;
+  --input-border-default: #60667c;
+  --input-border-disabled: #262831;
+  --input-text-default: #fcfcfd;
+  --input-text-placeholder: #60667c;
+  --input-text-disabled: #60667c;
+
+  /* Dropdown */
+  --dropdown-label-color: var(--color-gray-300);
+  --dropdown-surface-field: var(--color-gray-750);
+  --dropdown-border-default: var(--color-gray-700);
+  --dropdown-item-surface-selected: #3a3e4b;
+  --dropdown-list-shadow: 0 8px 24px rgba(0,0,0,0.4);
+
+  /* Toggle */
+  --toggle-surface-off: #60667c;
+  --toggle-surface-disabled: #3a3e4b;
+
+  /* Snackbar */
+  --snackbar-surface-neutral: #21273b;
+  --snackbar-surface-warning: #271400;
+  --snackbar-surface-negative: #240001;
+  --snackbar-surface-positive: #03190e;
+
+  /* Radio Button */
+  --radio-surface-default: #262831;
+  --radio-border-default: #60667c;
+  --radio-surface-disabled: #3a3e4b;
+  --radio-border-disabled: #4d5264;
+  --radio-text-default: #fcfcfd;
+  --radio-text-disabled: #a3a8b8;
+
+  /* Stepper */
+  --stepper-track-inactive: #3a3e4b;
+
+  /* Separator */
+  --separator-line: #3a3e4b;
+
+  /* Logo */
+  --logo-color: #ffffff;
+}
