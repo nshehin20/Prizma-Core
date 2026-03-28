@@ -1,5 +1,21 @@
 // ============================================
-//  PRIZMA PLAYGROUND — Token Editor
+//  PRIZMA DESIGN SYSTEM — Lab Playground
+//  Vercel / v0 experimentation-ready
+//
+//  FILE STRUCTURE:
+//  1. Token editor (updateToken, resetTokens, themeTokens)
+//  2. Shared UI helpers (_navBar, _verifiedTag, SVG constants)
+//  3. Face Capture screen functions (fcTutorial, fcCamSearching…)
+//     ← ADD NEW SCREENS HERE
+//  4. Module registry (_labModuleData)
+//     ← REGISTER NEW SCREENS / MODULES HERE
+//  5. Lab view engine (initLab, labNav, labExpand…)
+//     ← DO NOT MODIFY unless changing lab behavior
+//
+//  TO EXPERIMENT WITH A MODULE:
+//  · Edit or duplicate any fc* function in section 3
+//  · Register it in _labModuleData in section 4
+//  · The Lab view will pick it up automatically
 // ============================================
 
 const root = document.documentElement;
@@ -570,8 +586,31 @@ function _navBar(variant) {
   </div>`;
 }
 
-// ---- Face Capture screens ----
+// ============================================================
+//  FACE CAPTURE — SCREENS
+//  Each function returns an HTML string rendered inside the
+//  phone frame (390×844px, scaled to 70%).
+//
+//  HOW TO ADD A NEW SCREEN:
+//  1. Create a new function here that returns an HTML string.
+//     Use the existing screens as reference.
+//  2. Register it in _labModuleData below under the right module.
+//
+//  SHARED HELPERS (defined above):
+//  · _navBar('logo-only' | 'back-close')  — top nav bar
+//  · _verifiedTag()                        — "verified by incode" footer
+//
+//  DESIGN TOKENS (change via the Tokens panel in the top bar):
+//  · --color-brand-500  primary blue
+//  · --text-primary     main text color
+//  · --text-secondary   secondary text color
+//  · --surface-bg       phone background color
+//  · --radius-button    button border radius
+// ============================================================
 
+// Screen 1/7 — Tutorial
+// Static intro screen: selfie illustration + instructions + CTA button.
+// To experiment: change the illustration, title copy, or button label.
 function fcTutorial() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0">
     <div style="display:flex;flex-direction:column;gap:24px">
@@ -594,7 +633,10 @@ function fcTutorial() {
   </div>`;
 }
 
-/// selfie ring frame + empty camera inside (searching state)
+// Screen 2/7 — Camera: Searching
+// Selfie ring (static) + empty camera placeholder inside the circle.
+// To experiment: replace with a full-screen camera layout, change the
+// ring color, or add animated guidance arrows around the oval.
 function fcCamSearching() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
     ${_navBar('logo-only')}
@@ -611,7 +653,10 @@ function fcCamSearching() {
   </div>`;
 }
 
-// selfie ring frame + DS selfie filled photo (face detected)
+// Screen 3/7 — Camera: Detected
+// Same layout as Searching but with a real face photo, indicating detection.
+// To experiment: add a green confirmation ring, change the feedback text,
+// or show a face mesh overlay.
 function fcCamDetected() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
     ${_navBar('logo-only')}
@@ -628,7 +673,10 @@ function fcCamDetected() {
   </div>`;
 }
 
-// selfie ring spinning (DS ring SVG itself rotates) + DS selfie filled photo stationary
+// Screen 4/7 — Camera: Get Ready (Capturing)
+// Selfie ring spinning (CSS animation) while the photo is being captured.
+// To experiment: change spin speed, swap the ring for a progress bar,
+// or add a countdown timer overlay.
 function fcCamCapturing() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
     ${_navBar('logo-only')}
@@ -645,7 +693,10 @@ function fcCamCapturing() {
   </div>`;
 }
 
-// DS: .loading-spinner (64px, defined in components.css)
+// Screen 5/7 — Processing
+// Spinner while the photo is being analyzed on the server.
+// To experiment: swap the spinner for a lottie animation, add a
+// progress percentage, or show "Analyzing..." steps.
 function fcProcessing() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px">
     ${_navBar('logo-only')}
@@ -657,6 +708,9 @@ function fcProcessing() {
   </div>`;
 }
 
+// Screen 6/7 — Uploading
+// Spinner while the photo is being uploaded.
+// To experiment: add an upload progress bar or merge with Processing.
 function fcUploading() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px">
     ${_navBar('logo-only')}
@@ -668,6 +722,10 @@ function fcUploading() {
   </div>`;
 }
 
+// Screen 7/7 — Success
+// Final confirmation screen. The flow is complete.
+// To experiment: add a confetti animation, show the captured photo,
+// or add a "Continue" CTA that leads to the next step in the journey.
 function fcSuccess() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px">
     ${_navBar('logo-only')}
@@ -824,6 +882,26 @@ const _LAB_PHONE_W = 273;  // 390 × 0.70
 const _LAB_PHONE_H = 591;  // 844 × 0.70
 const _LAB_CELL_GAP = 36;
 
+// ============================================================
+//  LAB MODULE REGISTRY
+//  This is where you wire screen functions to modules.
+//
+//  HOW TO ADD A NEW SCREEN to an existing module:
+//  1. Write a new function above (e.g. fcCamFullScreen)
+//  2. Add { label: 'My Screen', render: fcCamFullScreen }
+//     to the screens array below.
+//
+//  HOW TO ADD A NEW MODULE:
+//  1. Add a new entry to this object with a unique key.
+//  2. Add a matching button in the sidebar in index.html.
+//  3. Write screen functions for it above.
+//
+//  HOW TO EXPERIMENT WITH A VARIANT (e.g. full-screen camera):
+//  1. Duplicate the screens array with your modified functions.
+//  2. Add it as a second entry in the registry, e.g.:
+//     'face-capture-fs': { label: 'Face Capture — Full Screen', screens: [...] }
+//  3. Add a sidebar button for it in index.html.
+// ============================================================
 const _labModuleData = {
   'face-capture': {
     label: 'Face Capture',
@@ -837,6 +915,7 @@ const _labModuleData = {
       { label: 'Success',    render: fcSuccess },
     ]
   },
+  // Add new modules here — copy the face-capture pattern above
   'id-capture':  { label: 'ID Capture',       screens: [] },
   'nfc':         { label: 'NFC',               screens: [] },
   'doc-capture': { label: 'Document Capture',  screens: [] },
