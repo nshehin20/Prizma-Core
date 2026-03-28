@@ -267,9 +267,9 @@ select {
 
 .phone-frame {
   width: 390px;
-  height: 844px;
+  height: 390px;
   background: var(--surface-bg);
-  border-radius: 54px;
+  border-radius: 32px;
   border: 1px solid rgba(0,0,0,0.1);
   box-shadow:
     0 24px 64px rgba(0,0,0,0.12),
