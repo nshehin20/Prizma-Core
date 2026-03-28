@@ -681,24 +681,59 @@ function fcSuccess() {
 
 // ---- Selfie Capture screens (Auto-Capture Version) ----
 
+// Reusable face frame SVG with corner brackets and scan effect
+function _faceFrame(state = 'searching') {
+  const colors = {
+    searching: { stroke: 'rgba(255,255,255,0.5)', glow: 'transparent' },
+    detected: { stroke: 'var(--color-brand-500)', glow: 'var(--color-brand-500)' },
+    capturing: { stroke: 'var(--color-brand-400)', glow: 'var(--color-brand-400)' },
+    verifying: { stroke: 'var(--color-brand-400)', glow: 'var(--color-brand-400)' },
+    success: { stroke: 'var(--color-positive-500)', glow: 'var(--color-positive-500)' },
+    error: { stroke: 'var(--color-negative-500)', glow: 'var(--color-negative-500)' }
+  };
+  const c = colors[state] || colors.searching;
+  const scanClass = state === 'searching' ? 'sc-scan-line sc-scan-line--searching' : 
+                    state === 'detected' ? 'sc-scan-line sc-scan-line--detected' :
+                    state === 'capturing' ? 'sc-scan-line sc-scan-line--capturing' : '';
+  const cornerClass = state === 'detected' || state === 'capturing' ? 'sc-corner--active' : 
+                      state === 'success' ? 'sc-corner--success' : 
+                      state === 'error' ? 'sc-corner--error' : '';
+  
+  return `<div class="sc-frame-container">
+    <div class="sc-vignette"></div>
+    <div class="sc-frame ${state === 'capturing' ? 'sc-frame--pulse' : ''}" style="--frame-color: ${c.stroke}; --frame-glow: ${c.glow}">
+      <!-- Corner brackets -->
+      <div class="sc-corner sc-corner--tl ${cornerClass}"></div>
+      <div class="sc-corner sc-corner--tr ${cornerClass}"></div>
+      <div class="sc-corner sc-corner--bl ${cornerClass}"></div>
+      <div class="sc-corner sc-corner--br ${cornerClass}"></div>
+      <!-- Center reticle -->
+      <div class="sc-reticle ${state !== 'searching' ? 'sc-reticle--hidden' : ''}">
+        <div class="sc-reticle-h"></div>
+        <div class="sc-reticle-v"></div>
+      </div>
+      <!-- Scan line -->
+      ${scanClass ? `<div class="${scanClass}"></div>` : ''}
+      <!-- Face detection points -->
+      ${state === 'detected' || state === 'capturing' || state === 'verifying' ? `
+      <div class="sc-detection-points">
+        <div class="sc-point sc-point--1"></div>
+        <div class="sc-point sc-point--2"></div>
+        <div class="sc-point sc-point--3"></div>
+        <div class="sc-point sc-point--4"></div>
+        <div class="sc-point sc-point--5"></div>
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
 // Fullscreen camera view - searching for face (no face detected yet)
 function scCamSearching() {
   return `<div class="sc-fullscreen-cam">
     <div class="sc-cam-bg">
-      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9)" alt="" />
+      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
     </div>
-    <div class="sc-oval-overlay">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-gray-300)" stroke-width="3" stroke-dasharray="8 4" fill="none"/>
-      </svg>
-    </div>
+    ${_faceFrame('searching')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
@@ -707,7 +742,7 @@ function scCamSearching() {
         <div class="sc-status-dot sc-status-dot--searching"></div>
         <span class="type-feedback-s" style="color:var(--color-gray-0)">Looking for face...</span>
       </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Position your face within the oval</div>
+      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Position your face in the frame</div>
     </div>
   </div>`;
 }
@@ -718,18 +753,7 @@ function scCamDetected() {
     <div class="sc-cam-bg">
       <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
     </div>
-    <div class="sc-oval-overlay">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask2">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask2)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-brand-500)" stroke-width="4" fill="none"/>
-      </svg>
-    </div>
+    ${_faceFrame('detected')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
@@ -752,23 +776,7 @@ function scCamCapturing() {
     <div class="sc-cam-bg">
       <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
     </div>
-    <div class="sc-oval-overlay sc-oval-capturing">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask3">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-          <linearGradient id="captureGrad" gradientTransform="rotate(90)">
-            <stop offset="0%" stop-color="var(--color-brand-500)"/>
-            <stop offset="50%" stop-color="var(--color-brand-300)"/>
-            <stop offset="100%" stop-color="var(--color-brand-500)"/>
-          </linearGradient>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask3)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="url(#captureGrad)" stroke-width="5" fill="none" class="sc-oval-pulse"/>
-      </svg>
-    </div>
+    ${_faceFrame('capturing')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
@@ -788,18 +796,7 @@ function scVerifying() {
     <div class="sc-cam-bg">
       <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
     </div>
-    <div class="sc-oval-overlay">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask4">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask4)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-brand-400)" stroke-width="4" fill="none" stroke-dasharray="12 6" class="sc-oval-rotate"/>
-      </svg>
-    </div>
+    ${_faceFrame('verifying')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
@@ -819,18 +816,7 @@ function scSuccess() {
     <div class="sc-cam-bg">
       <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
     </div>
-    <div class="sc-oval-overlay">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask5">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask5)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-positive-500)" stroke-width="4" fill="none"/>
-      </svg>
-    </div>
+    ${_faceFrame('success')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
@@ -852,20 +838,9 @@ function scSuccess() {
 function scError() {
   return `<div class="sc-fullscreen-cam">
     <div class="sc-cam-bg">
-      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7)" alt="" />
+      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.8)" alt="" />
     </div>
-    <div class="sc-oval-overlay">
-      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <mask id="ovalMask6">
-            <rect width="342" height="420" fill="white"/>
-            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask6)"/>
-        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-negative-500)" stroke-width="3" fill="none"/>
-      </svg>
-    </div>
+    ${_faceFrame('error')}
     <div class="sc-top-bar">
       <button class="sc-close-btn">${_CLOSE_SVG2}</button>
     </div>
