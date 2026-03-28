@@ -18,37 +18,86 @@
   <!-- TOKEN PANEL (sliding) -->
   <aside class="sidebar" id="token-panel">
     <div class="sidebar-header">
-      <div class="sidebar-logo">I</div>
-      <div>
-        <div class="sidebar-title">Incode Core Lab</div>
-        <div class="sidebar-subtitle">Token Playground</div>
-      </div>
+      <div class="sidebar-title">Token Playground</div>
     </div>
     <div class="token-sections">
+
+      <!-- Brand Color -->
       <div class="token-section">
         <div class="token-section-title">Brand Color</div>
-        <div class="token-row">
-          <label>Primary (500)</label>
-          <div class="token-input-row">
-            <input type="color" id="brand-500" value="#006aff" onchange="updateToken('--color-brand-500', this.value); syncHex('brand-500-hex', this.value)" />
-            <input type="text" id="brand-500-hex" value="#006aff" class="hex-input" oninput="syncColor('brand-500', this.value); updateToken('--color-brand-500', this.value)" />
+        <div class="token-color-group">
+          <div class="token-color-row">
+            <span class="token-color-label">Primary (500)</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot" style="background:#006aff">
+                <input type="color" id="brand-500" value="#006aff" onchange="updateToken('--color-brand-500', this.value); syncHex('brand-500-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="brand-500-hex" value="#006aff" class="token-pill-hex" oninput="syncColor('brand-500', this.value); updateToken('--color-brand-500', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
           </div>
-        </div>
-        <div class="token-row">
-          <label>Hover (400)</label>
-          <div class="token-input-row">
-            <input type="color" id="brand-400" value="#3388ff" onchange="updateToken('--color-brand-400', this.value); syncHex('brand-400-hex', this.value)" />
-            <input type="text" id="brand-400-hex" value="#3388ff" class="hex-input" oninput="syncColor('brand-400', this.value); updateToken('--color-brand-400', this.value)" />
+          <div class="token-color-row">
+            <span class="token-color-label">Hover (400)</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot" style="background:#3388ff">
+                <input type="color" id="brand-400" value="#3388ff" onchange="updateToken('--color-brand-400', this.value); syncHex('brand-400-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="brand-400-hex" value="#3388ff" class="token-pill-hex" oninput="syncColor('brand-400', this.value); updateToken('--color-brand-400', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
           </div>
-        </div>
-        <div class="token-row">
-          <label>Pressed (600)</label>
-          <div class="token-input-row">
-            <input type="color" id="brand-600" value="#0055cc" onchange="updateToken('--color-brand-600', this.value); syncHex('brand-600-hex', this.value)" />
-            <input type="text" id="brand-600-hex" value="#0055cc" class="hex-input" oninput="syncColor('brand-600', this.value); updateToken('--color-brand-600', this.value)" />
+          <div class="token-color-row">
+            <span class="token-color-label">Pressed (600)</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot" style="background:#0055cc">
+                <input type="color" id="brand-600" value="#0055cc" onchange="updateToken('--color-brand-600', this.value); syncHex('brand-600-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="brand-600-hex" value="#0055cc" class="token-pill-hex" oninput="syncColor('brand-600', this.value); updateToken('--color-brand-600', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Text Colors -->
+      <div class="token-section">
+        <div class="token-section-title">Text</div>
+        <div class="token-color-group">
+          <div class="token-color-row">
+            <span class="token-color-label">Primary</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot" style="background:#262831">
+                <input type="color" id="text-primary" value="#262831" onchange="updateToken('--text-primary', this.value); syncHex('text-primary-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="text-primary-hex" value="#262831" class="token-pill-hex" oninput="syncColor('text-primary', this.value); updateToken('--text-primary', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
+          </div>
+          <div class="token-color-row">
+            <span class="token-color-label">Secondary</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot" style="background:#60667c">
+                <input type="color" id="text-secondary" value="#60667c" onchange="updateToken('--text-secondary', this.value); syncHex('text-secondary-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="text-secondary-hex" value="#60667c" class="token-pill-hex" oninput="syncColor('text-secondary', this.value); updateToken('--text-secondary', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surface -->
+      <div class="token-section">
+        <div class="token-section-title">Surface</div>
+        <div class="token-color-group">
+          <div class="token-color-row">
+            <span class="token-color-label">Background</span>
+            <div class="token-color-pill">
+              <div class="token-pill-dot token-pill-dot--light" style="background:#ffffff">
+                <input type="color" id="surface-bg" value="#ffffff" onchange="updateToken('--surface-bg', this.value); syncHex('surface-bg-hex', this.value); this.parentElement.style.background=this.value" />
+              </div>
+              <input type="text" id="surface-bg-hex" value="#ffffff" class="token-pill-hex" oninput="syncColor('surface-bg', this.value); updateToken('--surface-bg', this.value); this.closest('.token-color-pill').querySelector('.token-pill-dot').style.background=this.value" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Border Radius -->
       <div class="token-section">
         <div class="token-section-title">Border Radius</div>
         <div class="token-row">
@@ -66,6 +115,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Typography -->
       <div class="token-section">
         <div class="token-section-title">Typography</div>
         <div class="token-row">
@@ -75,33 +126,6 @@
             <option value="'Rethink Sans', sans-serif">Rethink Sans</option>
             <option value="system-ui, sans-serif">System UI</option>
           </select>
-        </div>
-      </div>
-      <div class="token-section">
-        <div class="token-section-title">Text</div>
-        <div class="token-row">
-          <label>Primary</label>
-          <div class="token-input-row">
-            <input type="color" id="text-primary" value="#262831" onchange="updateToken('--text-primary', this.value); syncHex('text-primary-hex', this.value)" />
-            <input type="text" id="text-primary-hex" value="#262831" class="hex-input" oninput="syncColor('text-primary', this.value); updateToken('--text-primary', this.value)" />
-          </div>
-        </div>
-        <div class="token-row">
-          <label>Secondary</label>
-          <div class="token-input-row">
-            <input type="color" id="text-secondary" value="#60667c" onchange="updateToken('--text-secondary', this.value); syncHex('text-secondary-hex', this.value)" />
-            <input type="text" id="text-secondary-hex" value="#60667c" class="hex-input" oninput="syncColor('text-secondary', this.value); updateToken('--text-secondary', this.value)" />
-          </div>
-        </div>
-      </div>
-      <div class="token-section">
-        <div class="token-section-title">Surface</div>
-        <div class="token-row">
-          <label>Background</label>
-          <div class="token-input-row">
-            <input type="color" id="surface-bg" value="#ffffff" onchange="updateToken('--surface-bg', this.value); syncHex('surface-bg-hex', this.value)" />
-            <input type="text" id="surface-bg-hex" value="#ffffff" class="hex-input" oninput="syncColor('surface-bg', this.value); updateToken('--surface-bg', this.value)" />
-          </div>
         </div>
       </div>
 
