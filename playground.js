@@ -1094,3 +1094,66 @@ function _labSetupInteraction() {
 
 // Lab is the default view — init after all lab code is defined
 initLab();
+
+// ============================================
+//  SELFIE CAPTURE — Camera functions
+// ============================================
+
+let _captureStream = null;
+let _facingMode = 'user';
+
+async function initCapture() {
+  const video = document.getElementById('capture-video');
+  const placeholder = document.querySelector('.capture-placeholder');
+  if (!video) return;
+
+  try {
+    if (_captureStream) {
+      _captureStream.getTracks().forEach(t => t.stop());
+    }
+    _captureStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: _facingMode, width: { ideal: 720 }, height: { ideal: 720 } },
+      audio: false
+    });
+    video.srcObject = _captureStream;
+    if (placeholder) placeholder.style.display = 'none';
+  } catch (err) {
+    console.log('[Capture] Camera not available:', err.message);
+    if (placeholder) placeholder.style.display = 'flex';
+  }
+}
+
+function flipCamera() {
+  _facingMode = _facingMode === 'user' ? 'environment' : 'user';
+  initCapture();
+}
+
+function triggerCapture() {
+  const btn = document.getElementById('capture-btn');
+  if (!btn) return;
+  
+  // Flash animation
+  btn.style.transform = 'scale(0.9)';
+  setTimeout(() => { btn.style.transform = ''; }, 150);
+  
+  // Flash overlay
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:absolute;inset:0;background:#fff;z-index:100;opacity:0;transition:opacity 0.1s';
+  const frame = document.querySelector('.capture-frame');
+  if (frame) {
+    frame.appendChild(flash);
+    requestAnimationFrame(() => {
+      flash.style.opacity = '0.8';
+      setTimeout(() => {
+        flash.style.opacity = '0';
+        setTimeout(() => flash.remove(), 150);
+      }, 100);
+    });
+  }
+}
+
+// Auto-init camera when Lab view is shown
+document.addEventListener('DOMContentLoaded', () => {
+  // Small delay to ensure DOM is ready
+  setTimeout(initCapture, 500);
+});
