@@ -230,12 +230,15 @@
 
     <!-- ===== MODULES VIEW ===== -->
     <div id="view-modules" class="view">
-      <div class="module-bar">
-        <button class="module-tab active" onclick="selectModule('face-capture', this)">Face Capture</button>
-        <button class="module-tab" onclick="selectModule('selfie-capture', this)">Selfie Capture</button>
-        <button class="module-tab" onclick="selectModule('id-capture', this)">ID Capture</button>
-        <button class="module-tab" onclick="selectModule('nfc', this)">NFC</button>
-        <button class="module-tab" onclick="selectModule('document-capture', this)">Document Capture</button>
+      <div class="module-header">
+        <div class="module-bar">
+          <button class="module-tab active" onclick="selectModule('face-capture', this)">Face Capture</button>
+          <button class="module-tab" onclick="selectModule('selfie-capture', this)">Selfie Capture</button>
+          <button class="module-tab" onclick="selectModule('id-capture', this)">ID Capture</button>
+          <button class="module-tab" onclick="selectModule('nfc', this)">NFC</button>
+          <button class="module-tab" onclick="selectModule('document-capture', this)">Document Capture</button>
+        </div>
+        <div id="module-version-bar" class="module-version-bar"></div>
       </div>
       <div class="canvas-viewport" id="canvas-viewport">
         <div class="canvas-inner" id="module-canvas"></div>
