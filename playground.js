@@ -78,7 +78,12 @@ function showView(name, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
   btn.classList.add('active');
-}
+  
+  // Initialize modules view when first shown
+  if (name === 'modules') {
+    initModules();
+  }
+  }
 
 function showDsSection(name, btn) {
   document.querySelectorAll('.ds-section').forEach(s => s.style.display = 'none');
