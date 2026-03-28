@@ -284,10 +284,6 @@ select {
 }
 
 /* ---- SELFIE CAPTURE VIEW ---- */
-.capture-frame {
-  background: #000;
-}
-
 .capture-camera-bg {
   position: absolute;
   inset: 0;
@@ -450,7 +446,8 @@ select {
   padding: 0;
   background: var(--surface-bg);
   scrollbar-width: none;
-}
+  position: relative;
+  }
 
 .phone-screen::-webkit-scrollbar { display: none; }
 
