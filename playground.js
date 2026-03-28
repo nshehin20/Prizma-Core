@@ -633,6 +633,149 @@ function fcSuccess() {
   </div>`;
 }
 
+// ============================================
+//  FACE CAPTURE V2 - Full Screen Camera View
+// ============================================
+
+// V2: Tutorial (same as V1)
+function fc2Tutorial() {
+  return fcTutorial();
+}
+
+// V2: Camera Searching - Full screen with oval mask
+function fc2CamSearching() {
+  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#0a0a0f;overflow:hidden">
+    <!-- Camera background -->
+    <div style="position:absolute;inset:0">
+      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;opacity:0.85" alt="" />
+    </div>
+    <!-- Oval mask overlay -->
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <svg width="100%" height="100%" viewBox="0 0 390 336" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <mask id="fc2-mask-search">
+            <rect width="100%" height="100%" fill="white"/>
+            <ellipse cx="195" cy="145" rx="105" ry="130" fill="black"/>
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#fc2-mask-search)"/>
+        <ellipse cx="195" cy="145" rx="105" ry="130" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="3"/>
+      </svg>
+    </div>
+    <!-- Top nav -->
+    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:12px 16px">
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div style="flex:1"></div>
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <!-- Bottom hint -->
+    <div style="position:absolute;bottom:20px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div class="type-feedback-l" style="color:rgba(255,255,255,0.95);text-align:center;text-shadow:0 1px 4px rgba(0,0,0,0.5)">Position your face in the frame</div>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
+// V2: Camera Detected - Full screen with green border
+function fc2CamDetected() {
+  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#0a0a0f;overflow:hidden">
+    <!-- Camera background with face -->
+    <div style="position:absolute;inset:0">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <!-- Oval mask overlay - green border -->
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <svg width="100%" height="100%" viewBox="0 0 390 336" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <mask id="fc2-mask-detect">
+            <rect width="100%" height="100%" fill="white"/>
+            <ellipse cx="195" cy="145" rx="105" ry="130" fill="black"/>
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#fc2-mask-detect)"/>
+        <ellipse cx="195" cy="145" rx="105" ry="130" fill="none" stroke="#22c55e" stroke-width="4"/>
+      </svg>
+    </div>
+    <!-- Top nav -->
+    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:12px 16px">
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div style="flex:1"></div>
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <!-- Bottom hint -->
+    <div style="position:absolute;bottom:20px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div class="type-feedback-l" style="color:#22c55e;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,0.5)">Face detected - Hold still</div>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
+// V2: Camera Capturing - Full screen with animated ring
+function fc2CamCapturing() {
+  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#0a0a0f;overflow:hidden">
+    <!-- Camera background with face -->
+    <div style="position:absolute;inset:0">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <!-- Oval mask with animated gradient border -->
+    <div style="position:absolute;inset:0;pointer-events:none">
+      <svg width="100%" height="100%" viewBox="0 0 390 336" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <mask id="fc2-mask-capture">
+            <rect width="100%" height="100%" fill="white"/>
+            <ellipse cx="195" cy="145" rx="105" ry="130" fill="black"/>
+          </mask>
+          <linearGradient id="fc2-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#22c55e"/>
+            <stop offset="50%" style="stop-color:#3b82f6"/>
+            <stop offset="100%" style="stop-color:#22c55e"/>
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#fc2-mask-capture)"/>
+        <ellipse cx="195" cy="145" rx="105" ry="130" fill="none" stroke="url(#fc2-grad)" stroke-width="4" style="animation:prizma-spin 1.5s linear infinite;transform-origin:195px 145px"/>
+      </svg>
+    </div>
+    <!-- Top nav -->
+    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:12px 16px">
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div style="flex:1"></div>
+      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <!-- Bottom hint -->
+    <div style="position:absolute;bottom:20px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div class="type-feedback-l" style="color:#fff;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,0.5)">Capturing...</div>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
+// V2: Processing (same as V1)
+function fc2Processing() {
+  return fcProcessing();
+}
+
+// V2: Uploading (same as V1)
+function fc2Uploading() {
+  return fcUploading();
+}
+
+// V2: Success (same as V1)
+function fc2Success() {
+  return fcSuccess();
+}
+
 
 // ---- Module registry ----
 
@@ -789,6 +932,18 @@ const _labModuleData = {
       { label: 'Processing', render: fcProcessing },
       { label: 'Uploading',  render: fcUploading },
       { label: 'Success',    render: fcSuccess },
+    ]
+  },
+  'face-capture-v2': {
+    label: 'Face Capture V2',
+    screens: [
+      { label: 'Tutorial',   render: fc2Tutorial },
+      { label: 'Searching',  render: fc2CamSearching },
+      { label: 'Detected',   render: fc2CamDetected },
+      { label: 'Capturing',  render: fc2CamCapturing },
+      { label: 'Processing', render: fc2Processing },
+      { label: 'Uploading',  render: fc2Uploading },
+      { label: 'Success',    render: fc2Success },
     ]
   },
   'id-capture':  { label: 'ID Capture',       screens: [] },
