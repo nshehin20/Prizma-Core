@@ -1903,9 +1903,8 @@ select {
   justify-content: center;
 }
 
-
 /* ============================================
-   MODULES VIEW
+   MODULES VIEW — Design Lab Canvas
    ============================================ */
 
 #view-modules {
@@ -1920,85 +1919,113 @@ select {
 .module-bar {
   flex-shrink: 0;
   display: flex;
+  align-items: center;
   gap: 6px;
-  padding: 12px 24px;
+  padding: 10px 24px;
   background: #fff;
   border-bottom: 1px solid var(--color-gray-100);
 }
 
+.module-bar-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gray-400);
+  margin-right: 6px;
+}
+
 .module-tab {
-  padding: 6px 16px;
-  border: none;
-  background: var(--color-gray-100);
+  padding: 5px 14px;
+  border: 1.5px solid transparent;
+  background: transparent;
   border-radius: 20px;
   font-size: 13px;
   font-family: var(--font-family-dm);
   font-weight: 500;
   color: var(--color-gray-500);
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: all 0.15s;
 }
 .module-tab:hover {
-  background: var(--color-gray-200);
+  background: var(--color-gray-100);
   color: var(--color-gray-800);
 }
 .module-tab.active {
   background: var(--color-brand-500);
+  border-color: var(--color-brand-500);
   color: #fff;
 }
 
-/* Canvas: horizontal scroll row */
-.module-canvas {
+/* ---- Canvas viewport ---- */
+.canvas-viewport {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 32px 40px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto;
+  position: relative;
+  background:
+    radial-gradient(circle, rgba(0,106,255,0.04) 1px, transparent 1px);
+  background-color: #eef0f4;
+  background-size: 24px 24px;
 }
-.module-canvas::-webkit-scrollbar { height: 6px; }
-.module-canvas::-webkit-scrollbar-track { background: transparent; }
-.module-canvas::-webkit-scrollbar-thumb { background: var(--color-gray-200); border-radius: 3px; }
+
+.canvas-viewport::-webkit-scrollbar { width: 8px; height: 8px; }
+.canvas-viewport::-webkit-scrollbar-track { background: transparent; }
+.canvas-viewport::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+/* Canvas inner — zoom applied via JS `style.zoom` */
+.canvas-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  padding: 64px 80px;
+  min-width: max-content;
+  min-height: 100%;
+}
 
 /* Each step */
 .module-step {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   flex-shrink: 0;
 }
 
 .module-step-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--color-gray-500);
   font-family: var(--font-family-dm);
   text-align: center;
   white-space: nowrap;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.07);
+  backdrop-filter: blur(4px);
 }
 
 .module-step-num {
   font-size: 10px;
   font-weight: 700;
-  color: var(--color-gray-300);
+  color: var(--color-gray-400);
   font-family: var(--font-family-dm);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* Arrow between steps */
+/* Arrow connector */
 .module-arrow {
-  font-size: 22px;
+  font-size: 28px;
   color: var(--color-gray-300);
   flex-shrink: 0;
   align-self: center;
-  padding-bottom: 28px;
+  padding-bottom: 54px;
   line-height: 1;
+  user-select: none;
 }
 
-/* Empty / coming soon */
+/* Empty state */
 .module-empty {
   flex: 1;
   display: flex;
@@ -2008,29 +2035,29 @@ select {
   gap: 12px;
   color: var(--color-gray-400);
   font-family: var(--font-family-dm);
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-/* ---- Mini phone frame ---- */
-/* Outer clipping container at 50% scale */
+/* ---- Full-size phone frame ---- */
 .mf-outer {
-  width: 195px;
-  height: 422px;
-  border-radius: 27px;
-  border: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
-  overflow: hidden;
-  position: relative;
-  background: var(--surface-bg);
-  flex-shrink: 0;
-}
-
-/* Inner full-size frame scaled to 50% */
-.mf-frame {
   width: 390px;
   height: 844px;
-  transform: scale(0.5);
-  transform-origin: top left;
+  border-radius: 54px;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.14),
+    0 8px 24px rgba(0,0,0,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.6);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--surface-bg);
+  position: relative;
+}
+
+.mf-frame {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: var(--surface-bg);
@@ -2054,6 +2081,7 @@ select {
   justify-content: center;
   align-items: center;
   padding: 8px 0 10px;
+  background: var(--surface-bg);
 }
 .mf-home::before {
   content: '';
@@ -2063,6 +2091,69 @@ select {
   background: #000;
   border-radius: 3px;
   opacity: 0.2;
+}
+
+/* ---- Zoom controls (floating bottom-left) ---- */
+.canvas-controls {
+  position: sticky;
+  bottom: 20px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08);
+  z-index: 100;
+  margin: 0 0 0 20px;
+  width: fit-content;
+}
+
+.canvas-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-700);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  transition: background 0.1s, color 0.1s;
+  font-family: var(--font-family-dm);
+}
+.canvas-ctrl-btn:hover {
+  background: var(--color-gray-100);
+  color: var(--color-gray-900);
+}
+.canvas-ctrl-btn svg {
+  pointer-events: none;
+}
+
+#canvas-zoom-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  font-family: var(--font-family-dm);
+  min-width: 36px;
+  text-align: center;
+  padding: 0 2px;
+  user-select: none;
+}
+
+.canvas-ctrl-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--color-gray-200);
+  margin: 0 2px;
 }
 
 /* ---- Camera viewport (⚠️ NOT in DS — flagged) ---- */
@@ -2094,23 +2185,14 @@ select {
   height: 100%;
   object-fit: cover;
 }
-/* Ring variants */
 .cam-ring {
   position: absolute;
   inset: -4px;
   border-radius: 50%;
   pointer-events: none;
 }
-.cam-ring--idle {
-  border: 3px solid rgba(255,255,255,0.25);
-}
-.cam-ring--detected {
-  border: 4px solid rgba(255,255,255,0.9);
-}
-.cam-ring--capturing {
-  border: 4px solid transparent;
-}
-/* Blue arc for capturing state (⚠️ NOT in DS) */
+.cam-ring--idle    { border: 3px solid rgba(255,255,255,0.25); }
+.cam-ring--detected { border: 4px solid rgba(255,255,255,0.9); }
 .cam-arc-svg {
   position: absolute;
   inset: -8px;
@@ -2135,7 +2217,6 @@ select {
 @keyframes cam-arc-spin {
   to { stroke-dashoffset: -679; }
 }
-
 .cam-text-area {
   padding: 20px 24px 24px;
   display: flex;

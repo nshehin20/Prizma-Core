@@ -475,13 +475,12 @@ function _verifiedTag() {
   </div>`;
 }
 
-// DS: .nav-bar with logo centered + optional back/close
+// DS: .nav-bar
 function _navBar(variant) {
   const logo = `<div class="nav-bar__center">${_LOGO_SVG}</div>`;
   if (variant === 'logo-only') {
     return `<div class="nav-bar" style="border-bottom:none;padding:0 16px">${logo}</div>`;
   }
-  // back + logo + close (DS: .phone-nav-btn)
   return `<div class="nav-bar" style="border-bottom:none;padding:0 16px">
     <div class="nav-bar__left"><button class="phone-nav-btn">${_BACK_SVG2}</button></div>
     ${logo}
@@ -544,9 +543,8 @@ function fcCamDetected() {
   </div>`;
 }
 
-// ⚠️ DS FLAG: blue arc progress ring not in DS — uses CSS SVG animation not from DS
+// ⚠️ DS FLAG: blue arc progress ring not in DS
 function fcCamCapturing() {
-  // Arc math: circle r=148, circumference=2πr≈929. We want ~75% fill → dashoffset=929*0.25≈232
   return `<div class="cam-screen">
     <div style="padding:0 16px">${_navBar('logo-only')}</div>
     <div class="cam-dark-area">
@@ -567,7 +565,7 @@ function fcCamCapturing() {
   </div>`;
 }
 
-// DS: .spinner (loading-spinner token colors)
+// DS: .spinner
 function fcProcessing() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:0 24px 24px">
     ${_navBar('logo-only')}
@@ -590,8 +588,7 @@ function fcUploading() {
   </div>`;
 }
 
-// ⚠️ DS FLAG: success icon (green circle + checkmark) — .states-block exists but no icon component
-// Using --color-positive-500 token + inline SVG checkmark
+// ⚠️ DS FLAG: success icon — .states-block exists but no icon component in DS
 function fcSuccess() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:0 24px 24px">
     ${_navBar('logo-only')}
@@ -613,19 +610,50 @@ const modules = {
   'face-capture': {
     label: 'Face Capture',
     screens: [
-      { id: 'tutorial',    label: 'Tutorial',   render: fcTutorial },
-      { id: 'cam-search',  label: 'Searching',  render: fcCamSearching },
-      { id: 'cam-detect',  label: 'Detected',   render: fcCamDetected },
-      { id: 'cam-ready',   label: 'Get Ready',  render: fcCamCapturing },
-      { id: 'processing',  label: 'Processing', render: fcProcessing },
-      { id: 'uploading',   label: 'Uploading',  render: fcUploading },
-      { id: 'success',     label: 'Success',    render: fcSuccess },
+      { id: 'tutorial',   label: 'Tutorial',   render: fcTutorial },
+      { id: 'cam-search', label: 'Searching',  render: fcCamSearching },
+      { id: 'cam-detect', label: 'Detected',   render: fcCamDetected },
+      { id: 'cam-ready',  label: 'Get Ready',  render: fcCamCapturing },
+      { id: 'processing', label: 'Processing', render: fcProcessing },
+      { id: 'uploading',  label: 'Uploading',  render: fcUploading },
+      { id: 'success',    label: 'Success',    render: fcSuccess },
     ]
   },
-  'id-capture':       { label: 'ID Capture',       screens: [] },
-  'nfc':              { label: 'NFC',               screens: [] },
-  'document-capture': { label: 'Document Capture',  screens: [] },
+  'id-capture':       { label: 'ID Capture',      screens: [] },
+  'nfc':              { label: 'NFC',              screens: [] },
+  'document-capture': { label: 'Document Capture', screens: [] },
 };
+
+// ---- Canvas zoom ----
+
+let _canvasZoom = 0.6;
+
+function setCanvasZoom(z) {
+  _canvasZoom = Math.min(2, Math.max(0.2, Math.round(z * 10) / 10));
+  const el = document.getElementById('module-canvas');
+  if (el) el.style.zoom = _canvasZoom;
+  const lbl = document.getElementById('canvas-zoom-label');
+  if (lbl) lbl.textContent = Math.round(_canvasZoom * 100) + '%';
+}
+
+function canvasZoomIn()  { setCanvasZoom(_canvasZoom + 0.1); }
+function canvasZoomOut() { setCanvasZoom(_canvasZoom - 0.1); }
+function canvasZoomFit() { setCanvasZoom(0.6); }
+
+// Cmd/Ctrl + scroll to zoom
+function _setupCanvasWheel() {
+  const vp = document.getElementById('canvas-viewport');
+  if (!vp) return;
+  vp.addEventListener('wheel', function(e) {
+    if (e.metaKey || e.ctrlKey) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      setCanvasZoom(_canvasZoom + delta);
+    }
+  }, { passive: false });
+}
+
+// ---- Init ----
 
 let _modulesInit = false;
 
@@ -633,6 +661,8 @@ function initModules() {
   if (_modulesInit) return;
   _modulesInit = true;
   renderModuleCanvas('face-capture');
+  setCanvasZoom(0.6);
+  _setupCanvasWheel();
 }
 
 function selectModule(id, btn) {

@@ -244,7 +244,18 @@
         <button class="module-tab" onclick="selectModule('nfc', this)">NFC</button>
         <button class="module-tab" onclick="selectModule('document-capture', this)">Document Capture</button>
       </div>
-      <div class="module-canvas" id="module-canvas"></div>
+      <div class="canvas-viewport" id="canvas-viewport">
+        <div class="canvas-inner" id="module-canvas"></div>
+        <div class="canvas-controls">
+          <button class="canvas-ctrl-btn canvas-ctrl-fit" onclick="canvasZoomFit()" title="Fit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="canvas-ctrl-divider"></div>
+          <button class="canvas-ctrl-btn" onclick="canvasZoomOut()">−</button>
+          <span id="canvas-zoom-label">60%</span>
+          <button class="canvas-ctrl-btn" onclick="canvasZoomIn()">+</button>
+        </div>
+      </div>
     </div>
 
     <!-- ===== COMPONENTS VIEW ===== -->
