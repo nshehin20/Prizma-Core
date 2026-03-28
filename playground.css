@@ -2465,6 +2465,56 @@ select {
   font-weight: 400;
 }
 
+.lab-sidebar-divider {
+  height: 1px;
+  background: rgba(0,0,0,0.08);
+  margin: 16px 20px;
+}
+
+.lab-version-selector {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lab-version-label {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(0,0,0,0.22);
+  text-transform: uppercase;
+}
+
+.lab-version-dropdown {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  background: #fff;
+  font-family: var(--font-family-dm);
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.lab-version-dropdown:hover {
+  border-color: rgba(0,0,0,0.25);
+}
+
+.lab-version-dropdown:focus {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: 0 0 0 3px rgba(0, 106, 255, 0.1);
+}
+
 /* ── Main area ── */
 .lab-main {
   flex: 1;

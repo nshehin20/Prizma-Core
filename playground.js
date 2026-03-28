@@ -691,8 +691,20 @@ let _fcVersion = 'Original';
 
 function setFcVersion(version) {
   _fcVersion = version;
+  
+  // Update the dropdown to reflect current selection
+  const labDropdown = document.getElementById('lab-fc-version');
+  if (labDropdown) labDropdown.value = version;
+  
+  // Update screen count in sidebar
+  const countEl = document.getElementById('fc-screen-count');
+  if (countEl) {
+    countEl.textContent = version === 'Original' ? '7' : '6';
+  }
+  
   // Re-render the current module if it's face-capture
   renderModuleCanvas('face-capture');
+  
   // Update lab view if active
   if (_labActiveModule === 'face-capture') {
     labRenderScreens();
@@ -990,11 +1002,9 @@ function renderModuleCanvas(moduleId) {
   const versionBar = document.getElementById('module-version-bar');
   
   // Handle version dropdown
-  console.log('[v0] renderModuleCanvas called', moduleId, 'hasVersions:', mod?.hasVersions, 'versionBar:', versionBar);
   if (versionBar) {
     if (mod && mod.hasVersions) {
       const currentVersion = moduleId === 'face-capture' ? _fcVersion : 'Original';
-      console.log('[v0] Rendering version dropdown, currentVersion:', currentVersion, 'versions:', mod.versions);
       versionBar.innerHTML = `
         <div class="version-selector">
           <label class="type-body-xs-medium" style="color:var(--color-gray-500)">Version</label>

@@ -3106,10 +3106,10 @@
       <div class="lab-sidebar">
         <div class="lab-sidebar-title">MODULES</div>
         <nav class="lab-sidebar-nav">
-<button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
-  <span>Face Capture</span><span class="lab-sidebar-count">7</span>
-  </button>
-  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
+          <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+            <span>Face Capture</span><span class="lab-sidebar-count" id="fc-screen-count">7</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
             <span>ID Capture</span><span class="lab-sidebar-count">—</span>
           </button>
           <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
@@ -3119,6 +3119,14 @@
             <span>Document Capture</span><span class="lab-sidebar-count">—</span>
           </button>
         </nav>
+        <div class="lab-sidebar-divider"></div>
+        <div class="lab-version-selector">
+          <label class="lab-version-label">Version</label>
+          <select id="lab-fc-version" class="lab-version-dropdown" onchange="setFcVersion(this.value)">
+            <option value="Original" selected>Original</option>
+            <option value="v2">v2</option>
+          </select>
+        </div>
       </div>
 
       <!-- Main lab area -->
