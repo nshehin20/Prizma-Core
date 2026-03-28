@@ -1263,36 +1263,20 @@ Available tokens: --color-brand-500, --color-brand-400, --color-brand-600, --tex
 ALWAYS respond with valid JSON only:
 { "message": "Short friendly sentence.", "actions": [ ...action objects... ] }`;
 
-async function _callClaudeDirect(apiKey, history) {
-  // history: [{role:'user'|'ai', text}] — map to Claude format, skip thinking bubbles
-  const messages = history
-    .filter(m => !m.thinking)
-    .map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.text }));
+async function _callClaude(history) {
+  // history: [{role:'user'|'ai', text}] — maps to Claude's messages format
+  const messages = history.map(m => ({
+    role: m.role === 'ai' ? 'assistant' : 'user',
+    content: m.text,
+  }));
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('/api/prompt', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 512,
-      system: _PROMPT_SYSTEM,
-      messages,
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages }),
   });
-  const body = await res.json();
-  if (!res.ok) return { message: `API error: ${body.error?.message || res.status}`, actions: [] };
-  const text = body.content?.[0]?.text || '';
-  try {
-    const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
-    return JSON.parse(clean);
-  } catch {
-    return { message: text, actions: [] };
-  }
+  const data = await res.json();
+  return data;
 }
 
 // ─── Multi-experiment state ───────────────────────────────────────────────────
@@ -1464,15 +1448,8 @@ async function _runExpResponse(exp) {
 
   try {
     let data;
-    const localKey = window.ANTHROPIC_LOCAL_KEY;
-    if (localKey && localKey !== 'PASTE_YOUR_KEY_HERE') {
-      // Real Claude — pass full conversation history for context
-      data = await _callClaudeDirect(localKey, exp.messages.filter(m => !m.thinking));
-    } else {
-      // Fallback: keyword-based fake
-      const lastUserMsg = [...exp.messages].reverse().find(m => m.role === 'user')?.text || '';
-      data = await _fakeExpResponse(lastUserMsg);
-    }
+    // Always route through local server or Vercel — never direct browser call
+    data = await _callClaude(exp.messages.filter(m => !m.thinking));
     exp.messages = exp.messages.filter(m => !m.thinking);
     exp.messages.push({ role: 'ai', text: data.message || 'Done.' });
     labExpRenderMessages(exp);
