@@ -1241,6 +1241,56 @@ initLab();
 
 let _promptResponseTimer = null;
 
+const _PROMPT_SYSTEM = `You are an AI assistant embedded in Incode Core Lab — a design system playground for identity verification (IDV) mobile flows. Users are product managers and designers (non-technical) who want to explore and modify UI components via natural language.
+
+Available modules:
+- face-capture: Face Capture. Screens (0-indexed): Tutorial(0), Camera Searching(1), Camera Detected(2), Get Ready(3), Processing(4), Uploading(5), Success(6)
+- id-capture: ID Capture (coming soon, no screens)
+- nfc: NFC (coming soon)
+- doc-capture: Document Capture (coming soon)
+
+Actions you can trigger:
+- { "type": "selectModule", "moduleId": "face-capture" }
+- { "type": "expandModule" }
+- { "type": "collapseModule" }
+- { "type": "goToScreen", "index": 0 }
+- { "type": "setTheme", "theme": "light" } or "dark"
+- { "type": "setToken", "token": "--color-brand-500", "value": "#hex" }
+- { "type": "openTokenPanel" }
+- { "type": "resetTokens" }
+
+Available tokens: --color-brand-500, --color-brand-400, --color-brand-600, --text-primary, --text-secondary, --surface-bg, --radius-button (e.g. "24px"), --radius-card
+
+ALWAYS respond with valid JSON only:
+{ "message": "Short friendly sentence.", "actions": [ ...action objects... ] }`;
+
+async function _callClaudeDirect(apiKey, message) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 512,
+      system: _PROMPT_SYSTEM,
+      messages: [{ role: 'user', content: message.slice(0, 500) }],
+    }),
+  });
+  const body = await res.json();
+  if (!res.ok) return { message: `API error: ${body.error?.message || res.status}`, actions: [] };
+  const text = body.content?.[0]?.text || '';
+  try {
+    const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+    return JSON.parse(clean);
+  } catch {
+    return { message: text, actions: [] };
+  }
+}
+
 async function submitPrompt() {
   const input  = document.getElementById('prompt-input');
   const bubble = document.getElementById('prompt-response');
@@ -1248,7 +1298,6 @@ async function submitPrompt() {
   const message = input.value.trim();
   if (!message || btn.disabled) return;
 
-  // Loading state
   input.disabled = true;
   btn.disabled = true;
   btn.innerHTML = '<div class="prompt-spinner"></div>';
@@ -1257,20 +1306,22 @@ async function submitPrompt() {
   clearTimeout(_promptResponseTimer);
 
   try {
-    const res = await fetch('/api/prompt', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message }),
-    });
+    let data;
+    const localKey = window.ANTHROPIC_LOCAL_KEY;
 
-    const data = await res.json();
-
-    bubble.textContent = data.message || 'Done.';
-
-    if (Array.isArray(data.actions)) {
-      data.actions.forEach(executeLabAction);
+    if (localKey && localKey !== 'PASTE_YOUR_KEY_HERE') {
+      data = await _callClaudeDirect(localKey, message);
+    } else {
+      const res = await fetch('/api/prompt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      });
+      data = await res.json();
     }
 
+    bubble.textContent = data.message || 'Done.';
+    if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
     input.value = '';
     _promptResponseTimer = setTimeout(() => bubble.classList.remove('visible'), 5000);
 
