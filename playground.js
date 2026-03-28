@@ -548,122 +548,54 @@ function fcTutorial() {
   </div>`;
 }
 
-/// selfie ring frame + empty camera inside (searching state) - FULL SCREEN
+/// selfie ring frame + empty camera inside (searching state)
 function fcCamSearching() {
-  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#1a1a2e;overflow:hidden">
-    <!-- Camera background -->
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
-      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;opacity:0.8" alt="" />
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
+      <div style="position:relative;width:342px;height:342px;flex-shrink:0">
+        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px" alt="" />
+        <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
+          <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+        </div>
+      </div>
+      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
     </div>
-    <!-- Oval mask overlay -->
-    <div style="position:absolute;inset:0;pointer-events:none">
-      <svg width="100%" height="100%" viewBox="0 0 390 390" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <mask id="oval-mask-search">
-            <rect width="100%" height="100%" fill="white"/>
-            <ellipse cx="195" cy="160" rx="110" ry="140" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="rgba(0,0,0,0.55)" mask="url(#oval-mask-search)"/>
-        <ellipse cx="195" cy="160" rx="110" ry="140" fill="none" stroke="white" stroke-width="3" opacity="0.9"/>
-      </svg>
-    </div>
-    <!-- Top nav -->
-    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:8px 16px">
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div style="flex:1"></div>
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <!-- Bottom hint -->
-    <div style="position:absolute;bottom:24px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px">
-      <div class="type-feedback-l" style="color:#fff;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,0.5)">Align your face and look at the camera</div>
-    </div>
+    ${_verifiedTag()}
   </div>`;
 }
 
-// selfie ring frame + DS selfie filled photo (face detected) - FULL SCREEN
+// selfie ring frame + DS selfie filled photo (face detected)
 function fcCamDetected() {
-  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#1a1a2e;overflow:hidden">
-    <!-- Camera background with face -->
-    <div style="position:absolute;inset:0">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
+      <div style="position:relative;width:342px;height:342px;flex-shrink:0">
+        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px" alt="" />
+        <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
+          <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+        </div>
+      </div>
+      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
     </div>
-    <!-- Oval mask overlay - green border for detected -->
-    <div style="position:absolute;inset:0;pointer-events:none">
-      <svg width="100%" height="100%" viewBox="0 0 390 390" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <mask id="oval-mask-detect">
-            <rect width="100%" height="100%" fill="white"/>
-            <ellipse cx="195" cy="160" rx="110" ry="140" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="rgba(0,0,0,0.55)" mask="url(#oval-mask-detect)"/>
-        <ellipse cx="195" cy="160" rx="110" ry="140" fill="none" stroke="#22c55e" stroke-width="4" opacity="1"/>
-      </svg>
-    </div>
-    <!-- Top nav -->
-    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:8px 16px">
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div style="flex:1"></div>
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <!-- Bottom hint -->
-    <div style="position:absolute;bottom:24px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px">
-      <div class="type-feedback-l" style="color:#22c55e;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,0.5)">Face detected - Hold still</div>
-    </div>
+    ${_verifiedTag()}
   </div>`;
 }
 
-// selfie ring spinning (DS ring SVG itself rotates) + DS selfie filled photo stationary - FULL SCREEN
+// selfie ring spinning (DS ring SVG itself rotates) + DS selfie filled photo stationary
 function fcCamCapturing() {
-  return `<div style="position:relative;display:flex;flex-direction:column;flex:1;background:#1a1a2e;overflow:hidden">
-    <!-- Camera background with face -->
-    <div style="position:absolute;inset:0">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;background:var(--surface-bg)">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
+      <div style="position:relative;width:342px;height:342px;flex-shrink:0">
+        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px;animation:prizma-spin 2s linear infinite;transform-origin:171px 171px;will-change:transform;transform:translateZ(0)" alt="" />
+        <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
+          <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+        </div>
+      </div>
+      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Get ready...</div>
     </div>
-    <!-- Animated oval mask overlay -->
-    <div style="position:absolute;inset:0;pointer-events:none">
-      <svg width="100%" height="100%" viewBox="0 0 390 390" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <mask id="oval-mask-capture">
-            <rect width="100%" height="100%" fill="white"/>
-            <ellipse cx="195" cy="160" rx="110" ry="140" fill="black"/>
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="rgba(0,0,0,0.55)" mask="url(#oval-mask-capture)"/>
-        <!-- Animated spinning ring -->
-        <ellipse cx="195" cy="160" rx="110" ry="140" fill="none" stroke="url(#grad-capture)" stroke-width="4" style="animation:prizma-spin 2s linear infinite;transform-origin:195px 160px"/>
-        <defs>
-          <linearGradient id="grad-capture" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#22c55e"/>
-            <stop offset="50%" style="stop-color:#3b82f6"/>
-            <stop offset="100%" style="stop-color:#22c55e"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-    <!-- Top nav -->
-    <div style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:8px 16px">
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div style="flex:1"></div>
-      <button style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:none;border-radius:50%;color:#fff;cursor:pointer">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <!-- Bottom hint -->
-    <div style="position:absolute;bottom:24px;left:0;right:0;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px">
-      <div class="type-feedback-l" style="color:#fff;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,0.5)">Get ready...</div>
-    </div>
+    ${_verifiedTag()}
   </div>`;
 }
 

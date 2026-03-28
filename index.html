@@ -3101,6 +3101,82 @@
 
     </div><!-- /view-components -->
 
+    <!-- ===== LAB VIEW ===== -->
+    <div id="view-lab" class="view active">
+
+      <!-- Module selector sidebar -->
+      <div class="lab-sidebar">
+        <div class="lab-sidebar-title">MODULES</div>
+        <nav class="lab-sidebar-nav">
+          <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+            <span>Face Capture</span><span class="lab-sidebar-count">7</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
+            <span>ID Capture</span><span class="lab-sidebar-count">-</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
+            <span>NFC</span><span class="lab-sidebar-count">-</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="doc-capture" onclick="labSelectModule(this)">
+            <span>Document Capture</span><span class="lab-sidebar-count">-</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Main lab area -->
+      <div class="lab-main">
+
+        <!-- Lab bar -->
+        <div class="lab-bar">
+          <div class="lab-bar-info">
+            <span class="lab-bar-module" id="lab-bar-module">FACE CAPTURE</span>
+            <span class="lab-bar-dot">.</span>
+            <span class="lab-bar-meta" id="lab-bar-meta"></span>
+          </div>
+          <button class="lab-figma-btn" onclick="">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" fill="currentColor" opacity=".9"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" opacity=".7"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="currentColor"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" fill="currentColor" opacity=".7"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" opacity=".5"/></svg>
+            Open in Figma
+          </button>
+        </div>
+
+        <!-- Dot-grid canvas viewport -->
+        <div class="lab-canvas-vp" id="lab-canvas-vp">
+          <div class="lab-canvas-inner" id="lab-canvas-inner">
+            <div class="lab-stage" id="lab-stage"></div>
+          </div>
+
+          <!-- Nav arrows -->
+          <button class="lab-arrow lab-arrow--prev" id="lab-arrow-prev" onclick="labNav(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="lab-arrow lab-arrow--next" id="lab-arrow-next" onclick="labNav(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <!-- Expand / Collapse button (top of canvas) -->
+          <button class="lab-expand-btn" id="lab-expand-btn" onclick="labToggleExpand()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="lab-expand-label">EXPAND</span>
+          </button>
+
+          <!-- Screen title (below phone) -->
+          <div class="lab-screen-info" id="lab-screen-info">
+            <span class="lab-screen-index" id="lab-screen-index"></span>
+            <span class="lab-screen-sep">-</span>
+            <span class="lab-screen-label" id="lab-screen-label"></span>
+          </div>
+
+          <!-- Zoom controls -->
+          <div class="lab-zoom-bar">
+            <button class="lab-zoom-btn" onclick="labZoom(-0.1)">-</button>
+            <span class="lab-zoom-val" id="lab-zoom-val">100%</span>
+            <button class="lab-zoom-btn" onclick="labZoom(0.1)">+</button>
+          </div>
+
+        </div><!-- /lab-canvas-vp -->
+      </div><!-- /lab-main -->
+    </div><!-- /view-lab -->
+
   </main>
 
   <script src="playground.js"></script>
