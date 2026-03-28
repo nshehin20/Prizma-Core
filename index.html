@@ -6,9 +6,9 @@
   <title>Prizma Design System — Playground</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Rethink+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="tokens.css" />
-  <link rel="stylesheet" href="components.css" />
-  <link rel="stylesheet" href="playground.css" />
+  <link rel="stylesheet" href="tokens.css?v=1774668063" />
+  <link rel="stylesheet" href="components.css?v=1774668063" />
+  <link rel="stylesheet" href="playground.css?v=1774668063" />
 </head>
 <body>
 
@@ -128,15 +128,14 @@
   <main class="main">
     <div class="topbar">
       <div class="topbar-tabs">
-        <button class="tab active" onclick="showView('phone', this)">📱 Phone</button>
-        <button class="tab" onclick="showView('modules', this); initModules()">🗂 Modules</button>
+        <button class="tab active" onclick="showView('lab', this)">⚗️ Lab</button>
         <button class="tab" onclick="showView('components', this)">🧩 Components</button>
       </div>
       <div class="topbar-badge">v2.5 · Prizma DS</div>
     </div>
 
     <!-- ===== PHONE VIEW ===== -->
-    <div id="view-phone" class="view active">
+    <div id="view-phone" class="view">
       <div class="phone-wrapper">
         <div class="phone-frame">
           <div class="phone-notch">
@@ -172,8 +171,8 @@
                   <div class="phone-slot" data-slot="title">
                     <div id="slot-title">
                       <div style="display:flex;flex-direction:column;gap:12px;text-align:center;padding:16px 0">
-                        <div style="font-family:var(--font-button);font-size:24px;font-weight:700;line-height:27.6px;letter-spacing:-1px;color:var(--text-primary)">Take a selfie</div>
-                        <div style="font-family:var(--font-button);font-size:16px;font-weight:500;line-height:18.4px;letter-spacing:-0.5px;color:var(--text-secondary)">Keep a neutral expression, find balanced light and remove any glasses and hats</div>
+                        <div class="type-h2" style="color:var(--text-primary)">Take a selfie</div>
+                        <div class="type-body-m-regular" style="color:var(--text-secondary)">Keep a neutral expression, find balanced light and remove any glasses and hats</div>
                       </div>
                     </div>
                     <button class="phone-slot__swap" onclick="openSwapPanel('title',this)">
@@ -199,16 +198,14 @@
                 <div style="display:flex;flex-direction:column;gap:16px">
 
                   <!-- Disclaimer: py-12px -->
-                  <div style="padding:12px 0;text-align:center;font-family:var(--font-button);font-size:18px;font-weight:500;line-height:20.7px;letter-spacing:-0.5px;color:var(--text-secondary)">
+                  <div class="type-body-m-regular" style="padding:12px 0;text-align:center;color:var(--text-secondary)">
                     The photo will be taken automatically
                   </div>
 
                   <!-- Primary button: phone slot -->
                   <div class="phone-slot" data-slot="cta">
                     <div id="slot-cta">
-                      <button class="btn btn-primary" style="width:100%;height:56px;border-radius:var(--radius-button);display:flex;align-items:center;justify-content:center;gap:8px">
-                        <span style="color:#fff;font-family:var(--font-button);font-size:var(--font-size-button-m);font-weight:500">Take photo</span>
-                      </button>
+                      <button class="btn btn-primary btn-full">Take photo</button>
                     </div>
                     <button class="phone-slot__swap" onclick="openSwapPanel('cta',this)">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 3.5h8.5M7 1l2.5 2.5L7 6M11 8.5H2.5M5 6l-2.5 2.5L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -219,7 +216,7 @@
                   <!-- Verified by tag -->
                   <div style="display:flex;justify-content:center;height:34px;align-items:center">
                     <div class="tag-verified">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--logo-color)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--color-brand-500)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
                       <span class="tag-verified__text">verified by</span>
                       <svg class="tag-verified__logo" width="44" height="12" viewBox="0 0 88 24" fill="none"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>
                     </div>
@@ -280,73 +277,149 @@
         <!-- Foundations -->
         <div class="ds-section" id="ds-foundations" style="display:none">
 
-          <!-- COLORS -->
-          <div class="found-section-label">COLORS</div>
+          <!-- COLORS — PRIMITIVES -->
+          <div class="found-section-label">COLORS — PRIMITIVES</div>
           <h2 class="found-section-heading">Primitive Palette</h2>
           <div class="found-color-grid">
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#3366e0">Blue</div>
+              <div class="found-color-card__header" style="background:var(--color-gray-600)">Gray</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#e5f0ff;border:1px solid #d0e4ff"></div><div class="found-color-meta"><span>blue.50</span><span class="found-color-hex">#E5F0FF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#bfdfff"></div><div class="found-color-meta"><span>blue.100</span><span class="found-color-hex">#CCE1FF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#99ceff"></div><div class="found-color-meta"><span>blue.200</span><span class="found-color-hex">#99C3FF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#66a6ff"></div><div class="found-color-meta"><span>blue.300</span><span class="found-color-hex">#66A6FF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#3388ff"></div><div class="found-color-meta"><span>blue.400</span><span class="found-color-hex">#3388FF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#006aff"></div><div class="found-color-meta"><span>blue.500</span><span class="found-color-hex">#006AFF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#0055cc"></div><div class="found-color-meta"><span>blue.600</span><span class="found-color-hex">#0055CC</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-0);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-gray-0</span><span class="found-color-hex" data-token="--color-gray-0">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-50)"></div><div class="found-color-meta"><span>--color-gray-50</span><span class="found-color-hex" data-token="--color-gray-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-100)"></div><div class="found-color-meta"><span>--color-gray-100</span><span class="found-color-hex" data-token="--color-gray-100">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-200)"></div><div class="found-color-meta"><span>--color-gray-200</span><span class="found-color-hex" data-token="--color-gray-200">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-300)"></div><div class="found-color-meta"><span>--color-gray-300</span><span class="found-color-hex" data-token="--color-gray-300">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-400)"></div><div class="found-color-meta"><span>--color-gray-400</span><span class="found-color-hex" data-token="--color-gray-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-500)"></div><div class="found-color-meta"><span>--color-gray-500</span><span class="found-color-hex" data-token="--color-gray-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-600)"></div><div class="found-color-meta"><span>--color-gray-600</span><span class="found-color-hex" data-token="--color-gray-600">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-700)"></div><div class="found-color-meta"><span>--color-gray-700</span><span class="found-color-hex" data-token="--color-gray-700">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-800)"></div><div class="found-color-meta"><span>--color-gray-800</span><span class="found-color-hex" data-token="--color-gray-800">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-900)"></div><div class="found-color-meta"><span>--color-gray-900</span><span class="found-color-hex" data-token="--color-gray-900">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-gray-1000)"></div><div class="found-color-meta"><span>--color-gray-1000</span><span class="found-color-hex" data-token="--color-gray-1000">—</span></div></div>
               </div>
             </div>
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#60677c">Grey</div>
+              <div class="found-color-card__header" style="background:var(--color-brand-500)">Brand</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#f9f9f9;border:1px solid #eee"></div><div class="found-color-meta"><span>grey.50</span><span class="found-color-hex">#F9F9F9</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#ebecef"></div><div class="found-color-meta"><span>grey.100</span><span class="found-color-hex">#EBECEF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#c6c8d2"></div><div class="found-color-meta"><span>grey.200</span><span class="found-color-hex">#C6C8D2</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#a3a8b8"></div><div class="found-color-meta"><span>grey.300</span><span class="found-color-hex">#A3A8B8</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#6e758c"></div><div class="found-color-meta"><span>grey.450</span><span class="found-color-hex">#6E758C</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#60667c"></div><div class="found-color-meta"><span>grey.500</span><span class="found-color-hex">#60667C</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#3a3e4b"></div><div class="found-color-meta"><span>grey.700</span><span class="found-color-hex">#3A3E4B</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#262831"></div><div class="found-color-meta"><span>grey.800</span><span class="found-color-hex">#262831</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#14151a"></div><div class="found-color-meta"><span>grey.900</span><span class="found-color-hex">#14151A</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-brand-50</span><span class="found-color-hex" data-token="--color-brand-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-100)"></div><div class="found-color-meta"><span>--color-brand-100</span><span class="found-color-hex" data-token="--color-brand-100">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-200)"></div><div class="found-color-meta"><span>--color-brand-200</span><span class="found-color-hex" data-token="--color-brand-200">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-300)"></div><div class="found-color-meta"><span>--color-brand-300</span><span class="found-color-hex" data-token="--color-brand-300">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-400)"></div><div class="found-color-meta"><span>--color-brand-400</span><span class="found-color-hex" data-token="--color-brand-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-500)"></div><div class="found-color-meta"><span>--color-brand-500</span><span class="found-color-hex" data-token="--color-brand-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-600)"></div><div class="found-color-meta"><span>--color-brand-600</span><span class="found-color-hex" data-token="--color-brand-600">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-900)"></div><div class="found-color-meta"><span>--color-brand-900</span><span class="found-color-hex" data-token="--color-brand-900">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-secondary-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-brand-secondary-50</span><span class="found-color-hex" data-token="--color-brand-secondary-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-brand-secondary-500)"></div><div class="found-color-meta"><span>--color-brand-secondary-500</span><span class="found-color-hex" data-token="--color-brand-secondary-500">—</span></div></div>
               </div>
             </div>
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#cc5555">Red</div>
+              <div class="found-color-card__header" style="background:var(--color-negative-500)">Negative</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#fff0f0;border:1px solid #ffe0e0"></div><div class="found-color-meta"><span>red.50</span><span class="found-color-hex">#FFF0F0</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#ff5a5f"></div><div class="found-color-meta"><span>red.500</span><span class="found-color-hex">#FF5A5F</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#e71111"></div><div class="found-color-meta"><span>red.600</span><span class="found-color-hex">#E71111</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#240001"></div><div class="found-color-meta"><span>red.950</span><span class="found-color-hex">#240001</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-negative-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-negative-50</span><span class="found-color-hex" data-token="--color-negative-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-negative-400)"></div><div class="found-color-meta"><span>--color-negative-400</span><span class="found-color-hex" data-token="--color-negative-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-negative-500)"></div><div class="found-color-meta"><span>--color-negative-500</span><span class="found-color-hex" data-token="--color-negative-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-negative-950)"></div><div class="found-color-meta"><span>--color-negative-950</span><span class="found-color-hex" data-token="--color-negative-950">—</span></div></div>
               </div>
             </div>
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#cc8800">Yellow</div>
+              <div class="found-color-card__header" style="background:var(--color-warning-500)">Warning</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#fff7eb;border:1px solid #ffe8c0"></div><div class="found-color-meta"><span>yellow.50</span><span class="found-color-hex">#FFF7EB</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#ffb647"></div><div class="found-color-meta"><span>yellow.400</span><span class="found-color-hex">#FFB647</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#ff9900"></div><div class="found-color-meta"><span>yellow.500</span><span class="found-color-hex">#FF9900</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#523100"></div><div class="found-color-meta"><span>yellow.950</span><span class="found-color-hex">#523100</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-warning-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-warning-50</span><span class="found-color-hex" data-token="--color-warning-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-warning-400)"></div><div class="found-color-meta"><span>--color-warning-400</span><span class="found-color-hex" data-token="--color-warning-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-warning-500)"></div><div class="found-color-meta"><span>--color-warning-500</span><span class="found-color-hex" data-token="--color-warning-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-warning-950)"></div><div class="found-color-meta"><span>--color-warning-950</span><span class="found-color-hex" data-token="--color-warning-950">—</span></div></div>
               </div>
             </div>
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#3a8a56">Green</div>
+              <div class="found-color-card__header" style="background:var(--color-positive-500)">Positive</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#e4fbf0;border:1px solid #c0f0d8"></div><div class="found-color-meta"><span>green.50</span><span class="found-color-hex">#E4FBF0</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#189f60"></div><div class="found-color-meta"><span>green.600</span><span class="found-color-hex">#189F60</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#0c5030"></div><div class="found-color-meta"><span>green.800</span><span class="found-color-hex">#0C5030</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-positive-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--color-positive-50</span><span class="found-color-hex" data-token="--color-positive-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-positive-400)"></div><div class="found-color-meta"><span>--color-positive-400</span><span class="found-color-hex" data-token="--color-positive-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-positive-500)"></div><div class="found-color-meta"><span>--color-positive-500</span><span class="found-color-hex" data-token="--color-positive-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-positive-950)"></div><div class="found-color-meta"><span>--color-positive-950</span><span class="found-color-hex" data-token="--color-positive-950">—</span></div></div>
               </div>
             </div>
 
             <div class="found-color-card">
-              <div class="found-color-card__header" style="background:#000000">Neutral</div>
+              <div class="found-color-card__header" style="background:var(--color-focus-500)">Focus</div>
               <div class="found-color-card__rows">
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#ffffff;border:1px solid #eee"></div><div class="found-color-meta"><span>Light</span><span class="found-color-hex">#FFFFFF</span></div></div>
-                <div class="found-color-row"><div class="found-color-swatch" style="background:#000000"></div><div class="found-color-meta"><span>Dark</span><span class="found-color-hex">#000000</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-focus-400)"></div><div class="found-color-meta"><span>--color-focus-400</span><span class="found-color-hex" data-token="--color-focus-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--color-focus-500)"></div><div class="found-color-meta"><span>--color-focus-500</span><span class="found-color-hex" data-token="--color-focus-500">—</span></div></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- COLORS — SEMANTIC -->
+          <div class="found-section-label" style="margin-top:48px">COLORS — SEMANTIC</div>
+          <h2 class="found-section-heading">Semantic Tokens</h2>
+          <p class="found-icon-meta">These tokens adapt automatically to Light / Dark mode. Toggle the theme to see live values update.</p>
+          <div class="found-semantic-grid">
+
+            <div class="found-color-card">
+              <div class="found-color-card__header" style="background:var(--color-gray-700)">Surface</div>
+              <div class="found-color-card__rows">
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-bg);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-bg</span><span class="found-color-hex" data-token="--surface-bg">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-0);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-neutral-0</span><span class="found-color-hex" data-token="--surface-neutral-0">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-50)"></div><div class="found-color-meta"><span>--surface-neutral-50</span><span class="found-color-hex" data-token="--surface-neutral-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-100)"></div><div class="found-color-meta"><span>--surface-neutral-100</span><span class="found-color-hex" data-token="--surface-neutral-100">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-200)"></div><div class="found-color-meta"><span>--surface-neutral-200</span><span class="found-color-hex" data-token="--surface-neutral-200">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-400)"></div><div class="found-color-meta"><span>--surface-neutral-400</span><span class="found-color-hex" data-token="--surface-neutral-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-neutral-800)"></div><div class="found-color-meta"><span>--surface-neutral-800</span><span class="found-color-hex" data-token="--surface-neutral-800">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-brand-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-brand-50</span><span class="found-color-hex" data-token="--surface-brand-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-status-warning-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-status-warning-50</span><span class="found-color-hex" data-token="--surface-status-warning-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-status-negative-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-status-negative-50</span><span class="found-color-hex" data-token="--surface-status-negative-50">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--surface-status-positive-50);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--surface-status-positive-50</span><span class="found-color-hex" data-token="--surface-status-positive-50">—</span></div></div>
+              </div>
+            </div>
+
+            <div class="found-color-card">
+              <div class="found-color-card__header" style="background:var(--color-gray-700)">Text</div>
+              <div class="found-color-card__rows">
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-primary)"></div><div class="found-color-meta"><span>--text-primary</span><span class="found-color-hex" data-token="--text-primary">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-secondary)"></div><div class="found-color-meta"><span>--text-secondary</span><span class="found-color-hex" data-token="--text-secondary">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-tertiary)"></div><div class="found-color-meta"><span>--text-tertiary</span><span class="found-color-hex" data-token="--text-tertiary">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-link-default)"></div><div class="found-color-meta"><span>--text-link-default</span><span class="found-color-hex" data-token="--text-link-default">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-link-hover)"></div><div class="found-color-meta"><span>--text-link-hover</span><span class="found-color-hex" data-token="--text-link-hover">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-accent-brand)"></div><div class="found-color-meta"><span>--text-accent-brand</span><span class="found-color-hex" data-token="--text-accent-brand">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-status-warning)"></div><div class="found-color-meta"><span>--text-status-warning</span><span class="found-color-hex" data-token="--text-status-warning">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-status-negative)"></div><div class="found-color-meta"><span>--text-status-negative</span><span class="found-color-hex" data-token="--text-status-negative">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--text-status-positive)"></div><div class="found-color-meta"><span>--text-status-positive</span><span class="found-color-hex" data-token="--text-status-positive">—</span></div></div>
+              </div>
+            </div>
+
+            <div class="found-color-card">
+              <div class="found-color-card__header" style="background:var(--color-gray-700)">Border</div>
+              <div class="found-color-card__rows">
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-neutral-100);border:1px solid var(--border-neutral-200)"></div><div class="found-color-meta"><span>--border-neutral-100</span><span class="found-color-hex" data-token="--border-neutral-100">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-neutral-200)"></div><div class="found-color-meta"><span>--border-neutral-200</span><span class="found-color-hex" data-token="--border-neutral-200">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-neutral-300)"></div><div class="found-color-meta"><span>--border-neutral-300</span><span class="found-color-hex" data-token="--border-neutral-300">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-neutral-400)"></div><div class="found-color-meta"><span>--border-neutral-400</span><span class="found-color-hex" data-token="--border-neutral-400">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-brand-500)"></div><div class="found-color-meta"><span>--border-brand-500</span><span class="found-color-hex" data-token="--border-brand-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-status-focus)"></div><div class="found-color-meta"><span>--border-status-focus</span><span class="found-color-hex" data-token="--border-status-focus">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-status-warning)"></div><div class="found-color-meta"><span>--border-status-warning</span><span class="found-color-hex" data-token="--border-status-warning">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-status-negative)"></div><div class="found-color-meta"><span>--border-status-negative</span><span class="found-color-hex" data-token="--border-status-negative">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--border-status-positive)"></div><div class="found-color-meta"><span>--border-status-positive</span><span class="found-color-hex" data-token="--border-status-positive">—</span></div></div>
+              </div>
+            </div>
+
+            <div class="found-color-card">
+              <div class="found-color-card__header" style="background:var(--color-gray-700)">Icon</div>
+              <div class="found-color-card__rows">
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-neutral-0);border:1px solid var(--border-neutral-100)"></div><div class="found-color-meta"><span>--icon-neutral-0</span><span class="found-color-hex" data-token="--icon-neutral-0">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-neutral-300)"></div><div class="found-color-meta"><span>--icon-neutral-300</span><span class="found-color-hex" data-token="--icon-neutral-300">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-neutral-500)"></div><div class="found-color-meta"><span>--icon-neutral-500</span><span class="found-color-hex" data-token="--icon-neutral-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-neutral-800)"></div><div class="found-color-meta"><span>--icon-neutral-800</span><span class="found-color-hex" data-token="--icon-neutral-800">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-brand-500)"></div><div class="found-color-meta"><span>--icon-brand-500</span><span class="found-color-hex" data-token="--icon-brand-500">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-status-warning)"></div><div class="found-color-meta"><span>--icon-status-warning</span><span class="found-color-hex" data-token="--icon-status-warning">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-status-negative)"></div><div class="found-color-meta"><span>--icon-status-negative</span><span class="found-color-hex" data-token="--icon-status-negative">—</span></div></div>
+                <div class="found-color-row"><div class="found-color-swatch" style="background:var(--icon-status-positive)"></div><div class="found-color-meta"><span>--icon-status-positive</span><span class="found-color-hex" data-token="--icon-status-positive">—</span></div></div>
               </div>
             </div>
 
@@ -354,23 +427,38 @@
 
           <!-- TYPOGRAPHY -->
           <div class="found-section-label" style="margin-top:48px">TYPOGRAPHY</div>
-          <h2 class="found-section-heading">Font Family &amp; Scale</h2>
+          <h2 class="found-section-heading">Type Scale</h2>
 
           <div class="found-type-family-card">
-            <div class="found-type-family-label">FAMILY</div>
-            <div class="found-type-family-name">DM Sans</div>
-            <div class="found-type-family-meta">Loaded via <code>Google Fonts</code> — weights 400, 500, 600, 700, 800</div>
+            <div class="found-type-family-label">PRIMARY FAMILY</div>
+            <div class="found-type-family-name" style="font-family:'DM Sans',sans-serif">DM Sans</div>
+            <div class="found-type-family-meta">Used for all UI text — weights 400, 500, 600, 700, 800 · Loaded via <code>Google Fonts</code></div>
+          </div>
+
+          <div class="found-type-family-card">
+            <div class="found-type-family-label">DISPLAY FAMILY</div>
+            <div class="found-type-family-name" style="font-family:'Rethink Sans',sans-serif">Rethink Sans</div>
+            <div class="found-type-family-meta">Used for Display D1 &amp; D2 — weights 700, 800 · Loaded via <code>Google Fonts</code></div>
           </div>
 
           <div class="found-type-scale">
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-2xl</span><span class="found-type-token-size">32px</span></div><div class="found-type-preview" style="font-size:32px;font-weight:700">The quick brown fox</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-xl</span><span class="found-type-token-size">24px</span></div><div class="found-type-preview" style="font-size:24px;font-weight:600">The quick brown fox jumps</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-lg</span><span class="found-type-token-size">20px</span></div><div class="found-type-preview" style="font-size:20px">The quick brown fox jumps over</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-base</span><span class="found-type-token-size">18px</span></div><div class="found-type-preview" style="font-size:18px">The quick brown fox jumps over the</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-md</span><span class="found-type-token-size">16px</span></div><div class="found-type-preview" style="font-size:16px">The quick brown fox jumps over the lazy</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-sm</span><span class="found-type-token-size">14px</span></div><div class="found-type-preview" style="font-size:14px">The quick brown fox jumps over the lazy dog</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-xs</span><span class="found-type-token-size">12px</span></div><div class="found-type-preview" style="font-size:12px">The quick brown fox jumps over the lazy dog</div></div>
-            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">text-2xs</span><span class="found-type-token-size">11px</span></div><div class="found-type-preview" style="font-size:11px">The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-d1</span><span class="found-type-token-size">80px · ExtraBold · −1.5px · Rethink Sans</span></div><div class="found-type-preview type-d1" style="font-size:40px">Display D1</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-d2</span><span class="found-type-token-size">48px · ExtraBold · −0.5px · Rethink Sans</span></div><div class="found-type-preview type-d2" style="font-size:36px">Display D2</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-h1</span><span class="found-type-token-size">32px · Bold · −1.5px</span></div><div class="found-type-preview type-h1">Headline H1</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-h2</span><span class="found-type-token-size">24px · Bold · −1px</span></div><div class="found-type-preview type-h2">Headline H2</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-h3</span><span class="found-type-token-size">20px · Bold · −0.5px</span></div><div class="found-type-preview type-h3">Headline H3</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-h4</span><span class="found-type-token-size">18px · Medium · −0.5px</span></div><div class="found-type-preview type-h4">Headline H4</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-h5</span><span class="found-type-token-size">16px · Medium · −0.5px</span></div><div class="found-type-preview type-h5">Headline H5</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-feedback-l</span><span class="found-type-token-size">24px · Bold · 0px</span></div><div class="found-type-preview type-feedback-l">Feedback L</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-feedback-s</span><span class="found-type-token-size">18px · Medium · 0px</span></div><div class="found-type-preview type-feedback-s">Feedback S</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-body-m-bold</span><span class="found-type-token-size">14px · Bold</span></div><div class="found-type-preview type-body-m-bold">Body M Bold — The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-body-m-regular</span><span class="found-type-token-size">14px · Regular</span></div><div class="found-type-preview type-body-m-regular">Body M Regular — The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-body-s-bold</span><span class="found-type-token-size">12px · Bold</span></div><div class="found-type-preview type-body-s-bold">Body S Bold — The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-body-s-regular</span><span class="found-type-token-size">12px · Regular</span></div><div class="found-type-preview type-body-s-regular">Body S Regular — The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-label-m</span><span class="found-type-token-size">14px · Bold</span></div><div class="found-type-preview type-label-m">Label M — The quick brown fox jumps over the lazy dog</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-button-m</span><span class="found-type-token-size">18px · Medium</span></div><div class="found-type-preview type-button-m">Button M</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-button-s</span><span class="found-type-token-size">14px · Medium · −0.5px</span></div><div class="found-type-preview type-button-s">Button S</div></div>
+            <div class="found-type-row"><div class="found-type-token"><span class="found-type-token-name">--type-link-m-bold</span><span class="found-type-token-size">14px · Bold</span></div><div class="found-type-preview type-link-m-bold" style="text-decoration:underline;color:var(--text-link-default)">Link M Bold</div></div>
           </div>
 
           <!-- SPACING -->
@@ -378,21 +466,21 @@
           <h2 class="found-section-heading">Spacing Scale</h2>
 
           <div class="found-space-table">
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-2</span><span class="found-space-size">2px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:2px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-4</span><span class="found-space-size">4px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:4px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-8</span><span class="found-space-size">8px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:8px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-12</span><span class="found-space-size">12px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:12px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-16</span><span class="found-space-size">16px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:16px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-20</span><span class="found-space-size">20px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:20px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-24</span><span class="found-space-size">24px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:24px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-32</span><span class="found-space-size">32px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:32px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-40</span><span class="found-space-size">40px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:40px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-48</span><span class="found-space-size">48px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:48px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-56</span><span class="found-space-size">56px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:56px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-64</span><span class="found-space-size">64px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:64px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-80</span><span class="found-space-size">80px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:80px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-96</span><span class="found-space-size">96px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:96px"></div></div></div>
-            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">space-120</span><span class="found-space-size">120px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:120px"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-2</span><span class="found-space-size">2px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:1%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-4</span><span class="found-space-size">4px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:2%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-8</span><span class="found-space-size">8px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:4%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-12</span><span class="found-space-size">12px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:6%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-16</span><span class="found-space-size">16px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:8%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-20</span><span class="found-space-size">20px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:10%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-24</span><span class="found-space-size">24px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:12%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-32</span><span class="found-space-size">32px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:16%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-40</span><span class="found-space-size">40px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:20%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-48</span><span class="found-space-size">48px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:24%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-64</span><span class="found-space-size">64px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:32%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-80</span><span class="found-space-size">80px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:40%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-96</span><span class="found-space-size">96px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:48%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-120</span><span class="found-space-size">120px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:60%"></div></div></div>
+            <div class="found-space-row"><div class="found-space-token"><span class="found-space-name">--spacing-200</span><span class="found-space-size">200px</span></div><div class="found-space-bar-wrap"><div class="found-space-bar" style="width:100%"></div></div></div>
           </div>
 
           <!-- SHAPE / BORDER RADIUS -->
@@ -400,12 +488,14 @@
           <h2 class="found-section-heading">Border Radius</h2>
 
           <div class="found-radius-row">
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:4px"></div><div class="found-radius-name">rounded</div><div class="found-radius-val">4px</div></div>
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:8px"></div><div class="found-radius-name">rounded-md</div><div class="found-radius-val">8px</div></div>
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:16px"></div><div class="found-radius-name">rounded-lg</div><div class="found-radius-val">16px</div></div>
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:24px"></div><div class="found-radius-name">rounded-xl</div><div class="found-radius-val">24px</div></div>
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:40px"></div><div class="found-radius-name">rounded-2xl</div><div class="found-radius-val">40px</div></div>
-            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:9999px"></div><div class="found-radius-name">rounded-full</div><div class="found-radius-val">9999px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:0px"></div><div class="found-radius-name">--border-radius-none</div><div class="found-radius-val">0px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:4px"></div><div class="found-radius-name">--border-radius-x-small</div><div class="found-radius-val">4px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:8px"></div><div class="found-radius-name">--border-radius-small</div><div class="found-radius-val">8px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:16px"></div><div class="found-radius-name">--border-radius-medium</div><div class="found-radius-val">16px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:24px"></div><div class="found-radius-name">--border-radius-large</div><div class="found-radius-val">24px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:40px"></div><div class="found-radius-name">--border-radius-x-large</div><div class="found-radius-val">40px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:64px"></div><div class="found-radius-name">--border-radius-xx-large</div><div class="found-radius-val">64px</div></div>
+            <div class="found-radius-item"><div class="found-radius-box" style="border-radius:9999px"></div><div class="found-radius-name">--border-radius-full</div><div class="found-radius-val">∞</div></div>
           </div>
 
           <!-- ICONS -->
@@ -414,11 +504,71 @@
           <p class="found-icon-meta">50+ icons at 24×24. All icons use <code>currentColor</code> for fill.</p>
 
           <div class="found-icon-group-title">Status</div>
+          <div class="found-icon-group-subheading">16px</div>
           <div class="found-icon-grid">
-            <div class="found-icon-card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z" fill="#189F60"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.993 10.2222L11.375 14.8402C11.228 14.9872 11.037 15.0602 10.845 15.0602C10.652 15.0602 10.461 14.9872 10.314 14.8402L8.00503 12.5312C7.71203 12.2382 7.71203 11.7632 8.00503 11.4702C8.29803 11.1772 8.77203 11.1772 9.06503 11.4702L10.845 13.2492L14.932 9.16116C15.225 8.86816 15.7 8.86816 15.993 9.16116C16.286 9.45416 16.286 9.92916 15.993 10.2222Z" fill="white"/></svg><span>iconCheckPass</span></div>
-            <div class="found-icon-card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z" fill="#E71111"/><path d="M9 9L15 15M15 9L9 15" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg><span>iconCheckFail</span></div>
-            <div class="found-icon-card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#60667c" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="#60667c" stroke-width="1.5" stroke-linecap="round"/></svg><span>iconPending</span></div>
-            <div class="found-icon-card"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#FF9900" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round"/></svg><span>iconWarning</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status.svg" width="24" height="24" alt="warning" /><span>Status</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-1.svg" width="24" height="24" alt="error" /><span>Status-1</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-2.svg" width="24" height="24" alt="positive" /><span>Status-2</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-3.svg" width="24" height="24" alt="info" /><span>Status-3</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-4.svg" width="24" height="24" alt="warning-ol" /><span>Status-4</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-5.svg" width="24" height="24" alt="error-ol" /><span>Status-5</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-6.svg" width="24" height="24" alt="positive-ol" /><span>Status-6</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-7.svg" width="24" height="24" alt="info-ol" /><span>Status-7</span></div>
+          </div>
+          <div class="found-icon-group-subheading">24px</div>
+          <div class="found-icon-grid">
+            <div class="found-icon-card"><img src="assets/icons/status/Status-8.svg" width="24" height="24" alt="warning" /><span>Status-8</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-9.svg" width="24" height="24" alt="error" /><span>Status-9</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-10.svg" width="24" height="24" alt="positive" /><span>Status-10</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-11.svg" width="24" height="24" alt="info" /><span>Status-11</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-12.svg" width="24" height="24" alt="warning-ol" /><span>Status-12</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-13.svg" width="24" height="24" alt="error-ol" /><span>Status-13</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-14.svg" width="24" height="24" alt="positive-ol" /><span>Status-14</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-15.svg" width="24" height="24" alt="info-ol" /><span>Status-15</span></div>
+          </div>
+          <div class="found-icon-group-subheading">32px</div>
+          <div class="found-icon-grid">
+            <div class="found-icon-card"><img src="assets/icons/status/Status-16.svg" width="24" height="24" alt="warning" /><span>Status-16</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-17.svg" width="24" height="24" alt="error" /><span>Status-17</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-18.svg" width="24" height="24" alt="positive" /><span>Status-18</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-19.svg" width="24" height="24" alt="info" /><span>Status-19</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-20.svg" width="24" height="24" alt="warning-ol" /><span>Status-20</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-21.svg" width="24" height="24" alt="error-ol" /><span>Status-21</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-22.svg" width="24" height="24" alt="positive-ol" /><span>Status-22</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-23.svg" width="24" height="24" alt="info-ol" /><span>Status-23</span></div>
+          </div>
+          <div class="found-icon-group-subheading">40px</div>
+          <div class="found-icon-grid">
+            <div class="found-icon-card"><img src="assets/icons/status/Status-24.svg" width="24" height="24" alt="warning" /><span>Status-24</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-25.svg" width="24" height="24" alt="error" /><span>Status-25</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-26.svg" width="24" height="24" alt="positive" /><span>Status-26</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-27.svg" width="24" height="24" alt="info" /><span>Status-27</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-28.svg" width="24" height="24" alt="warning-ol" /><span>Status-28</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-29.svg" width="24" height="24" alt="error-ol" /><span>Status-29</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-30.svg" width="24" height="24" alt="positive-ol" /><span>Status-30</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-31.svg" width="24" height="24" alt="info-ol" /><span>Status-31</span></div>
+          </div>
+          <div class="found-icon-group-subheading">48px</div>
+          <div class="found-icon-grid">
+            <div class="found-icon-card"><img src="assets/icons/status/Status-32.svg" width="24" height="24" alt="warning" /><span>Status-32</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-33.svg" width="24" height="24" alt="error" /><span>Status-33</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-34.svg" width="24" height="24" alt="positive" /><span>Status-34</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-35.svg" width="24" height="24" alt="info" /><span>Status-35</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-36.svg" width="24" height="24" alt="warning-ol" /><span>Status-36</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-37.svg" width="24" height="24" alt="error-ol" /><span>Status-37</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-38.svg" width="24" height="24" alt="positive-ol" /><span>Status-38</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-39.svg" width="24" height="24" alt="info-ol" /><span>Status-39</span></div>
+          </div>
+          <div class="found-icon-group-subheading">64px</div>
+          <div class="found-icon-grid">
+            <div class="found-icon-card"><img src="assets/icons/status/Status-40.svg" width="24" height="24" alt="warning" /><span>Status-40</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-41.svg" width="24" height="24" alt="error" /><span>Status-41</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-42.svg" width="24" height="24" alt="positive" /><span>Status-42</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-43.svg" width="24" height="24" alt="info" /><span>Status-43</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-44.svg" width="24" height="24" alt="warning-ol" /><span>Status-44</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-45.svg" width="24" height="24" alt="error-ol" /><span>Status-45</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-46.svg" width="24" height="24" alt="positive-ol" /><span>Status-46</span></div>
+            <div class="found-icon-card"><img src="assets/icons/status/Status-47.svg" width="24" height="24" alt="info-ol" /><span>Status-47</span></div>
           </div>
 
           <div class="found-icon-group-title">Actions</div>
@@ -646,7 +796,7 @@
             <!-- Loading -->
             <div class="comp-card" onclick="openDetail('loading')">
               <div class="comp-card-preview" style="gap:24px">
-                <div class="loading-spinner" style="width:40px;height:40px;border-width:4px"></div>
+                <div class="loading-spinner" style="width:40px;height:40px"></div>
                 <div style="display:flex;flex-direction:column;gap:6px;width:100px">
                   <div class="loading-bar-track"><div class="loading-bar-fill" style="width:45%"></div></div>
                   <div class="loading-bar-track"><div class="loading-bar-fill" style="width:72%"></div></div>
@@ -695,7 +845,7 @@
               <div class="comp-card-preview" style="flex-direction:column;gap:12px">
                 <svg width="88" height="24" viewBox="0 0 88 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>
                 <div class="tag-verified">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C2.18983 6.73047 2.18783 6.73113 2.1865 6.73247C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--logo-color)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C2.18983 6.73047 2.18783 6.73113 2.1865 6.73247C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--color-brand-500)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
                   <span class="tag-verified__text">verified by</span><svg class="tag-verified__logo" width="44" height="12" viewBox="0 0 88 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>
                 </div>
               </div>
@@ -710,7 +860,7 @@
               <div class="comp-card-preview" style="gap:12px;flex-wrap:wrap;align-items:center;justify-content:center">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--icon-neutral-500)"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.6834 10.762L12.2494 3.29102L4.81641 10.762L6.23441 12.173L11.2494 7.13202V20.709H13.2494V7.13202L18.2654 12.173L19.6834 10.762Z" fill="currentColor"/></svg>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--icon-neutral-500)"><path d="M10.875 2C15.7765 2 19.75 5.97347 19.75 10.875C19.75 12.9654 19.0246 14.8848 17.8154 16.4014L21.707 20.293C22.0971 20.6834 22.0971 21.3166 21.707 21.707C21.3166 22.0974 20.6835 22.0972 20.293 21.707L16.4014 17.8154C14.8848 19.0246 12.9654 19.75 10.875 19.75C5.97347 19.75 2 15.7765 2 10.875C2 5.97347 5.97347 2 10.875 2ZM10.875 4C7.07804 4 4 7.07804 4 10.875C4 14.672 7.07804 17.75 10.875 17.75C14.672 17.75 17.75 14.672 17.75 10.875C17.75 7.07804 14.672 4 10.875 4Z" fill="currentColor"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z" fill="#189F60"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.993 10.2222L11.375 14.8402C11.228 14.9872 11.037 15.0602 10.845 15.0602C10.652 15.0602 10.461 14.9872 10.314 14.8402L8.00503 12.5312C7.71203 12.2382 7.71203 11.7632 8.00503 11.4702C8.29803 11.1772 8.77203 11.1772 9.06503 11.4702L10.845 13.2492L14.932 9.16116C15.225 8.86816 15.7 8.86816 15.993 9.16116C16.286 9.45416 16.286 9.92916 15.993 10.2222Z" fill="white"/></svg>
+                <img src="assets/icons/status/Status-10.svg" width="20" height="20" alt="Positive" />
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--icon-neutral-500)"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.2274 9.4879C14.9664 9.48441 14.6801 9.48354 14.3528 9.48354H9.64701C9.31886 9.48354 9.0326 9.48441 8.77164 9.4879V8.08102C8.80132 6.32505 10.2012 4.93301 11.9589 4.91032H11.999C13.7611 4.91032 15.2055 6.33116 15.2274 8.08801V9.4879ZM12.6546 15.8895C12.6546 16.2508 12.3612 16.5441 12 16.5441C11.6387 16.5441 11.3454 16.2508 11.3454 15.8895V13.9956C11.3454 13.6343 11.6387 13.3411 12 13.3411C12.3612 13.3411 12.6546 13.6343 12.6546 13.9956V15.8895ZM18.5979 11.2133C18.2943 10.5867 17.7855 10.0805 17.1693 9.78987C16.9756 9.69561 16.7686 9.63278 16.5366 9.58739V8.08015C16.5051 5.57972 14.4411 3.5462 11.9424 3.60119C9.47246 3.63261 7.50441 5.59106 7.46252 8.06968V9.58739C7.23211 9.6319 7.02614 9.69387 6.83413 9.78725C6.21448 10.0796 5.70567 10.5858 5.39933 11.2159C5.09998 11.8469 5.09998 12.5766 5.09998 14.0306V15.8895C5.09998 17.3514 5.09998 18.0854 5.4002 18.7041C5.69956 19.3343 6.19441 19.83 6.83501 20.1416C7.46077 20.4366 8.19126 20.4366 9.64701 20.4366H14.3529C15.8087 20.4366 16.5383 20.4366 17.1693 20.1389C17.7968 19.8335 18.3038 19.3238 18.5971 18.7076C18.9 18.0854 18.9 17.3514 18.9 15.8895V14.0306C18.9 12.5766 18.8999 11.8469 18.5979 11.2133Z" fill="currentColor"/></svg>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--icon-neutral-500)"><path fill-rule="evenodd" clip-rule="evenodd" d="M17.7484 11.2718H14.2414C13.7874 11.2718 13.4184 10.9038 13.4184 10.4498C13.4184 9.99478 13.7874 9.62678 14.2414 9.62678H17.7484C18.2024 9.62678 18.5704 9.99478 18.5704 10.4498C18.5704 10.9038 18.2024 11.2718 17.7484 11.2718ZM17.7484 14.9808H15.5654C15.1114 14.9808 14.7434 14.6128 14.7434 14.1588C14.7434 13.7038 15.1114 13.3358 15.5654 13.3358H17.7484C18.2024 13.3358 18.5704 13.7038 18.5704 14.1588C18.5704 14.6128 18.2024 14.9808 17.7484 14.9808ZM12.4744 16.4148L6.07539 16.4238C5.97639 16.4238 5.88139 16.3848 5.81139 16.3158C5.74239 16.2458 5.70339 16.1508 5.70339 16.0528C5.70339 14.6998 6.80739 13.3358 9.27439 13.3358C11.7414 13.3358 12.8464 14.6958 12.8464 16.0438C12.8464 16.2488 12.6804 16.4148 12.4744 16.4148ZM9.27439 7.55278C10.5524 7.55278 11.5914 8.59178 11.5914 9.86978C11.5914 11.1478 10.5524 12.1878 9.27439 12.1878C7.99639 12.1878 6.95739 11.1478 6.95739 9.86978C6.95739 8.59178 7.99639 7.55278 9.27439 7.55278ZM17.0504 3.80078H7.25039C4.55039 3.80078 2.65039 5.80078 2.65039 8.60078V15.4008C2.65039 18.2008 4.55039 20.2008 7.25039 20.2008H17.0504C19.7504 20.2008 21.6504 18.2008 21.6504 15.4008V8.60078C21.6504 5.80078 19.7504 3.80078 17.0504 3.80078Z" fill="currentColor"/></svg>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="color:var(--icon-neutral-500)"><path d="M12.02 2C17.7 2 22 6.65699 22 11.985C22 18.1642 16.96 22 12 22C10.36 22 8.54 21.5593 7.08 20.698C6.57 20.3876 6.14 20.1572 5.59 20.3375L3.57 20.9384C3.06 21.0986 2.6 20.698 2.75 20.1572L3.42 17.9139C3.53 17.6034 3.51 17.2729 3.35 17.0125C2.49 15.4301 2 13.6975 2 12.015C2 6.74712 6.21 2 12.02 2ZM16.59 10.7431C15.88 10.7431 15.31 11.314 15.31 12.025C15.31 12.7261 15.88 13.307 16.59 13.307C17.3 13.307 17.87 12.7261 17.87 12.025C17.87 11.314 17.3 10.7431 16.59 10.7431ZM11.98 10.7431C11.28 10.7331 10.7 11.314 10.7 12.015C10.7 12.7261 11.27 13.2969 11.98 13.307C12.69 13.307 13.26 12.7261 13.26 12.025C13.26 11.314 12.69 10.7431 11.98 10.7431ZM7.37 10.7431C6.66 10.7431 6.09 11.314 6.09 12.025C6.09 12.7261 6.67 13.307 7.37 13.307C8.08 13.2969 8.65 12.7261 8.65 12.025C8.65 11.314 8.08 10.7431 7.37 10.7431Z" fill="currentColor"/></svg>
@@ -751,11 +901,11 @@
             <div class="comp-card" onclick="openDetail('states')">
               <div class="comp-card-preview" style="gap:20px">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#189f60"/><path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <img src="assets/icons/status/Status-26.svg" width="40" height="40" alt="Positive" />
                   <span style="font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-primary)">Verified</span>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#e71111"/><path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <img src="assets/icons/status/Status-25.svg" width="40" height="40" alt="Negative" />
                   <span style="font-family:var(--font-button);font-size:12px;font-weight:600;color:var(--text-primary)">Failed</span>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
@@ -993,6 +1143,22 @@
             </div>
           </div>
 
+          <!-- Tokens used -->
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Light value</span><span>Dark value</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-surface-default</span><span class="prop-type" data-token="--btn-primary-surface-default">—</span><span class="prop-default">#006AFF</span><span class="prop-desc">Primary background (static)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-surface-hover</span><span class="prop-type" data-token="--btn-primary-surface-hover">—</span><span class="prop-default">#3388FF</span><span class="prop-desc">Primary hover background (static)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-surface-disabled</span><span class="prop-type" data-token="--btn-primary-surface-disabled">—</span><span class="prop-default">#2E3140</span><span class="prop-desc">Primary disabled background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-text-default</span><span class="prop-type" data-token="--btn-primary-text-default">—</span><span class="prop-default">#FFFFFF</span><span class="prop-desc">Primary label (always white)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-secondary-border-default</span><span class="prop-type" data-token="--btn-secondary-border-default">—</span><span class="prop-default">#006AFF</span><span class="prop-desc">Secondary border (static)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-secondary-text-default</span><span class="prop-type" data-token="--btn-secondary-text-default">—</span><span class="prop-default">#006AFF</span><span class="prop-desc">Secondary label</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-tertiary-text-default</span><span class="prop-type" data-token="--btn-tertiary-text-default">—</span><span class="prop-default">#006AFF</span><span class="prop-desc">Tertiary label</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--font-button</span><span class="prop-type" data-token="--font-button">—</span><span class="prop-default">DM Sans</span><span class="prop-desc">Label font family</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--type-button-m</span><span class="prop-type">18px · Medium</span><span class="prop-default">18px · Medium</span><span class="prop-desc">Label type style</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--radius-button</span><span class="prop-type" data-token="--radius-button">—</span><span class="prop-default">16px</span><span class="prop-desc">Corner radius</span></div>
+          </div>
+
           <!-- Accessibility -->
           <div class="a11y-box">
             <div class="a11y-title">Accessibility Compliance</div>
@@ -1084,6 +1250,14 @@
               <span class="prop-default prop-default--dash">—</span>
               <span class="prop-desc">Button elements to group</span>
             </div>
+          </div>
+
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--spacing-3</span><span class="prop-type" data-token="--spacing-3">—</span><span class="prop-default">—</span><span class="prop-desc">Gap between buttons (12px)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-surface-default</span><span class="prop-type" data-token="--btn-primary-surface-default">—</span><span class="prop-default">—</span><span class="prop-desc">Primary button background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-secondary-border-default</span><span class="prop-type" data-token="--btn-secondary-border-default">—</span><span class="prop-default">—</span><span class="prop-desc">Secondary button border</span></div>
           </div>
 
           <!-- Accessibility -->
@@ -1249,12 +1423,12 @@
           <h2 class="detail-section-title">Tokens used</h2>
           <div class="props-table">
             <div class="props-header"><span>Token</span><span>Light</span><span>Dark</span><span>Usage</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Surface/Default</span><span class="prop-type">#fcfcfd</span><span class="prop-default">#262831</span><span class="prop-desc">Unchecked background</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Surface/Selected</span><span class="prop-type">#006aff</span><span class="prop-default">#006aff</span><span class="prop-desc">Checked background</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Surface/Disabled</span><span class="prop-type">#82879a</span><span class="prop-default">#3a3e4b</span><span class="prop-desc">Disabled background</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Border/Default</span><span class="prop-type">#82879a</span><span class="prop-default">#60667c</span><span class="prop-desc">Unchecked border</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Border/Radius</span><span class="prop-type">8px</span><span class="prop-default">8px</span><span class="prop-desc">Box corner radius</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">Checkbox/Icon/Default</span><span class="prop-type">#ffffff</span><span class="prop-default">#ffffff</span><span class="prop-desc">Checkmark icon color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--checkbox-surface-default</span><span class="prop-type" data-token="--checkbox-surface-default">—</span><span class="prop-default">#14151A</span><span class="prop-desc">Unchecked background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--checkbox-surface-selected</span><span class="prop-type" data-token="--checkbox-surface-selected">—</span><span class="prop-default">#006AFF</span><span class="prop-desc">Checked background (static)</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--checkbox-surface-disabled</span><span class="prop-type" data-token="--checkbox-surface-disabled">—</span><span class="prop-default">#60667C</span><span class="prop-desc">Disabled background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--checkbox-border-default</span><span class="prop-type" data-token="--checkbox-border-default">—</span><span class="prop-default">#60667C</span><span class="prop-desc">Unchecked border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--checkbox-border-radius</span><span class="prop-type" data-token="--checkbox-border-radius">—</span><span class="prop-default">8px</span><span class="prop-desc">Box corner radius</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--icon-neutral-0-static</span><span class="prop-type" data-token="--icon-neutral-0-static">—</span><span class="prop-default">#FFFFFF</span><span class="prop-desc">Checkmark icon (always white)</span></div>
           </div>
 
           <!-- Accessibility -->
@@ -1459,13 +1633,13 @@
           <h2 class="detail-section-title">Tokens used</h2>
           <div class="props-table">
             <div class="props-header"><span>Token</span><span>Light</span><span>Dark</span><span>Usage</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-surface-default</span><span class="prop-type">#fcfcfd</span><span class="prop-default">#262831</span><span class="prop-desc">Field background</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-default</span><span class="prop-type">#82879a</span><span class="prop-default">#60667c</span><span class="prop-desc">Default border</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-focused</span><span class="prop-type">#006aff</span><span class="prop-default">#006aff</span><span class="prop-desc">Focused / open border + list border</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-negative</span><span class="prop-type">#e71111</span><span class="prop-default">#e71111</span><span class="prop-desc">Error border</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-text-default</span><span class="prop-type">#262831</span><span class="prop-default">#fcfcfd</span><span class="prop-desc">Field text color</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-text-placeholder</span><span class="prop-type">#82879a</span><span class="prop-default">#60667c</span><span class="prop-desc">Placeholder & chevron color</span></div>
-            <div class="props-row"><span class="prop-name" style="font-size:11px">--dropdown-item-surface-selected</span><span class="prop-type">#ebecef</span><span class="prop-default">#3a3e4b</span><span class="prop-desc">Selected item background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--dropdown-surface-field</span><span class="prop-type" data-token="--dropdown-surface-field">—</span><span class="prop-default">#14151A</span><span class="prop-desc">Field background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-default</span><span class="prop-type" data-token="--input-border-default">—</span><span class="prop-default">#60667C</span><span class="prop-desc">Default border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-focused</span><span class="prop-type" data-token="--input-border-focused">—</span><span class="prop-default">#0099FF</span><span class="prop-desc">Focused / open border + list border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-border-negative</span><span class="prop-type" data-token="--input-border-negative">—</span><span class="prop-default">#FF5A5F</span><span class="prop-desc">Error border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-text-default</span><span class="prop-type" data-token="--input-text-default">—</span><span class="prop-default">#FCFCFD</span><span class="prop-desc">Field text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--input-text-placeholder</span><span class="prop-type" data-token="--input-text-placeholder">—</span><span class="prop-default">#60667C</span><span class="prop-desc">Placeholder &amp; chevron color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--dropdown-item-surface-selected</span><span class="prop-type" data-token="--dropdown-item-surface-selected">—</span><span class="prop-default">#3A3E4B</span><span class="prop-desc">Selected item background</span></div>
           </div>
 
           <!-- Accessibility -->
@@ -1518,8 +1692,10 @@
             <div class="icon-category-label">Status</div>
             <div class="icon-grid">
               <div class="icon-item" onclick="copyIconName(this,'status-warning')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z" fill="#FF9900"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 16.4691C11.586 16.4691 11.25 16.1571 11.25 15.7421V15.6951C11.25 15.2811 11.586 14.9451 12 14.9451C12.414 14.9451 12.75 15.2811 12.75 15.6951C12.75 16.1091 12.414 16.4691 12 16.4691ZM11.246 8.3081C11.246 7.8941 11.582 7.55811 11.996 7.55811C12.41 7.55811 12.746 7.8941 12.746 8.3081V12.6071C12.746 13.0211 12.41 13.3571 11.996 13.3571C11.582 13.3571 11.246 13.0211 11.246 12.6071V8.3081Z" fill="white"/></svg><span class="icon-item-name">Warning</span></div>
-              <div class="icon-item" onclick="copyIconName(this,'status-negative')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.761 2.5 12C2.5 17.238 6.762 21.5 12 21.5C17.238 21.5 21.5 17.238 21.5 12C21.5 6.761 17.238 2.5 12 2.5Z" fill="#E71111"/><path fill-rule="evenodd" clip-rule="evenodd" d="M14.866 14.8638C14.72 15.0098 14.528 15.0838 14.336 15.0838C14.143 15.0838 13.952 15.0098 13.805 14.8638L11.999 13.0568L10.198 14.8578C9.90501 15.1508 9.43001 15.1508 9.13701 14.8578C8.84501 14.5648 8.84501 14.0908 9.13701 13.7978L10.938 11.9968L9.13601 10.1938C8.84301 9.90081 8.84301 9.42681 9.13601 9.13381C9.42901 8.84081 9.90301 8.84081 10.196 9.13381L11.998 10.9358L13.8 9.13481C14.093 8.84181 14.567 8.84181 14.86 9.13481C15.153 9.42681 15.153 9.90181 14.86 10.1948L13.059 11.9968L14.866 13.8028C15.159 14.0958 15.159 14.5708 14.866 14.8638Z" fill="white"/></svg><span class="icon-item-name">Negative</span></div>
-              <div class="icon-item" onclick="copyIconName(this,'status-positive')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C6.762 2.5 2.5 6.762 2.5 12C2.5 17.239 6.762 21.5 12 21.5C17.238 21.5 21.5 17.239 21.5 12C21.5 6.762 17.238 2.5 12 2.5Z" fill="#189F60"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.993 10.2222L11.375 14.8402C11.228 14.9872 11.037 15.0602 10.845 15.0602C10.652 15.0602 10.461 14.9872 10.314 14.8402L8.00503 12.5312C7.71203 12.2382 7.71203 11.7632 8.00503 11.4702C8.29803 11.1772 8.77203 11.1772 9.06503 11.4702L10.845 13.2492L14.932 9.16116C15.225 8.86816 15.7 8.86816 15.993 9.16116C16.286 9.45416 16.286 9.92916 15.993 10.2222Z" fill="white"/></svg><span class="icon-item-name">Positive</span></div>
+              <div class="icon-item" onclick="copyIconName(this,'status-negative')"><img src="assets/icons/status/Status-9.svg" width="24" height="24" alt="Negative" /><span class="icon-item-name">Negative</span></div>
+              <div class="icon-item" onclick="copyIconName(this,'status-positive')"><img src="assets/icons/status/Status-10.svg" width="24" height="24" alt="Positive" /><span class="icon-item-name">Positive</span></div>
+              <div class="icon-item" onclick="copyIconName(this,'status-warning')"><img src="assets/icons/status/Status-8.svg" width="24" height="24" alt="Warning" /><span class="icon-item-name">Warning</span></div>
+              <div class="icon-item" onclick="copyIconName(this,'status-info')"><img src="assets/icons/status/Status-11.svg" width="24" height="24" alt="Info" /><span class="icon-item-name">Info</span></div>
               <div class="icon-item" onclick="copyIconName(this,'status-brand')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.7037 10.0857L20.0047 9.38667C19.6857 9.06667 19.5107 8.64067 19.5107 8.18967V7.18967C19.5107 5.70067 18.2987 4.48967 16.8107 4.48967H15.8087C15.3557 4.48967 14.9307 4.31467 14.6127 3.99667L13.9017 3.28667C12.8447 2.23867 11.1327 2.24367 10.0837 3.29767L9.38673 3.99667C9.06573 4.31567 8.64075 4.49067 8.18875 4.49067H7.18774C5.71674 4.49167 4.51674 5.67567 4.48974 7.14167C4.48873 7.15767 4.48775 7.17367 4.48775 7.19067V8.18767C4.48775 8.63967 4.31275 9.06467 3.99375 9.38367L3.28574 10.0927C3.28474 10.0957 3.28175 10.0967 3.27975 10.0987C2.23475 11.1567 2.24375 12.8687 3.29675 13.9117L3.99574 14.6127C4.31374 14.9317 4.48974 15.3557 4.48974 15.8077V16.8127C4.48974 18.3007 5.69974 19.5117 7.18774 19.5117H8.18675C8.63975 19.5127 9.06474 19.6877 9.38274 20.0047L10.0957 20.7157C10.6037 21.2207 11.2777 21.4987 11.9947 21.4987H12.0067C12.7277 21.4957 13.4037 21.2117 13.9097 20.7027L14.6107 20.0027C14.9257 19.6887 15.3617 19.5087 15.8067 19.5087H16.8127C18.2977 19.5087 19.5087 18.2997 19.5117 16.8127V15.8097C19.5117 15.3587 19.6867 14.9337 20.0037 14.6147L20.7147 13.9037C21.7647 12.8477 21.7587 11.1347 20.7037 10.0857Z" fill="#006AFF"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.5837 10.5576L11.5107 14.6326C11.3697 14.7736 11.1787 14.8526 10.9797 14.8526C10.7807 14.8526 10.5897 14.7736 10.4497 14.6326L8.47277 12.6526C8.18078 12.3586 8.18078 11.8836 8.47378 11.5906C8.76778 11.2986 9.24177 11.2996 9.53478 11.5916L10.9807 13.0406L14.5227 9.49661C14.8157 9.20361 15.2907 9.20361 15.5837 9.49661C15.8767 9.78961 15.8767 10.2646 15.5837 10.5576Z" fill="white"/></svg><span class="icon-item-name">Brand Badge</span></div>
             </div>
 
@@ -1867,20 +2043,8 @@
             <h3 class="detail-section-title">Spinner</h3>
             <div style="display:flex;align-items:center;gap:32px;margin-bottom:40px;flex-wrap:wrap">
               <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-                <div class="loading-spinner" style="width:64px;height:64px"></div>
-                <span style="font-size:12px;color:var(--text-secondary)">Default (64px)</span>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-                <div class="loading-spinner" style="width:48px;height:48px;border-width:5px"></div>
-                <span style="font-size:12px;color:var(--text-secondary)">Medium (48px)</span>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-                <div class="loading-spinner" style="width:32px;height:32px;border-width:4px"></div>
-                <span style="font-size:12px;color:var(--text-secondary)">Small (32px)</span>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-                <div class="loading-spinner" style="width:24px;height:24px;border-width:3px"></div>
-                <span style="font-size:12px;color:var(--text-secondary)">XS (24px)</span>
+                <div class="loading-spinner"></div>
+                <span style="font-size:12px;color:var(--text-secondary)">64px</span>
               </div>
             </div>
 
@@ -2089,7 +2253,7 @@
             <h3 class="detail-section-title">Verified by Incode Tag</h3>
             <div style="display:flex;align-items:center;gap:32px;margin-bottom:32px;flex-wrap:wrap">
               <div class="tag-verified">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C2.18983 6.73047 2.18783 6.73113 2.1865 6.73247C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--logo-color)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8025 6.7238L13.3365 6.25778C13.1238 6.04445 13.0071 5.76045 13.0071 5.45978V4.79311C13.0071 3.80045 12.1991 2.99311 11.2071 2.99311H10.5391C10.2371 2.99311 9.9538 2.87645 9.7418 2.66445L9.2678 2.19111C8.56313 1.49245 7.4218 1.49578 6.72247 2.19845L6.25783 2.66445C6.04383 2.87711 5.7605 2.99378 5.45917 2.99378H4.79183C3.81117 2.99445 3.01117 3.78378 2.99317 4.76111C2.99249 4.77178 2.99183 4.78245 2.99183 4.79378V5.45845C2.99183 5.75978 2.87517 6.04311 2.6625 6.25578L2.1905 6.72847C2.18983 6.73047 2.18783 6.73113 2.1865 6.73247C1.48983 7.4378 1.49583 8.57913 2.19783 9.27447L2.66383 9.7418C2.87583 9.95447 2.99317 10.2371 2.99317 10.5385V11.2085C2.99317 12.2005 3.79983 13.0078 4.79183 13.0078H5.45783C5.75983 13.0085 6.04317 13.1251 6.25517 13.3365L6.73047 13.8105C7.06913 14.1471 7.51847 14.3325 7.99647 14.3325H8.00447C8.48513 14.3305 8.9358 14.1411 9.27313 13.8018L9.74047 13.3351C9.95047 13.1258 10.2411 13.0058 10.5378 13.0058H11.2085C12.1985 13.0058 13.0058 12.1998 13.0078 11.2085V10.5398C13.0078 10.2391 13.1245 9.9558 13.3358 9.74313L13.8098 9.26913C14.5098 8.56513 14.5058 7.42313 13.8025 6.7238Z" fill="var(--color-brand-500)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.3891 7.03847L7.6738 9.75513C7.5798 9.84913 7.45246 9.9018 7.3198 9.9018C7.18713 9.9018 7.0598 9.84913 6.96646 9.75513L5.64849 8.43513C5.45383 8.23913 5.45383 7.92247 5.64916 7.72713C5.84516 7.53247 6.16116 7.53313 6.3565 7.7278L7.32046 8.6938L9.6818 6.33111C9.87713 6.13578 10.1938 6.13578 10.3891 6.33111C10.5845 6.52645 10.5845 6.84313 10.3891 7.03847Z" fill="white"/></svg>
                 <span class="tag-verified__text">verified by</span><svg class="tag-verified__logo" width="44" height="12" viewBox="0 0 88 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>
               </div>
             </div>
@@ -2155,6 +2319,16 @@
             <div class="props-row"><span class="prop-name">showClose</span><span class="prop-type prop-type--bool">boolean</span><span class="prop-default prop-default--bool">true</span><span class="prop-desc">Show close × icon in the right zone</span></div>
           </div>
 
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--surface-bg</span><span class="prop-type" data-token="--surface-bg">—</span><span class="prop-default">—</span><span class="prop-desc">Bar background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--border-neutral-100</span><span class="prop-type" data-token="--border-neutral-100">—</span><span class="prop-default">—</span><span class="prop-desc">Bottom divider</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-primary</span><span class="prop-type" data-token="--text-primary">—</span><span class="prop-default">—</span><span class="prop-desc">Icon and label color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--type-h4 (title)</span><span class="prop-type">17px · SemiBold · DM Sans</span><span class="prop-default">—</span><span class="prop-desc">Center title text style</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--logo-color</span><span class="prop-type" data-token="--logo-color">—</span><span class="prop-default">—</span><span class="prop-desc">Logo fill color</span></div>
+          </div>
+
           <div class="a11y-box">
             <div class="a11y-title">Accessibility Compliance</div>
             <div class="a11y-status">Status: <span class="a11y-compliant">Compliant</span></div>
@@ -2186,7 +2360,7 @@
               <div class="detail-state-group">
                 <span class="detail-state-name">Positive</span>
                 <div class="states-block states-block--positive" style="width:220px">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#189f60"/><path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <img src="assets/icons/status/Status-42.svg" width="56" height="56" alt="Positive" />
                   <div class="states-block__title">Identity Verified</div>
                   <div class="states-block__subtitle">Your identity has been successfully confirmed.</div>
                 </div>
@@ -2194,7 +2368,7 @@
               <div class="detail-state-group">
                 <span class="detail-state-name">Negative</span>
                 <div class="states-block states-block--negative" style="width:220px">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#e71111"/><path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <img src="assets/icons/status/Status-41.svg" width="56" height="56" alt="Negative" />
                   <div class="states-block__title">Verification Failed</div>
                   <div class="states-block__subtitle">We could not verify your identity. Please try again.</div>
                 </div>
@@ -2202,7 +2376,7 @@
               <div class="detail-state-group">
                 <span class="detail-state-name">Warning</span>
                 <div class="states-block states-block--warning" style="width:220px">
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#ff9900"/><path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                  <img src="assets/icons/status/Status-40.svg" width="56" height="56" alt="Warning" />
                   <div class="states-block__title">Action Required</div>
                   <div class="states-block__subtitle">Additional information is needed to continue.</div>
                 </div>
@@ -2226,6 +2400,18 @@
             <div class="props-row"><span class="prop-name">title</span><span class="prop-type prop-type--str">string</span><span class="prop-default prop-default--dash">—</span><span class="prop-desc">Main heading text</span></div>
             <div class="props-row"><span class="prop-name">subtitle</span><span class="prop-type prop-type--str">string</span><span class="prop-default">''</span><span class="prop-desc">Supporting description below the title</span></div>
             <div class="props-row"><span class="prop-name">align</span><span class="prop-type">'center' | 'left'</span><span class="prop-default">'center'</span><span class="prop-desc">Content alignment within the block</span></div>
+          </div>
+
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--color-positive-500</span><span class="prop-type" data-token="--color-positive-500">—</span><span class="prop-default">—</span><span class="prop-desc">Verified icon background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--color-negative-500</span><span class="prop-type" data-token="--color-negative-500">—</span><span class="prop-default">—</span><span class="prop-desc">Failed icon background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--color-warning-500</span><span class="prop-type" data-token="--color-warning-500">—</span><span class="prop-default">—</span><span class="prop-desc">Warning icon background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-primary</span><span class="prop-type" data-token="--text-primary">—</span><span class="prop-default">—</span><span class="prop-desc">Title text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-secondary</span><span class="prop-type" data-token="--text-secondary">—</span><span class="prop-default">—</span><span class="prop-desc">Subtitle text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--type-h2</span><span class="prop-type">24px · Bold · −1px</span><span class="prop-default">—</span><span class="prop-desc">Status title type</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--type-h5</span><span class="prop-type">16px · Medium · −0.5px</span><span class="prop-default">—</span><span class="prop-desc">Status subtitle type</span></div>
           </div>
 
           <div class="a11y-box">
@@ -2345,6 +2531,16 @@
             <div class="props-row"><span class="prop-name">onSelect</span><span class="prop-type prop-type--node">function</span><span class="prop-default prop-default--dash">—</span><span class="prop-desc">Callback fired when an option item is tapped</span></div>
           </div>
 
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--surface-card</span><span class="prop-type" data-token="--surface-card">—</span><span class="prop-default">—</span><span class="prop-desc">Card background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--border-neutral-100</span><span class="prop-type" data-token="--border-neutral-100">—</span><span class="prop-default">—</span><span class="prop-desc">Card and item border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-primary</span><span class="prop-type" data-token="--text-primary">—</span><span class="prop-default">—</span><span class="prop-desc">Item label text</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--icon-brand-500</span><span class="prop-type" data-token="--icon-brand-500">—</span><span class="prop-default">—</span><span class="prop-desc">Option item icon color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--radius-card</span><span class="prop-type" data-token="--radius-card">—</span><span class="prop-default">—</span><span class="prop-desc">Card corner radius</span></div>
+          </div>
+
           <div class="a11y-box">
             <div class="a11y-title">Accessibility Compliance</div>
             <div class="a11y-status">Status: <span class="a11y-compliant">Compliant</span></div>
@@ -2425,6 +2621,16 @@
             <div class="props-row"><span class="prop-name">width</span><span class="prop-type prop-type--str">number</span><span class="prop-default">312</span><span class="prop-desc">List width in pixels</span></div>
           </div>
 
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-primary</span><span class="prop-type" data-token="--text-primary">—</span><span class="prop-default">—</span><span class="prop-desc">Item text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--color-positive-500</span><span class="prop-type" data-token="--color-positive-500">—</span><span class="prop-default">—</span><span class="prop-desc">Checkmark and done state color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--icon-brand-500</span><span class="prop-type" data-token="--icon-brand-500">—</span><span class="prop-default">—</span><span class="prop-desc">Step number circle and icon color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--border-neutral-100</span><span class="prop-type" data-token="--border-neutral-100">—</span><span class="prop-default">—</span><span class="prop-desc">Chain connector line color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--type-body-m-regular</span><span class="prop-type">14px · Regular · 130%</span><span class="prop-default">—</span><span class="prop-desc">List item text style</span></div>
+          </div>
+
           <div class="a11y-box">
             <div class="a11y-title">Accessibility Compliance</div>
             <div class="a11y-status">Status: <span class="a11y-compliant">Compliant</span></div>
@@ -2468,7 +2674,7 @@
               <div class="detail-state-group">
                 <div class="gc-modal" style="width:280px">
                   <button class="gc-modal__close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
-                  <div style="width:48px;height:48px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#189f60"/><path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  <div style="width:48px;height:48px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center"><img src="assets/icons/status/Status-34.svg" width="48" height="48" alt="Positive" /></div>
                   <div class="gc-modal__title">Verification complete</div>
                   <div class="gc-modal__sub">Your identity has been successfully verified.</div>
                   <div class="btn-group btn-group--vertical" style="margin-top:20px">
@@ -2491,6 +2697,17 @@
             <div class="props-row"><span class="prop-name">showClose</span><span class="prop-type prop-type--bool">boolean</span><span class="prop-default prop-default--bool">true</span><span class="prop-desc">Show × dismiss icon in the top-right corner</span></div>
             <div class="props-row"><span class="prop-name">primaryLabel</span><span class="prop-type prop-type--str">string</span><span class="prop-default">''</span><span class="prop-desc">Primary CTA button label — omit to hide</span></div>
             <div class="props-row"><span class="prop-name">secondaryLabel</span><span class="prop-type prop-type--str">string</span><span class="prop-default">''</span><span class="prop-desc">Secondary button label — omit to hide</span></div>
+          </div>
+
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--surface-card</span><span class="prop-type" data-token="--surface-card">—</span><span class="prop-default">—</span><span class="prop-desc">Modal panel background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--surface-overlay</span><span class="prop-type" data-token="--surface-overlay">—</span><span class="prop-default">—</span><span class="prop-desc">Backdrop overlay color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-primary</span><span class="prop-type" data-token="--text-primary">—</span><span class="prop-default">—</span><span class="prop-desc">Title text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-secondary</span><span class="prop-type" data-token="--text-secondary">—</span><span class="prop-default">—</span><span class="prop-desc">Subtitle text color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-primary-surface-default</span><span class="prop-type" data-token="--btn-primary-surface-default">—</span><span class="prop-default">—</span><span class="prop-desc">Primary CTA button</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--radius-card</span><span class="prop-type" data-token="--radius-card">—</span><span class="prop-default">—</span><span class="prop-desc">Panel corner radius</span></div>
           </div>
 
           <div class="a11y-box">
@@ -2547,6 +2764,16 @@
             <div class="props-row"><span class="prop-name">height</span><span class="prop-type prop-type--str">number</span><span class="prop-default">256</span><span class="prop-desc">Drawing area height in pixels</span></div>
             <div class="props-row"><span class="prop-name">onClear</span><span class="prop-type prop-type--node">function</span><span class="prop-default prop-default--dash">—</span><span class="prop-desc">Callback fired when the drawing field is cleared</span></div>
             <div class="props-row"><span class="prop-name">disabled</span><span class="prop-type prop-type--bool">boolean</span><span class="prop-default prop-default--bool">false</span><span class="prop-desc">Disables drawing and clear action</span></div>
+          </div>
+
+          <h2 class="detail-section-title">Tokens used</h2>
+          <div class="props-table">
+            <div class="props-header"><span>Token</span><span>Value</span><span>—</span><span>Usage</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--surface-card</span><span class="prop-type" data-token="--surface-card">—</span><span class="prop-default">—</span><span class="prop-desc">Drawing area background</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--border-neutral-100</span><span class="prop-type" data-token="--border-neutral-100">—</span><span class="prop-default">—</span><span class="prop-desc">Drawing field border</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--text-tertiary</span><span class="prop-type" data-token="--text-tertiary">—</span><span class="prop-default">—</span><span class="prop-desc">Placeholder hint text</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--btn-tertiary-text-default</span><span class="prop-type" data-token="--btn-tertiary-text-default">—</span><span class="prop-default">—</span><span class="prop-desc">Clear canvas button color</span></div>
+            <div class="props-row"><span class="prop-name" style="font-size:11px">--radius-card</span><span class="prop-type" data-token="--radius-card">—</span><span class="prop-default">—</span><span class="prop-desc">Drawing area corner radius</span></div>
           </div>
 
           <div class="a11y-box">
@@ -2873,6 +3100,82 @@
       </div><!-- /ds-detail-page -->
 
     </div><!-- /view-components -->
+
+    <!-- ===== LAB VIEW ===== -->
+    <div id="view-lab" class="view active">
+
+      <!-- Module selector sidebar -->
+      <div class="lab-sidebar">
+        <div class="lab-sidebar-title">MODULES</div>
+        <nav class="lab-sidebar-nav">
+          <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+            <span>Face Capture</span><span class="lab-sidebar-count">7</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
+            <span>ID Capture</span><span class="lab-sidebar-count">—</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
+            <span>NFC</span><span class="lab-sidebar-count">—</span>
+          </button>
+          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="doc-capture" onclick="labSelectModule(this)">
+            <span>Document Capture</span><span class="lab-sidebar-count">—</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Main lab area -->
+      <div class="lab-main">
+
+        <!-- Lab bar -->
+        <div class="lab-bar">
+          <div class="lab-bar-info">
+            <span class="lab-bar-module" id="lab-bar-module">FACE CAPTURE</span>
+            <span class="lab-bar-dot">·</span>
+            <span class="lab-bar-meta" id="lab-bar-meta"></span>
+          </div>
+          <button class="lab-figma-btn" onclick="">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" fill="currentColor" opacity=".9"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" opacity=".7"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="currentColor"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" fill="currentColor" opacity=".7"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" opacity=".5"/></svg>
+            Open in Figma
+          </button>
+        </div>
+
+        <!-- Dot-grid canvas viewport -->
+        <div class="lab-canvas-vp" id="lab-canvas-vp">
+          <div class="lab-canvas-inner" id="lab-canvas-inner">
+            <div class="lab-stage" id="lab-stage"></div>
+          </div>
+
+          <!-- Nav arrows -->
+          <button class="lab-arrow lab-arrow--prev" id="lab-arrow-prev" onclick="labNav(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="lab-arrow lab-arrow--next" id="lab-arrow-next" onclick="labNav(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <!-- Expand / Collapse button (top of canvas) -->
+          <button class="lab-expand-btn" id="lab-expand-btn" onclick="labToggleExpand()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="lab-expand-label">EXPAND</span>
+          </button>
+
+          <!-- Screen title (below phone) -->
+          <div class="lab-screen-info" id="lab-screen-info">
+            <span class="lab-screen-index" id="lab-screen-index"></span>
+            <span class="lab-screen-sep">—</span>
+            <span class="lab-screen-label" id="lab-screen-label"></span>
+          </div>
+
+          <!-- Zoom controls -->
+          <div class="lab-zoom-bar">
+            <button class="lab-zoom-btn" onclick="labZoom(-0.1)">−</button>
+            <span class="lab-zoom-val" id="lab-zoom-val">100%</span>
+            <button class="lab-zoom-btn" onclick="labZoom(0.1)">+</button>
+          </div>
+
+        </div><!-- /lab-canvas-vp -->
+      </div><!-- /lab-main -->
+    </div><!-- /view-lab -->
 
   </main>
 

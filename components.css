@@ -2,6 +2,145 @@
    PRIZMA DESIGN SYSTEM — COMPONENTS
    ============================================ */
 
+/* --- TYPOGRAPHY UTILITY CLASSES ---
+   Source of truth: --type-* tokens in tokens.css.
+   Use these classes everywhere instead of inline font styles. */
+
+.type-d1 {
+  font-family: var(--type-d1-family);
+  font-size: var(--type-d1-size);
+  font-weight: var(--type-d1-weight);
+  line-height: var(--type-d1-line-height);
+  letter-spacing: var(--type-d1-letter-spacing);
+}
+.type-d2 {
+  font-family: var(--type-d2-family);
+  font-size: var(--type-d2-size);
+  font-weight: var(--type-d2-weight);
+  line-height: var(--type-d2-line-height);
+  letter-spacing: var(--type-d2-letter-spacing);
+}
+.type-h1 {
+  font-family: var(--type-h1-family);
+  font-size: var(--type-h1-size);
+  font-weight: var(--type-h1-weight);
+  line-height: var(--type-h1-line-height);
+  letter-spacing: var(--type-h1-letter-spacing);
+}
+.type-h2 {
+  font-family: var(--type-h2-family);
+  font-size: var(--type-h2-size);
+  font-weight: var(--type-h2-weight);
+  line-height: var(--type-h2-line-height);
+  letter-spacing: var(--type-h2-letter-spacing);
+}
+.type-h3 {
+  font-family: var(--type-h3-family);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-weight);
+  line-height: var(--type-h3-line-height);
+  letter-spacing: var(--type-h3-letter-spacing);
+}
+.type-h4 {
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  letter-spacing: var(--type-h4-letter-spacing);
+}
+.type-h5 {
+  font-family: var(--type-h5-family);
+  font-size: var(--type-h5-size);
+  font-weight: var(--type-h5-weight);
+  line-height: var(--type-h5-line-height);
+  letter-spacing: var(--type-h5-letter-spacing);
+}
+.type-feedback-l {
+  font-family: var(--type-feedback-l-family);
+  font-size: var(--type-feedback-l-size);
+  font-weight: var(--type-feedback-l-weight);
+  line-height: var(--type-feedback-l-line-height);
+  letter-spacing: var(--type-feedback-l-letter-spacing);
+}
+.type-feedback-s {
+  font-family: var(--type-feedback-s-family);
+  font-size: var(--type-feedback-s-size);
+  font-weight: var(--type-feedback-s-weight);
+  line-height: var(--type-feedback-s-line-height);
+  letter-spacing: var(--type-feedback-s-letter-spacing);
+}
+.type-body-m-bold {
+  font-family: var(--type-body-m-bold-family);
+  font-size: var(--type-body-m-bold-size);
+  font-weight: var(--type-body-m-bold-weight);
+  line-height: var(--type-body-m-bold-line-height);
+  letter-spacing: var(--type-body-m-bold-letter-spacing);
+}
+.type-body-m-regular {
+  font-family: var(--type-body-m-regular-family);
+  font-size: var(--type-body-m-regular-size);
+  font-weight: var(--type-body-m-regular-weight);
+  line-height: var(--type-body-m-regular-line-height);
+  letter-spacing: var(--type-body-m-regular-letter-spacing);
+}
+.type-body-s-bold {
+  font-family: var(--type-body-s-bold-family);
+  font-size: var(--type-body-s-bold-size);
+  font-weight: var(--type-body-s-bold-weight);
+  line-height: var(--type-body-s-bold-line-height);
+  letter-spacing: var(--type-body-s-bold-letter-spacing);
+}
+.type-body-s-regular {
+  font-family: var(--type-body-s-regular-family);
+  font-size: var(--type-body-s-regular-size);
+  font-weight: var(--type-body-s-regular-weight);
+  line-height: var(--type-body-s-regular-line-height);
+  letter-spacing: var(--type-body-s-regular-letter-spacing);
+}
+.type-label-m {
+  font-family: var(--type-label-m-family);
+  font-size: var(--type-label-m-size);
+  font-weight: var(--type-label-m-weight);
+  line-height: var(--type-label-m-line-height);
+  letter-spacing: var(--type-label-m-letter-spacing);
+}
+.type-button-m {
+  font-family: var(--type-button-m-family);
+  font-size: var(--type-button-m-size);
+  font-weight: var(--type-button-m-weight);
+  line-height: var(--type-button-m-line-height);
+  letter-spacing: var(--type-button-m-letter-spacing);
+}
+.type-button-s {
+  font-family: var(--type-button-s-family);
+  font-size: var(--type-button-s-size);
+  font-weight: var(--type-button-s-weight);
+  line-height: var(--type-button-s-line-height);
+  letter-spacing: var(--type-button-s-letter-spacing);
+}
+.type-link-m-bold {
+  font-family: var(--type-link-m-bold-family);
+  font-size: var(--type-link-m-bold-size);
+  font-weight: var(--type-link-m-bold-weight);
+  line-height: var(--type-link-m-bold-line-height);
+  letter-spacing: var(--type-link-m-bold-letter-spacing);
+}
+
+/* --- ICON STATUS ---
+   Large status icon for success/failure/warning screens. */
+.icon-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--border-radius-full);
+  width: 64px;
+  height: 64px;
+}
+.icon-status--positive { background: var(--color-positive-500); }
+.icon-status--negative { background: var(--color-negative-500); }
+.icon-status--warning  { background: var(--color-warning-500);  }
+
 /* --- BUTTON --- */
 .btn {
   font-family: var(--font-button);
@@ -925,10 +1064,14 @@
 .loading-spinner {
   width: 64px;
   height: 64px;
-  border-radius: 50%;
-  border: 6px solid var(--color-gray-100);
-  border-top-color: var(--color-brand-500);
+  background-image: url('assets/illustrations/loading-spinner.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   animation: prizma-spin 0.8s linear infinite;
+  flex-shrink: 0;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes prizma-spin {
@@ -937,7 +1080,7 @@
 
 .spinner {
   border-radius: 50%;
-  border: 6px solid var(--color-gray-100);
+  border: 3px solid var(--color-gray-100);
   border-top-color: var(--color-brand-500);
   animation: prizma-spin 0.8s linear infinite;
 }
@@ -1068,6 +1211,11 @@
   color: var(--text-secondary);
   letter-spacing: -0.14px;
   white-space: nowrap;
+}
+
+.tag-verified__text--brand {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-500);
 }
 
 .tag-verified__logo {

@@ -1,32 +1,41 @@
 /* ============================================
    PRIZMA DESIGN SYSTEM — TOKENS
-   Auto-generated from Figma variables
+   Source of Truth: /Tokens/ JSON files
+   ============================================
+   Layer 1 — Primitives (Raw Values)
+   Layer 2 — Semantic Tokens (Light Mode default)
+   Layer 3 — Component Tokens
+   Layer 4 — Dark Mode overrides
    ============================================ */
 
 :root {
 
-  /* --- PRIMITIVES: Color/Gray --- */
-  --color-gray-0: #ffffff;
-  --color-gray-50: #fcfcfd;
-  --color-gray-100: #ebecef;
-  --color-gray-150: #d9dae1;
-  --color-gray-200: #c6c8d2;
-  --color-gray-250: #b5b8c5;
-  --color-gray-300: #a3a8b8;
-  --color-gray-400: #82879a;
-  --color-gray-500: #60667c;
-  --color-gray-600: #4d5264;
-  --color-gray-700: #3a3e4b;
-  --color-gray-750: #30333e;
-  --color-gray-800: #262831;
-  --color-gray-900: #14151a;
-  --color-gray-1000: #000000;
-  --color-gray-0-80: rgba(255,255,255,0.8);
+  /* ==========================================
+     LAYER 1: PRIMITIVES
+     ========================================== */
+
+  /* --- Color / Gray --- */
+  --color-gray-0:      #ffffff;
+  --color-gray-50:     #fcfcfd;
+  --color-gray-100:    #ebecef;
+  --color-gray-150:    #d9dae1;
+  --color-gray-200:    #c6c8d2;
+  --color-gray-250:    #b5b8c5;
+  --color-gray-300:    #a3a8b8;
+  --color-gray-400:    #82879a;
+  --color-gray-500:    #60667c;
+  --color-gray-600:    #4d5264;
+  --color-gray-700:    #3a3e4b;
+  --color-gray-750:    #30333e;
+  --color-gray-800:    #262831;
+  --color-gray-900:    #14151a;
+  --color-gray-1000:   #000000;
+  --color-gray-0-80:   rgba(255,255,255,0.8);
   --color-gray-900-80: rgba(20,21,26,0.8);
   --color-gray-1000-80: rgba(0,0,0,0.8);
 
-  /* --- PRIMITIVES: Color/Brand --- */
-  --color-brand-50: #e5f0ff;
+  /* --- Color / Brand --- */
+  --color-brand-50:  #e5f0ff;
   --color-brand-100: #bfdfff;
   --color-brand-200: #99ceff;
   --color-brand-300: #66a6ff;
@@ -35,38 +44,39 @@
   --color-brand-600: #0055cc;
   --color-brand-900: #21273b;
 
-  /* --- PRIMITIVES: Color/Brand Secondary --- */
-  --color-brand-secondary-50: #f2e2fe;
+  /* --- Color / Brand Secondary --- */
+  --color-brand-secondary-50:  #f2e2fe;
   --color-brand-secondary-500: #820ad1;
 
-  /* --- PRIMITIVES: Color/Focus --- */
+  /* --- Color / Focus --- */
   --color-focus-400: #0099ff;
   --color-focus-500: #006aff;
 
-  /* --- PRIMITIVES: Color/Warning --- */
-  --color-warning-50: #fff7eb;
+  /* --- Color / Warning --- */
+  --color-warning-50:  #fff7eb;
   --color-warning-400: #ffb647;
   --color-warning-500: #ff9900;
   --color-warning-750: #523100;
   --color-warning-950: #271400;
 
-  /* --- PRIMITIVES: Color/Negative --- */
-  --color-negative-50: #fff0f0;
+  /* --- Color / Negative --- */
+  --color-negative-50:  #fff0f0;
   --color-negative-400: #ff5a5f;
   --color-negative-500: #e71111;
   --color-negative-950: #240001;
 
-  /* --- PRIMITIVES: Color/Positive --- */
-  --color-positive-50: #e4fbf0;
+  /* --- Color / Positive --- */
+  --color-positive-50:  #e4fbf0;
   --color-positive-400: #45b380;
   --color-positive-500: #189f60;
   --color-positive-750: #0c5030;
   --color-positive-950: #03190e;
 
-  /* --- PRIMITIVES: Typography --- */
+  /* --- Typography / Families --- */
   --font-family-rethink: 'Rethink Sans', sans-serif;
-  --font-family-dm: 'DM Sans', sans-serif;
+  --font-family-dm:      'DM Sans', sans-serif;
 
+  /* --- Typography / Sizes --- */
   --font-size-12: 12px;
   --font-size-14: 14px;
   --font-size-16: 16px;
@@ -78,316 +88,536 @@
   --font-size-48: 48px;
   --font-size-80: 80px;
 
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  /* --- Typography / Weights --- */
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
   --font-weight-extrabold: 800;
 
+  /* --- Typography / Letter Spacing --- */
   --letter-spacing-neg-15: -1.5px;
-  --letter-spacing-neg-1: -1px;
+  --letter-spacing-neg-1:  -1px;
   --letter-spacing-neg-05: -0.5px;
-  --letter-spacing-0: 0px;
-  --letter-spacing-2: 2px;
+  --letter-spacing-0:       0px;
+  --letter-spacing-2:       2px;
 
-  /* --- PRIMITIVES: Scale (Spacing) --- */
-  --scale-0: 0px;
-  --scale-2: 2px;
-  --scale-4: 4px;
-  --scale-8: 8px;
-  --scale-12: 12px;
-  --scale-16: 16px;
-  --scale-20: 20px;
-  --scale-24: 24px;
-  --scale-32: 32px;
-  --scale-40: 40px;
-  --scale-48: 48px;
-  --scale-56: 56px;
-  --scale-64: 64px;
-  --scale-72: 72px;
-  --scale-80: 80px;
-  --scale-88: 88px;
-  --scale-96: 96px;
+  /* --- Scale (Spacing) --- */
+  --scale-0:   0px;
+  --scale-2:   2px;
+  --scale-4:   4px;
+  --scale-8:   8px;
+  --scale-12:  12px;
+  --scale-16:  16px;
+  --scale-20:  20px;
+  --scale-24:  24px;
+  --scale-32:  32px;
+  --scale-40:  40px;
+  --scale-48:  48px;
+  --scale-56:  56px;
+  --scale-64:  64px;
+  --scale-72:  72px;
+  --scale-80:  80px;
+  --scale-88:  88px;
+  --scale-96:  96px;
   --scale-104: 104px;
   --scale-120: 120px;
   --scale-128: 128px;
   --scale-200: 200px;
 
-  /* --- PRIMITIVES: Border --- */
+  /* --- Border / Width (primitives) --- */
   --border-width-0: 0px;
   --border-width-1: 1px;
   --border-width-2: 2px;
   --border-width-4: 4px;
 
-  --border-radius-0: 0px;
-  --border-radius-4: 4px;
-  --border-radius-8: 8px;
-  --border-radius-16: 16px;
-  --border-radius-24: 24px;
-  --border-radius-40: 40px;
-  --border-radius-64: 64px;
+  /* --- Border / Radius (primitives) --- */
+  --border-radius-0:    0px;
+  --border-radius-4:    4px;
+  --border-radius-8:    8px;
+  --border-radius-16:   16px;
+  --border-radius-24:   24px;
+  --border-radius-40:   40px;
+  --border-radius-64:   64px;
   --border-radius-full: 9999px;
 
-  /* ============================================
-     SEMANTIC TOKENS
-     ============================================ */
+
+  /* ==========================================
+     LAYER 2: SEMANTIC TOKENS — SCALE
+     (Scale Modes / Default.json)
+     ========================================== */
+
+  /* Icon Sizes */
+  --icon-size-xx-small: var(--scale-16);
+  --icon-size-x-small:  var(--scale-20);
+  --icon-size-small:    var(--scale-24);
+  --icon-size-medium:   var(--scale-32);
+  --icon-size-large:    var(--scale-40);
+  --icon-size-x-large:  var(--scale-48);
+  --icon-size-xx-large: var(--scale-64);
+  --icon-size-xxx-large: var(--scale-80);
+
+  /* Border Width — semantic names */
+  --border-width-none:    var(--border-width-0);
+  --border-width-regular: var(--border-width-1);
+  --border-width-bold:    var(--border-width-2);
+
+  /* Border Radius — semantic names */
+  --border-radius-none:     var(--border-radius-0);
+  --border-radius-x-small:  var(--border-radius-4);
+  --border-radius-small:    var(--border-radius-8);
+  --border-radius-medium:   var(--border-radius-16);
+  --border-radius-large:    var(--border-radius-24);
+  --border-radius-x-large:  var(--border-radius-40);
+  --border-radius-xx-large: var(--border-radius-64);
+
+  /* Spacing — semantic names */
+  --spacing-none: var(--scale-0);
+  --spacing-2:    var(--scale-2);
+  --spacing-4:    var(--scale-4);
+  --spacing-8:    var(--scale-8);
+  --spacing-12:   var(--scale-12);
+  --spacing-16:   var(--scale-16);
+  --spacing-20:   var(--scale-20);
+  --spacing-24:   var(--scale-24);
+  --spacing-32:   var(--scale-32);
+  --spacing-40:   var(--scale-40);
+  --spacing-48:   var(--scale-48);
+  --spacing-64:   var(--scale-64);
+  --spacing-80:   var(--scale-80);
+  --spacing-96:   var(--scale-96);
+  --spacing-104:  var(--scale-104);
+  --spacing-120:  var(--scale-120);
+  --spacing-200:  var(--scale-200);
+
+
+  /* ==========================================
+     LAYER 2: SEMANTIC TOKENS — COLOR (LIGHT)
+     (Color Modes / Light Mode.json)
+     ========================================== */
 
   /* --- Surface --- */
+  --surface-neutral-0:    var(--color-gray-0);
+  --surface-neutral-50:   var(--color-gray-50);
+  --surface-neutral-100:  var(--color-gray-100);
+  --surface-neutral-150:  var(--color-gray-150);
+  --surface-neutral-200:  var(--color-gray-200);
+  --surface-neutral-250:  var(--color-gray-250);
+  --surface-neutral-300:  var(--color-gray-300);
+  --surface-neutral-400:  var(--color-gray-400);
+  --surface-neutral-500:  var(--color-gray-500);
+  --surface-neutral-600:  var(--color-gray-600);
+  --surface-neutral-700:  var(--color-gray-700);
+  --surface-neutral-750:  var(--color-gray-750);
+  --surface-neutral-800:  var(--color-gray-800);
+  --surface-neutral-900:  var(--color-gray-900);
+  --surface-neutral-1000: var(--color-gray-1000);
+  --surface-neutral-0-80:   var(--color-gray-0-80);
+  --surface-neutral-900-80: var(--color-gray-900-80);
+
+  /* Static surface tokens — never change between light/dark */
+  --surface-neutral-0-static:   var(--color-gray-0);
+  --surface-neutral-100-static: var(--color-gray-100);
+  --surface-neutral-200-static: var(--color-gray-200);
+  --surface-neutral-900-static: var(--color-gray-900);
+  --surface-neutral-900-80-static: var(--color-gray-900-80);
+  --surface-neutral-1000-80-static: var(--color-gray-1000-80);
+
+  --surface-brand-50:          var(--color-brand-50);
+  --surface-brand-100:         var(--color-brand-100);
+  --surface-brand-500:         var(--color-brand-500);
+  --surface-brand-400-static:  var(--color-brand-400);
+  --surface-brand-500-static:  var(--color-brand-500);
+  --surface-brand-600-static:  var(--color-brand-600);
+
+  --surface-status-warning-50:   var(--color-warning-50);
+  --surface-status-warning-500:  var(--color-warning-500);
+  --surface-status-negative-50:  var(--color-negative-50);
+  --surface-status-negative-500: var(--color-negative-500);
+  --surface-status-positive-50:  var(--color-positive-50);
+  --surface-status-positive-500: var(--color-positive-500);
+
+  /* App background (neutral 0 in light = white) */
   --surface-bg: var(--color-gray-0);
-  --surface-neutral-0: var(--color-gray-0);
-  --surface-neutral-50: var(--color-gray-50);
-  --surface-neutral-100: var(--color-gray-100);
-  --surface-neutral-800: var(--color-gray-800);
-  --surface-brand-50: var(--color-brand-50);
-  --surface-brand-500: var(--color-brand-500);
-  --surface-status-warning-50: var(--color-warning-50);
-  --surface-status-negative-50: var(--color-negative-50);
-  --surface-status-positive-50: var(--color-positive-50);
 
   /* --- Text --- */
-  --text-primary: var(--color-gray-800);
-  --text-secondary: var(--color-gray-500);
-  --text-tertiary: var(--color-gray-300);
-  --text-link-default: var(--color-brand-500);
-  --text-link-hover: var(--color-brand-300);
-  --text-status-warning: var(--color-warning-500);
+  --text-primary:        var(--color-gray-800);   /* Text.Body.800 (Primary) */
+  --text-secondary:      var(--color-gray-500);   /* Text.Body.500 (Secondary) */
+  --text-tertiary:       var(--color-gray-300);   /* Text.Body.300 (Tertiary) */
+  --text-body-400:       var(--color-gray-400);   /* Text.Body.400 */
+  --text-link-default:   var(--color-brand-500);  /* Text.Link.Default */
+  --text-link-hover:     var(--color-brand-300);  /* Text.Link.Hover */
+  --text-link-visited:   var(--color-gray-700);   /* Text.Link.Visited */
+  --text-link-disabled:  var(--color-gray-500);   /* Text.Link.Disabled */
+  --text-accent-brand:   var(--color-brand-500);  /* Text.Accent.Brand */
+  --text-status-warning:  var(--color-warning-500);
   --text-status-negative: var(--color-negative-500);
   --text-status-positive: var(--color-positive-500);
 
   /* --- Border --- */
-  --border-neutral-100: var(--color-gray-100);
-  --border-neutral-200: var(--color-gray-200);
-  --border-neutral-300: var(--color-gray-300);
-  --border-neutral-400: var(--color-gray-400);
-  --border-brand-500: var(--color-brand-500);
-  --border-status-focus: var(--color-focus-500);
-  --border-status-warning: var(--color-warning-500);
-  --border-status-negative: var(--color-negative-500);
-  --border-status-positive: var(--color-positive-500);
+  --border-neutral-100:  var(--color-gray-100);
+  --border-neutral-200:  var(--color-gray-200);
+  --border-neutral-250:  var(--color-gray-250);
+  --border-neutral-300:  var(--color-gray-300);
+  --border-neutral-400:  var(--color-gray-400);
+  --border-neutral-500:  var(--color-gray-500);
+  --border-brand-500:    var(--color-brand-500);
+  --border-brand-600:    var(--color-brand-600);
+  --border-status-focus:          var(--color-focus-500);
+  --border-status-warning:        var(--color-warning-500);
+  --border-status-warning-static: var(--color-warning-500);
+  --border-status-negative:        var(--color-negative-500);
+  --border-status-negative-static: var(--color-negative-500);
+  --border-status-positive-static: var(--color-positive-500);
+  --border-neutral-100-static:     var(--color-gray-100);
 
   /* --- Icon --- */
-  --icon-neutral-0: var(--color-gray-0);
+  --icon-neutral-0:   var(--color-gray-0);
   --icon-neutral-300: var(--color-gray-300);
   --icon-neutral-500: var(--color-gray-500);
   --icon-neutral-800: var(--color-gray-800);
-  --icon-brand-500: var(--color-brand-500);
-  --icon-status-warning: var(--color-warning-500);
+  --icon-brand-500:   var(--color-brand-500);
+
+  /* Static icon tokens */
+  --icon-neutral-0-static:   var(--color-gray-0);
+  --icon-neutral-50-static:  var(--color-gray-50);
+  --icon-neutral-300-static: var(--color-gray-300);
+  --icon-neutral-500-static: var(--color-gray-500);
+  --icon-neutral-800-static: var(--color-gray-800);
+  --icon-brand-500-static:   var(--color-brand-500);
+
+  --icon-status-warning:  var(--color-warning-500);
   --icon-status-negative: var(--color-negative-500);
   --icon-status-positive: var(--color-positive-500);
 
-  /* --- Button --- */
-  --font-button: var(--font-family-dm);
+
+  /* ==========================================
+     LAYER 2: SEMANTIC TOKENS — TYPOGRAPHY
+     (Typo Modes / Mobile.json)
+     ========================================== */
+
+  /* Display — Rethink Sans, ExtraBold */
+  --type-d1-family:        var(--font-family-rethink);
+  --type-d1-size:          var(--font-size-80);
+  --type-d1-weight:        var(--font-weight-extrabold);
+  --type-d1-line-height:   1.05;
+  --type-d1-letter-spacing: var(--letter-spacing-neg-15);
+
+  --type-d2-family:         var(--font-family-rethink);
+  --type-d2-size:           var(--font-size-48);
+  --type-d2-weight:         var(--font-weight-extrabold);
+  --type-d2-line-height:    1.05;
+  --type-d2-letter-spacing: var(--letter-spacing-neg-05);
+
+  /* Headline — DM Sans, Bold */
+  --type-h1-family:         var(--font-family-dm);
+  --type-h1-size:           var(--font-size-32);
+  --type-h1-weight:         var(--font-weight-bold);
+  --type-h1-line-height:    1.15;
+  --type-h1-letter-spacing: var(--letter-spacing-neg-15);
+
+  --type-h2-family:         var(--font-family-dm);
+  --type-h2-size:           var(--font-size-24);
+  --type-h2-weight:         var(--font-weight-bold);
+  --type-h2-line-height:    1.15;
+  --type-h2-letter-spacing: var(--letter-spacing-neg-1);
+
+  --type-h3-family:         var(--font-family-dm);
+  --type-h3-size:           var(--font-size-20);
+  --type-h3-weight:         var(--font-weight-bold);
+  --type-h3-line-height:    1.15;
+  --type-h3-letter-spacing: var(--letter-spacing-neg-05);
+
+  --type-h4-family:         var(--font-family-dm);
+  --type-h4-size:           var(--font-size-18);
+  --type-h4-weight:         var(--font-weight-medium);
+  --type-h4-line-height:    1.15;
+  --type-h4-letter-spacing: var(--letter-spacing-neg-05);
+
+  --type-h5-family:         var(--font-family-dm);
+  --type-h5-size:           var(--font-size-16);
+  --type-h5-weight:         var(--font-weight-medium);
+  --type-h5-line-height:    1.15;
+  --type-h5-letter-spacing: var(--letter-spacing-neg-05);
+
+  /* Feedback — DM Sans (feedback-big / feedback-small in Figma) */
+  --type-feedback-l-family:         var(--font-family-dm);
+  --type-feedback-l-size:           var(--font-size-24);
+  --type-feedback-l-weight:         var(--font-weight-bold);
+  --type-feedback-l-line-height:    1.20;
+  --type-feedback-l-letter-spacing: var(--letter-spacing-0);
+
+  --type-feedback-s-family:         var(--font-family-dm);
+  --type-feedback-s-size:           var(--font-size-18);
+  --type-feedback-s-weight:         var(--font-weight-medium);
+  --type-feedback-s-line-height:    1.20;
+  --type-feedback-s-letter-spacing: var(--letter-spacing-0);
+
+  /* Body — DM Sans */
+  --type-body-m-bold-family:  var(--font-family-dm);
+  --type-body-m-bold-size:    var(--font-size-14);
+  --type-body-m-bold-weight:  var(--font-weight-bold);
+  --type-body-m-bold-line-height:    1.30;
+  --type-body-m-bold-letter-spacing: var(--letter-spacing-0);
+
+  --type-body-m-regular-family:  var(--font-family-dm);
+  --type-body-m-regular-size:    var(--font-size-14);
+  --type-body-m-regular-weight:  var(--font-weight-regular);
+  --type-body-m-regular-line-height:    1.30;
+  --type-body-m-regular-letter-spacing: var(--letter-spacing-0);
+
+  --type-body-s-bold-family:  var(--font-family-dm);
+  --type-body-s-bold-size:    var(--font-size-12);
+  --type-body-s-bold-weight:  var(--font-weight-bold);
+  --type-body-s-bold-line-height:    1.30;
+  --type-body-s-bold-letter-spacing: var(--letter-spacing-0);
+
+  --type-body-s-regular-family:  var(--font-family-dm);
+  --type-body-s-regular-size:    var(--font-size-12);
+  --type-body-s-regular-weight:  var(--font-weight-regular);
+  --type-body-s-regular-line-height:    1.30;
+  --type-body-s-regular-letter-spacing: var(--letter-spacing-0);
+
+  /* Label — DM Sans, Bold */
+  --type-label-m-family:         var(--font-family-dm);
+  --type-label-m-size:           var(--font-size-14);
+  --type-label-m-weight:         var(--font-weight-bold);
+  --type-label-m-line-height:    1.00;
+  --type-label-m-letter-spacing: var(--letter-spacing-0);
+
+  /* Button — DM Sans, Medium */
+  --type-button-m-family:         var(--font-family-dm);
+  --type-button-m-size:           var(--font-size-18);
+  --type-button-m-weight:         var(--font-weight-medium);
+  --type-button-m-line-height:    1.00;
+  --type-button-m-letter-spacing: var(--letter-spacing-0);
+
+  --type-button-s-family:         var(--font-family-dm);
+  --type-button-s-size:           var(--font-size-14);
+  --type-button-s-weight:         var(--font-weight-medium);
+  --type-button-s-line-height:    1.00;
+  --type-button-s-letter-spacing: var(--letter-spacing-neg-05);
+
+  /* Link — DM Sans */
+  --type-link-m-bold-family:  var(--font-family-dm);
+  --type-link-m-bold-size:    var(--font-size-14);
+  --type-link-m-bold-weight:  var(--font-weight-bold);
+  --type-link-m-bold-line-height:    1.25;
+  --type-link-m-bold-letter-spacing: var(--letter-spacing-0);
+
+
+
+  /* ==========================================
+     LAYER 3: COMPONENT TOKENS
+     (Component Tokens / Value.json)
+     All values reference semantic tokens so
+     dark mode propagates automatically.
+     ========================================== */
+
+  /* Legacy aliases used throughout the codebase */
+  --font-button:        var(--font-family-dm);
   --font-size-button-m: var(--font-size-18);
   --font-size-button-s: var(--font-size-14);
-  --radius-button: var(--border-radius-16);
-  --radius-card: var(--border-radius-16);
+  --radius-button:      var(--border-radius-medium);
+  --radius-card:        var(--border-radius-medium);
 
-  /* Button Primary */
-  --btn-primary-surface-default: var(--color-brand-500);
-  --btn-primary-surface-hover: var(--color-brand-400);
-  --btn-primary-surface-pressed: var(--color-brand-600);
-  --btn-primary-surface-disabled: var(--color-gray-100);
-  --btn-primary-text-default: var(--color-gray-0);
-  --btn-primary-text-disabled: var(--color-gray-500);
+  /* --- Button / Primary --- */
+  --btn-primary-surface-default:  var(--color-brand-500);    /* Static */
+  --btn-primary-surface-hover:    var(--color-brand-400);    /* Static */
+  --btn-primary-surface-pressed:  var(--color-brand-600);    /* Static */
+  --btn-primary-surface-disabled: var(--surface-neutral-100);
+  --btn-primary-text-default:     var(--color-gray-0);       /* Static white */
+  --btn-primary-text-disabled:    var(--text-secondary);
 
-  /* Button Secondary */
-  --btn-secondary-border-default: var(--color-brand-500);
-  --btn-secondary-border-hover: var(--color-brand-400);
-  --btn-secondary-border-pressed: var(--color-brand-600);
-  --btn-secondary-border-disabled: var(--color-gray-100);
-  --btn-secondary-text-default: var(--color-brand-500);
-  --btn-secondary-text-disabled: var(--color-gray-500);
+  /* --- Button / Secondary --- */
+  --btn-secondary-border-default:  var(--color-brand-500);   /* Static */
+  --btn-secondary-border-hover:    var(--color-brand-400);   /* Static */
+  --btn-secondary-border-pressed:  var(--color-brand-600);   /* Static */
+  --btn-secondary-border-disabled: var(--surface-neutral-100);
+  --btn-secondary-text-default:    var(--text-accent-brand); /* Brand.500 */
+  --btn-secondary-text-disabled:   var(--text-secondary);
 
-  /* Button Tertiary */
-  --btn-tertiary-text-default: var(--color-brand-500);
-  --btn-tertiary-text-disabled: var(--color-gray-500);
+  /* --- Button / Tertiary --- */
+  --btn-tertiary-text-default:  var(--text-accent-brand);
+  --btn-tertiary-text-disabled: var(--text-secondary);
 
   /* --- Input --- */
-  --input-surface-default: var(--color-gray-50);
-  --input-surface-focused: var(--color-gray-50);
-  --input-surface-disabled: var(--color-gray-100);
-  --input-border-default: var(--color-gray-400);
-  --input-border-focused: var(--color-brand-500);
-  --input-border-disabled: var(--color-gray-100);
-  --input-border-negative: var(--color-negative-500);
-  --input-text-default: var(--color-gray-800);
-  --input-text-placeholder: var(--color-gray-400);
-  --input-text-disabled: var(--color-gray-400);
+  --input-surface-default:  var(--surface-neutral-50);
+  --input-surface-focused:  var(--surface-neutral-50);
+  --input-surface-disabled: var(--surface-neutral-100);
+  --input-border-default:   var(--border-neutral-400);
+  --input-border-focused:   var(--border-status-focus);
+  --input-border-disabled:  var(--border-neutral-100);
+  --input-border-negative:  var(--border-status-negative);
+  --input-text-default:     var(--text-primary);
+  --input-text-placeholder: var(--text-body-400);
+  --input-text-disabled:    var(--text-body-400);
 
   /* --- Checkbox --- */
-  --checkbox-surface-default: #fcfcfd;
-  --checkbox-surface-selected: var(--color-brand-500);
-  --checkbox-surface-disabled: #82879a;
-  --checkbox-border-default: #82879a;
-  --checkbox-border-disabled: #82879a;
-  --checkbox-border-focused: var(--color-focus-500);
-  --checkbox-border-radius: 8px;
-  --checkbox-icon-default: #ffffff;
-  --checkbox-text-default: #262831;
-  --checkbox-text-disabled: #60667c;
-  --checkbox-font-family: 'DM Sans', sans-serif;
-  --checkbox-font-size-m: 16px;
-  --checkbox-font-size-s: 14px;
-
-  /* --- Checkbox dark --- (overridden in [data-theme="dark"]) */
+  --checkbox-surface-default:  var(--surface-neutral-50);
+  --checkbox-surface-selected: var(--color-brand-500);       /* Static */
+  --checkbox-surface-disabled: var(--surface-neutral-400);
+  --checkbox-border-default:   var(--border-neutral-400);
+  --checkbox-border-disabled:  var(--border-neutral-400);
+  --checkbox-border-focused:   var(--border-status-focus);
+  --checkbox-border-radius:    var(--border-radius-small);
+  --checkbox-icon-default:     var(--color-gray-0);          /* Static white */
+  --checkbox-text-default:     var(--text-primary);
+  --checkbox-text-disabled:    var(--text-secondary);
+  --checkbox-font-family:      var(--font-family-dm);
+  --checkbox-font-size-m:      var(--font-size-16);
+  --checkbox-font-size-s:      var(--font-size-14);
 
   /* --- Dropdown --- */
-  --dropdown-label-color: var(--color-gray-800);
-  --dropdown-surface-field: var(--input-surface-default);
-  --dropdown-border-default: var(--input-border-default);
-  --dropdown-item-surface-selected: var(--color-gray-100);
-  --dropdown-list-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  --dropdown-label-color:         var(--text-primary);
+  --dropdown-surface-field:       var(--surface-neutral-50);
+  --dropdown-border-default:      var(--border-neutral-400);
+  --dropdown-item-surface-selected: var(--surface-neutral-100);
+  --dropdown-list-shadow:         0 8px 24px rgba(0,0,0,0.12);
 
   /* --- Toggle --- */
-  --toggle-surface-on: var(--color-brand-500);
-  --toggle-surface-off: var(--color-gray-400);
-  --toggle-surface-disabled: var(--color-gray-200);
-  --toggle-knob-on: var(--color-gray-0);
-  --toggle-knob-off: var(--color-gray-0);
+  --toggle-surface-on:       var(--color-brand-500);         /* Static */
+  --toggle-surface-off:      var(--surface-neutral-400);
+  --toggle-surface-disabled: var(--surface-neutral-200);
+  --toggle-knob-on:          var(--color-gray-0);            /* Static white */
+  --toggle-knob-off:         var(--color-gray-0);            /* Static white */
 
   /* --- Snackbar --- */
-  --snackbar-surface-neutral: var(--color-brand-50);
-  --snackbar-surface-warning: var(--color-warning-50);
-  --snackbar-surface-negative: var(--color-negative-50);
-  --snackbar-surface-positive: var(--color-positive-50);
-  --snackbar-border-neutral: var(--color-brand-500);
-  --snackbar-border-warning: var(--color-warning-500);
-  --snackbar-border-negative: var(--color-negative-500);
-  --snackbar-border-positive: var(--color-positive-500);
+  --snackbar-surface-neutral:  var(--surface-brand-50);
+  --snackbar-surface-warning:  var(--surface-status-warning-50);
+  --snackbar-surface-negative: var(--surface-status-negative-50);
+  --snackbar-surface-positive: var(--surface-status-positive-50);
+  --snackbar-border-neutral:   var(--border-brand-500);      /* Static */
+  --snackbar-border-warning:   var(--border-status-warning);
+  --snackbar-border-negative:  var(--border-status-negative);
+  --snackbar-border-positive:  var(--color-positive-500);    /* Static */
 
   /* --- Radio Button --- */
-  --radio-surface-default: var(--color-gray-50);
-  --radio-border-default: var(--color-gray-400);
-  --radio-border-selected: var(--color-brand-500);
-  --radio-knob-selected: var(--color-brand-500);
-  --radio-surface-disabled: var(--color-gray-100);
-  --radio-border-disabled: var(--color-gray-200);
-  --radio-text-default: var(--text-primary);
-  --radio-text-disabled: var(--text-secondary);
+  --radio-surface-default:  var(--surface-neutral-50);
+  --radio-border-default:   var(--border-neutral-400);
+  --radio-border-selected:  var(--color-brand-500);          /* Static */
+  --radio-knob-selected:    var(--color-brand-500);          /* Static */
+  --radio-surface-disabled: var(--surface-neutral-400);
+  --radio-border-disabled:  var(--border-neutral-400);
+  --radio-text-default:     var(--text-primary);
+  --radio-text-disabled:    var(--text-secondary);
 
-  /* --- Timer --- */
-  --timer-surface: #14151a;
-  --timer-border: var(--color-gray-100);
-  --timer-text: #ffffff;
+  /* --- Timer / Countdown --- */
+  /* Static: always dark background with white text */
+  --timer-surface: var(--surface-neutral-900-static);
+  --timer-border:  var(--border-neutral-100-static);
+  --timer-text:    var(--color-gray-0);
 
   /* --- Tooltip --- */
-  --tooltip-surface: #14151a;
-  --tooltip-text: #ffffff;
+  /* Static: always dark background with white text */
+  --tooltip-surface: var(--surface-neutral-900-static);
+  --tooltip-text:    var(--color-gray-0);
+
+  /* --- Card --- */
+  --card-surface-primary: var(--surface-neutral-800);
+  --card-text-title:      var(--surface-neutral-100);
+  --card-text-subtitle:   var(--text-secondary);
 
   /* --- Stepper --- */
-  --stepper-track-active: var(--color-brand-500);
-  --stepper-track-inactive: var(--color-gray-200);
+  --stepper-track-active:   var(--color-brand-500);          /* Static */
+  --stepper-track-inactive: var(--surface-neutral-200-static); /* Always Gray.200 */
 
   /* --- Separator --- */
-  --separator-line: var(--color-gray-200);
+  --separator-line: var(--border-neutral-200);
   --separator-text: var(--text-tertiary);
 
   /* --- Logo --- */
   --logo-color: var(--color-brand-500);
+
 }
 
+
 /* ============================================
-   DARK MODE — from Figma Light/Dark Modes
+   LAYER 4: DARK MODE
+   [data-theme="dark"]
+
+   Only semantic tokens are overridden here.
+   Component tokens referencing semantic tokens
+   automatically resolve to the correct dark values.
    ============================================ */
 [data-theme="dark"] {
 
-  /* Surface */
-  --surface-bg: #14151a;
-  --surface-neutral-0: #000000;
-  --surface-neutral-50: #14151a;
-  --surface-neutral-100: #262831;
-  --surface-neutral-800: #fcfcfd;
-  --surface-brand-50: #21273b;
-  --surface-brand-500: var(--color-brand-500);
+  /* --- Surface (inverted gray scale) --- */
+  --surface-neutral-0:    var(--color-gray-1000);   /* #000000 */
+  --surface-neutral-50:   var(--color-gray-900);    /* #14151a */
+  --surface-neutral-100:  var(--color-gray-800);    /* #262831 */
+  --surface-neutral-150:  var(--color-gray-750);    /* #30333e */
+  --surface-neutral-200:  var(--color-gray-700);    /* #3a3e4b */
+  --surface-neutral-250:  var(--color-gray-600);    /* #4d5264 */
+  --surface-neutral-300:  var(--color-gray-500);    /* #60667c */
+  --surface-neutral-400:  var(--color-gray-500);    /* #60667c */
+  --surface-neutral-500:  var(--color-gray-300);    /* #a3a8b8 */
+  --surface-neutral-600:  var(--color-gray-250);    /* #b5b8c5 */
+  --surface-neutral-700:  var(--color-gray-200);    /* #c6c8d2 */
+  --surface-neutral-750:  var(--color-gray-150);    /* #d9dae1 */
+  --surface-neutral-800:  var(--color-gray-100);    /* #ebecef */
+  --surface-neutral-900:  var(--color-gray-0);      /* #ffffff */
+  --surface-neutral-1000: var(--color-gray-0);      /* #ffffff */
+  --surface-neutral-0-80:   var(--color-gray-900-80);  /* rgba(20,21,26,0.8) */
+  --surface-neutral-900-80: var(--color-gray-0-80);    /* rgba(255,255,255,0.8) */
 
-  /* Text */
-  --text-primary: #fcfcfd;
-  --text-secondary: #a3a8b8;
-  --text-tertiary: #60667c;
-  --text-link-default: var(--color-brand-500);
-  --text-link-hover: var(--color-brand-300);
+  --surface-brand-50:  var(--color-brand-900);      /* #21273b */
+  --surface-brand-100: var(--color-brand-900);      /* #21273b */
+  /* surface-brand-500 in dark = Gray.0 (logo white), but this is the
+     dynamic brand-500 slot — logo uses a separate alias */
+  --surface-brand-500: var(--color-gray-0);         /* white background for logo in dark */
 
-  /* Border */
-  --border-neutral-100: #262831;
-  --border-neutral-200: #3a3e4b;
-  --border-neutral-300: #4d5264;
-  --border-neutral-400: #60667c;
+  --surface-status-warning-50:   var(--color-warning-950);  /* #271400 */
+  --surface-status-warning-500:  var(--color-warning-400);  /* #ffb647 */
+  --surface-status-negative-50:  var(--color-negative-950); /* #240001 */
+  --surface-status-negative-500: var(--color-negative-400); /* #ff5a5f */
+  --surface-status-positive-50:  var(--color-positive-950); /* #03190e */
+  --surface-status-positive-500: var(--color-positive-400); /* #45b380 */
 
-  /* Icon */
-  --icon-neutral-0: #000000;
-  --icon-neutral-300: #60667c;
-  --icon-neutral-500: #a3a8b8;
-  --icon-neutral-800: #fcfcfd;
+  /* App background stays gray-900 (softer than pure black) */
+  --surface-bg: var(--color-gray-900);              /* #14151a */
 
-  /* Button Primary — same surface, different disabled */
-  --btn-primary-surface-default: var(--color-brand-500);
-  --btn-primary-surface-hover: var(--color-brand-400);
-  --btn-primary-surface-pressed: var(--color-brand-600);
-  --btn-primary-surface-disabled: #262831;
-  --btn-primary-text-default: #ffffff;
-  --btn-primary-text-disabled: #a3a8b8;
+  /* --- Text --- */
+  --text-primary:         var(--color-gray-50);     /* #fcfcfd */
+  --text-secondary:       var(--color-gray-300);    /* #a3a8b8 */
+  --text-tertiary:        var(--color-gray-500);    /* #60667c */
+  --text-body-400:        var(--color-gray-500);    /* #60667c */
+  --text-link-default:    var(--color-brand-400);   /* #3388ff */
+  --text-link-hover:      var(--color-brand-300);   /* #66a6ff */
+  --text-link-visited:    var(--color-gray-300);    /* #a3a8b8 */
+  --text-link-disabled:   var(--color-gray-500);    /* #60667c */
+  --text-accent-brand:    var(--color-brand-500);   /* stays brand-500 */
+  --text-status-warning:  var(--color-warning-400); /* #ffb647 */
+  --text-status-negative: var(--color-negative-400);/* #ff5a5f */
+  /* text-status-positive stays .500 (#189f60) — no change */
 
-  /* Button Secondary */
-  --btn-secondary-border-default: var(--color-brand-500);
-  --btn-secondary-border-hover: var(--color-brand-400);
-  --btn-secondary-border-pressed: var(--color-brand-600);
-  --btn-secondary-border-disabled: #262831;
-  --btn-secondary-text-default: var(--color-brand-500);
-  --btn-secondary-text-disabled: #a3a8b8;
+  /* --- Border --- */
+  --border-neutral-100: var(--color-gray-700);      /* #3a3e4b */
+  --border-neutral-200: var(--color-gray-600);      /* #4d5264 */
+  --border-neutral-250: var(--color-gray-600);      /* #4d5264 */
+  --border-neutral-300: var(--color-gray-500);      /* #60667c */
+  --border-neutral-400: var(--color-gray-500);      /* #60667c */
+  --border-neutral-500: var(--color-gray-300);      /* #a3a8b8 */
+  --border-brand-600:   var(--color-brand-400);     /* #3388ff */
+  --border-status-focus:    var(--color-focus-400); /* #0099ff */
+  --border-status-warning:  var(--color-warning-400);  /* #ffb647 */
+  --border-status-negative: var(--color-negative-400); /* #ff5a5f */
 
-  /* Button Tertiary */
-  --btn-tertiary-text-default: var(--color-brand-500);
-  --btn-tertiary-text-disabled: #a3a8b8;
+  /* --- Icon --- */
+  --icon-neutral-0:   var(--color-gray-800);        /* #262831 (inverted) */
+  --icon-neutral-300: var(--color-gray-500);        /* #60667c */
+  --icon-neutral-500: var(--color-gray-300);        /* #a3a8b8 */
+  --icon-neutral-800: var(--color-gray-100);        /* #ebecef */
+  --icon-status-warning:  var(--color-warning-400); /* #ffb647 */
+  --icon-status-negative: var(--color-negative-400);/* #ff5a5f */
+  --icon-status-positive: var(--color-positive-400);/* #45b380 */
 
-  /* Checkbox */
-  --checkbox-surface-default: #262831;
-  --checkbox-surface-disabled: #3a3e4b;
-  --checkbox-border-default: #60667c;
-  --checkbox-border-disabled: #3a3e4b;
-  --checkbox-text-default: #fcfcfd;
-  --checkbox-text-disabled: #a3a8b8;
+  /* --- Component overrides that don't auto-resolve --- */
 
-  /* Input */
-  --input-surface-default: #262831;
-  --input-surface-focused: #262831;
-  --input-surface-disabled: #14151a;
-  --input-border-default: #60667c;
-  --input-border-disabled: #262831;
-  --input-text-default: #fcfcfd;
-  --input-text-placeholder: #60667c;
-  --input-text-disabled: #60667c;
-
-  /* Dropdown */
-  --dropdown-label-color: var(--color-gray-300);
-  --dropdown-surface-field: var(--color-gray-750);
-  --dropdown-border-default: var(--color-gray-700);
-  --dropdown-item-surface-selected: #3a3e4b;
+  /* Dropdown shadow needs higher opacity in dark */
   --dropdown-list-shadow: 0 8px 24px rgba(0,0,0,0.4);
 
-  /* Toggle */
-  --toggle-surface-off: #60667c;
-  --toggle-surface-disabled: #3a3e4b;
+  /* Logo becomes white in dark mode */
+  --logo-color: var(--color-gray-0);
 
-  /* Snackbar */
-  --snackbar-surface-neutral: #21273b;
-  --snackbar-surface-warning: #271400;
-  --snackbar-surface-negative: #240001;
-  --snackbar-surface-positive: #03190e;
-
-  /* Radio Button */
-  --radio-surface-default: #262831;
-  --radio-border-default: #60667c;
-  --radio-surface-disabled: #3a3e4b;
-  --radio-border-disabled: #4d5264;
-  --radio-text-default: #fcfcfd;
-  --radio-text-disabled: #a3a8b8;
-
-  /* Stepper */
-  --stepper-track-inactive: #3a3e4b;
-
-  /* Separator */
-  --separator-line: #3a3e4b;
-
-  /* Logo */
-  --logo-color: #ffffff;
 }

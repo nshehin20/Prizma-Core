@@ -278,6 +278,9 @@ select {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* Status bar */
@@ -1584,9 +1587,7 @@ select {
 }
 
 .found-type-preview {
-  font-family: var(--font-family-dm);
   color: var(--text-primary);
-  line-height: 1.3;
   flex: 1;
 }
 
@@ -1640,6 +1641,7 @@ select {
   background: var(--color-brand-500);
   border-radius: 2px;
   min-width: 2px;
+  max-width: 100%;
   opacity: 0.8;
 }
 
@@ -1647,7 +1649,7 @@ select {
 .found-radius-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 16px;
   margin-bottom: 8px;
 }
 
@@ -1655,26 +1657,29 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  min-width: 100px;
 }
 
 .found-radius-box {
   width: 80px;
   height: 80px;
-  background: #e5f0ff;
-  border: 2px solid #006aff;
+  background: var(--surface-brand-50);
+  border: 2px solid var(--color-brand-500);
 }
 
 .found-radius-name {
-  font-family: var(--font-family-dm);
-  font-size: 13px;
+  font-family: monospace;
+  font-size: 11px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--color-brand-500);
+  text-align: center;
+  word-break: break-all;
 }
 
 .found-radius-val {
   font-family: var(--font-family-dm);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-tertiary);
 }
 
@@ -1700,6 +1705,14 @@ select {
   font-weight: 700;
   color: var(--text-primary);
   margin: 20px 0 10px;
+}
+
+.found-icon-group-subheading {
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 12px 0 6px;
 }
 
 .found-icon-grid {
@@ -1804,6 +1817,9 @@ select {
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .flow-phone-notch {
@@ -2208,16 +2224,16 @@ select {
 .cam-arc-fill {
   fill: none;
   stroke: var(--color-brand-500);
-  stroke-width: 6;
+  stroke-width: 13;
   stroke-linecap: round;
-  stroke-dasharray: 679 226;
-  stroke-dashoffset: 226;
+  stroke-dasharray: 731 244;
+  stroke-dashoffset: 244;
   transform: rotate(-90deg);
   transform-origin: center;
   animation: cam-arc-spin 1.8s linear infinite;
 }
 @keyframes cam-arc-spin {
-  to { stroke-dashoffset: -679; }
+  to { stroke-dashoffset: -731; }
 }
 .cam-text-area {
   padding: 20px 24px 24px;
@@ -2226,4 +2242,494 @@ select {
   gap: 16px;
   align-items: center;
   background: var(--surface-bg);
+}
+
+/* --- SEMANTIC TOKEN GRID --- */
+.found-semantic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 8px;
+}
+@media (max-width: 700px) {
+  .found-semantic-grid { grid-template-columns: 1fr; }
+}
+
+
+
+/* ============================================
+   LAB VIEW
+   ============================================ */
+
+#view-lab {
+  flex-direction: row;
+  overflow: hidden;
+}
+
+/* ── Module sidebar ── */
+.lab-sidebar {
+  width: 192px;
+  min-width: 192px;
+  border-right: 1px solid rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0 0;
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+.lab-sidebar-title {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(0,0,0,0.22);
+  text-transform: uppercase;
+  padding: 0 20px 14px;
+}
+
+.lab-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.lab-sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 10px 18px;
+  border: none;
+  border-left: 2px solid transparent;
+  background: none;
+  text-align: left;
+  font-family: var(--font-family-dm);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.42);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.lab-sidebar-item:hover {
+  color: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.03);
+}
+
+.lab-sidebar-item--active {
+  color: #000;
+  font-weight: 600;
+  border-left-color: #000;
+  background: rgba(0,0,0,0.04);
+}
+
+.lab-sidebar-item--soon {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.lab-sidebar-count {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  color: rgba(0,0,0,0.25);
+  font-weight: 400;
+}
+
+/* ── Main area ── */
+.lab-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Lab bar ── */
+.lab-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+.lab-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab-bar-module {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.65);
+}
+
+.lab-bar-dot {
+  color: rgba(0,0,0,0.18);
+  font-size: 10px;
+}
+
+.lab-bar-meta {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(0,0,0,0.32);
+  text-transform: uppercase;
+}
+
+.lab-figma-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 4px;
+  background: transparent;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.45);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.lab-figma-btn:hover {
+  border-color: rgba(0,0,0,0.2);
+  color: #000;
+  background: rgba(0,0,0,0.03);
+}
+
+.lab-expand-btn {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.lab-expand-btn:hover {
+  border-color: rgba(0,0,0,0.22);
+  color: #000;
+  background: #fff;
+}
+
+.lab-expand-btn--active {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.lab-expand-btn--active:hover {
+  background: #1a1a1a;
+}
+
+/* ── Canvas viewport (dot grid) ── */
+.lab-canvas-vp {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #fafafa;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  cursor: default;
+}
+
+.lab-expanded.lab-canvas-vp {
+  cursor: grab;
+}
+
+.lab-expanded.lab-canvas-vp:active {
+  cursor: grabbing;
+}
+
+/* ── Pannable inner ── */
+.lab-canvas-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* ── Stage: all phone cells ── */
+.lab-stage {
+  position: relative;
+  width: 273px;
+  height: 591px;
+  flex-shrink: 0;
+}
+
+/* ── Phone cell ── */
+.lab-phone-cell {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 273px;
+  height: 591px;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.32s ease;
+  cursor: default;
+}
+
+.lab-phone-cell--clickable {
+  cursor: pointer;
+}
+
+.lab-phone-cell--clickable:hover .lab-phone-frame {
+  border-color: rgba(0,106,255,0.35);
+}
+
+/* Phone frame (390×844, scaled to 0.70) */
+.lab-phone-frame {
+  width: 390px;
+  height: 844px;
+  background: var(--surface-bg, #fff);
+  border-radius: 54px;
+  border: 1.5px solid rgba(0,0,0,0.09);
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.07),
+    0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.70);
+  transform-origin: top left;
+  position: absolute;
+  inset: 0;
+  -webkit-font-smoothing: antialiased;
+  moz-osx-font-smoothing: grayscale;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lab-phone-cell--current .lab-phone-frame {
+  box-shadow:
+    0 0 0 2px #006AFF,
+    0 8px 40px rgba(0,0,0,0.1);
+  border-color: transparent;
+}
+
+.lab-phone-notch {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.lab-phone-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-bg, #fff);
+  min-height: 0;
+}
+
+.lab-phone-home {
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-bg, #fff);
+}
+
+.lab-phone-home::after {
+  content: '';
+  width: 120px;
+  height: 4px;
+  background: rgba(0,0,0,0.14);
+  border-radius: 2px;
+}
+
+/* Cell labels (shown in expand) */
+.lab-phone-index-lbl {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  color: rgba(0,0,0,0.2);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lab-phone-name-lbl {
+  position: absolute;
+  bottom: -22px;
+  left: -40px;
+  right: -40px;
+  text-align: center;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.25s ease 0.15s;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lab-expanded .lab-phone-index-lbl,
+.lab-expanded .lab-phone-name-lbl {
+  opacity: 1;
+}
+
+/* ── Nav arrows (fixed in viewport, flanking centered phone) ── */
+.lab-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0,0,0,0.45);
+  transition: all 0.15s ease, opacity 0.25s ease;
+}
+
+.lab-arrow:hover {
+  background: #fff;
+  color: #000;
+  border-color: rgba(0,0,0,0.18);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* tight to the phone (273px wide, centered) */
+.lab-arrow--prev { left: calc(50% - 136.5px - 12px - 32px); }
+.lab-arrow--next { left: calc(50% + 136.5px + 12px); }
+
+.lab-arrow--disabled {
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.lab-expanded .lab-arrow {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Screen info below phone ── */
+.lab-screen-info {
+  position: absolute;
+  top: calc(50% + 310px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  user-select: none;
+}
+
+.lab-expanded .lab-screen-info {
+  opacity: 0;
+}
+
+.lab-screen-index {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  color: rgba(0,0,0,0.28);
+  letter-spacing: 0.06em;
+}
+
+.lab-screen-sep {
+  color: rgba(0,0,0,0.14);
+  font-size: 10px;
+}
+
+.lab-screen-label {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lab-expanded .lab-zoom-bar { display: flex; }
+
+/* ── Zoom controls (only in expand mode) ── */
+.lab-zoom-bar {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: none;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.09);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.lab-zoom-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+  line-height: 1;
+}
+
+.lab-zoom-btn:hover {
+  background: rgba(0,0,0,0.05);
+  color: #000;
+}
+
+.lab-zoom-val {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 10px;
+  color: rgba(0,0,0,0.38);
+  min-width: 36px;
+  text-align: center;
+  padding: 0 2px;
+  user-select: none;
+  cursor: default;
 }
