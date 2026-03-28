@@ -1263,7 +1263,12 @@ Available tokens: --color-brand-500, --color-brand-400, --color-brand-600, --tex
 ALWAYS respond with valid JSON only:
 { "message": "Short friendly sentence.", "actions": [ ...action objects... ] }`;
 
-async function _callClaudeDirect(apiKey, message) {
+async function _callClaudeDirect(apiKey, history) {
+  // history: [{role:'user'|'ai', text}] — map to Claude format, skip thinking bubbles
+  const messages = history
+    .filter(m => !m.thinking)
+    .map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.text }));
+
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -1276,7 +1281,7 @@ async function _callClaudeDirect(apiKey, message) {
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 512,
       system: _PROMPT_SYSTEM,
-      messages: [{ role: 'user', content: message.slice(0, 500) }],
+      messages,
     }),
   });
   const body = await res.json();
@@ -1457,16 +1462,22 @@ async function _runExpResponse(exp) {
   exp.messages.push({ role: 'ai', text: '...', thinking: true });
   labExpRenderMessages(exp);
 
-  const lastUserMsg = [...exp.messages].reverse().find(m => m.role === 'user')?.text || '';
-
   try {
-    const data = await _fakeExpResponse(lastUserMsg);
-    // Replace thinking bubble with real response
+    let data;
+    const localKey = window.ANTHROPIC_LOCAL_KEY;
+    if (localKey && localKey !== 'PASTE_YOUR_KEY_HERE') {
+      // Real Claude — pass full conversation history for context
+      data = await _callClaudeDirect(localKey, exp.messages.filter(m => !m.thinking));
+    } else {
+      // Fallback: keyword-based fake
+      const lastUserMsg = [...exp.messages].reverse().find(m => m.role === 'user')?.text || '';
+      data = await _fakeExpResponse(lastUserMsg);
+    }
     exp.messages = exp.messages.filter(m => !m.thinking);
     exp.messages.push({ role: 'ai', text: data.message || 'Done.' });
     labExpRenderMessages(exp);
     if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
-  } catch {
+  } catch (err) {
     exp.messages = exp.messages.filter(m => !m.thinking);
     exp.messages.push({ role: 'ai', text: 'Something went wrong — please try again.' });
     labExpRenderMessages(exp);
