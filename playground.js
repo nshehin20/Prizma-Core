@@ -491,14 +491,14 @@ function _navBar(variant) {
 // ---- Face Capture screens ----
 
 function fcTutorial() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px;gap:0">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 24px">
     ${_navBar('full')}
     <div style="text-align:center;padding:16px 0 0">
       <div style="font-family:var(--font-button);font-size:24px;font-weight:700;line-height:1.15;letter-spacing:-1px;color:var(--text-primary)">Take a selfie</div>
       <div style="font-family:var(--font-button);font-size:16px;font-weight:500;line-height:1.4;letter-spacing:-0.5px;color:var(--text-secondary);margin-top:12px">Keep a neutral expression, find balanced light and remove any glasses and hats</div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px 0">
-      <img src="assets/images/selfie-empty.png" style="width:240px;height:240px;object-fit:contain" alt="Selfie illustration" />
+      <img src="assets/illustrations/selfie/selfie-animated.svg" style="width:296px;height:296px;object-fit:contain" alt="Selfie illustration" />
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div style="text-align:center;font-family:var(--font-button);font-size:16px;font-weight:500;color:var(--text-secondary)">Stay still, selfie will be taken automatically</div>
@@ -508,16 +508,17 @@ function fcTutorial() {
   </div>`;
 }
 
-// ⚠️ DS FLAG: cam-circle / cam-dark-area / cam-ring are NOT in DS — camera viewport component needed
+// ⚠️ DS FLAG: cam-circle / cam-dark-area are NOT in DS — camera viewport component needed
+// selfie-empty.png = camera feed with no face (room background)
 function fcCamSearching() {
-  return `<div class="cam-screen">
-    <div style="padding:0 16px">${_navBar('logo-only')}</div>
-    <div class="cam-dark-area">
-      <div style="position:relative">
-        <div class="cam-circle" style="border:3px solid rgba(255,255,255,0.25)"></div>
+  return `<div style="display:flex;flex-direction:column;flex:1">
+    <div style="background:var(--surface-bg)">${_navBar('logo-only')}</div>
+    <div style="flex:1;background:#0d0d0d;display:flex;align-items:center;justify-content:center">
+      <div style="width:280px;height:280px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.3)">
+        <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
       </div>
     </div>
-    <div class="cam-text-area">
+    <div style="padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:center;background:var(--surface-bg)">
       <div style="font-family:var(--font-button);font-size:18px;font-weight:600;letter-spacing:-0.3px;color:var(--text-primary);text-align:center">Align your face within the silhouette and look at the camera</div>
       ${_verifiedTag()}
     </div>
@@ -525,18 +526,19 @@ function fcCamSearching() {
 }
 
 // ⚠️ DS FLAG: white detection ring not in DS
+// selfie-filled.png = camera feed with face detected
 function fcCamDetected() {
-  return `<div class="cam-screen">
-    <div style="padding:0 16px">${_navBar('logo-only')}</div>
-    <div class="cam-dark-area">
+  return `<div style="display:flex;flex-direction:column;flex:1">
+    <div style="background:var(--surface-bg)">${_navBar('logo-only')}</div>
+    <div style="flex:1;background:#0d0d0d;display:flex;align-items:center;justify-content:center">
       <div style="position:relative">
-        <div class="cam-circle">
-          <img src="assets/images/selfie-filled.png" alt="" />
+        <div style="width:280px;height:280px;border-radius:50%;overflow:hidden">
+          <img src="assets/images/selfie-filled.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
-        <div class="cam-ring cam-ring--detected"></div>
+        <div style="position:absolute;inset:-5px;border-radius:50%;border:4px solid rgba(255,255,255,0.9);pointer-events:none"></div>
       </div>
     </div>
-    <div class="cam-text-area">
+    <div style="padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:center;background:var(--surface-bg)">
       <div style="font-family:var(--font-button);font-size:18px;font-weight:600;letter-spacing:-0.3px;color:var(--text-primary);text-align:center">Align your face within the silhouette and look at the camera</div>
       ${_verifiedTag()}
     </div>
@@ -545,32 +547,32 @@ function fcCamDetected() {
 
 // ⚠️ DS FLAG: blue arc progress ring not in DS
 function fcCamCapturing() {
-  return `<div class="cam-screen">
-    <div style="padding:0 16px">${_navBar('logo-only')}</div>
-    <div class="cam-dark-area">
+  return `<div style="display:flex;flex-direction:column;flex:1">
+    <div style="background:var(--surface-bg)">${_navBar('logo-only')}</div>
+    <div style="flex:1;background:#0d0d0d;display:flex;align-items:center;justify-content:center">
       <div style="position:relative;width:280px;height:280px">
-        <div class="cam-circle">
-          <img src="assets/images/selfie-filled.png" alt="" />
+        <div style="width:280px;height:280px;border-radius:50%;overflow:hidden">
+          <img src="assets/images/selfie-filled.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
-        <svg class="cam-arc-svg" viewBox="0 0 296 296" width="296" height="296">
-          <circle class="cam-arc-track" cx="148" cy="148" r="144"/>
+        <svg style="position:absolute;inset:-8px;pointer-events:none" viewBox="0 0 296 296" width="296" height="296">
+          <circle fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="6" cx="148" cy="148" r="144"/>
           <circle class="cam-arc-fill" cx="148" cy="148" r="144"/>
         </svg>
       </div>
     </div>
-    <div class="cam-text-area">
+    <div style="padding:20px 24px 24px;display:flex;flex-direction:column;gap:16px;align-items:center;background:var(--surface-bg)">
       <div style="font-family:var(--font-button);font-size:18px;font-weight:600;letter-spacing:-0.3px;color:var(--text-primary);text-align:center">Get ready...</div>
       ${_verifiedTag()}
     </div>
   </div>`;
 }
 
-// DS: .spinner
+// DS: .loading-spinner (64px, defined in components.css)
 function fcProcessing() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:0 24px 24px">
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px">
-      <div class="spinner" style="width:64px;height:64px;border-width:6px"></div>
+      <div class="loading-spinner"></div>
       <div style="font-family:var(--font-button);font-size:24px;font-weight:700;letter-spacing:-0.5px;color:var(--text-primary)">Processing...</div>
     </div>
     ${_verifiedTag()}
@@ -581,7 +583,7 @@ function fcUploading() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:0 24px 24px">
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px">
-      <div class="spinner" style="width:64px;height:64px;border-width:6px"></div>
+      <div class="loading-spinner"></div>
       <div style="font-family:var(--font-button);font-size:24px;font-weight:700;letter-spacing:-0.5px;color:var(--text-primary)">Uploading...</div>
     </div>
     ${_verifiedTag()}
@@ -603,6 +605,7 @@ function fcSuccess() {
     ${_verifiedTag()}
   </div>`;
 }
+
 
 // ---- Module registry ----
 
@@ -640,10 +643,12 @@ function canvasZoomIn()  { setCanvasZoom(_canvasZoom + 0.1); }
 function canvasZoomOut() { setCanvasZoom(_canvasZoom - 0.1); }
 function canvasZoomFit() { setCanvasZoom(0.6); }
 
-// Cmd/Ctrl + scroll to zoom
-function _setupCanvasWheel() {
+// Cmd/Ctrl + scroll to zoom; click+drag to pan
+function _setupCanvasInteraction() {
   const vp = document.getElementById('canvas-viewport');
   if (!vp) return;
+
+  // Zoom
   vp.addEventListener('wheel', function(e) {
     if (e.metaKey || e.ctrlKey) {
       e.preventDefault();
@@ -651,6 +656,30 @@ function _setupCanvasWheel() {
       setCanvasZoom(_canvasZoom + delta);
     }
   }, { passive: false });
+
+  // Pan (click+drag)
+  let _panning = false, _panStartX = 0, _panStartY = 0, _scrollStartX = 0, _scrollStartY = 0;
+
+  vp.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    _panning = true;
+    _panStartX = e.clientX; _panStartY = e.clientY;
+    _scrollStartX = vp.scrollLeft; _scrollStartY = vp.scrollTop;
+    vp.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (!_panning) return;
+    vp.scrollLeft = _scrollStartX - (e.clientX - _panStartX);
+    vp.scrollTop  = _scrollStartY - (e.clientY - _panStartY);
+  });
+  window.addEventListener('mouseup', function() {
+    if (!_panning) return;
+    _panning = false;
+    vp.style.cursor = 'grab';
+  });
+
+  vp.style.cursor = 'grab';
 }
 
 // ---- Init ----
@@ -662,7 +691,7 @@ function initModules() {
   _modulesInit = true;
   renderModuleCanvas('face-capture');
   setCanvasZoom(0.6);
-  _setupCanvasWheel();
+  _setupCanvasInteraction();
 }
 
 function selectModule(id, btn) {

@@ -1962,6 +1962,8 @@ select {
   flex: 1;
   overflow: auto;
   position: relative;
+  cursor: grab;
+  user-select: none;
   background:
     radial-gradient(circle, rgba(0,106,255,0.04) 1px, transparent 1px);
   background-color: #eef0f4;
