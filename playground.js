@@ -707,7 +707,9 @@ function setFcVersion(version) {
   
   // Update lab view if active
   if (_labActiveModule === 'face-capture') {
-    labRenderScreens();
+    _labCurrent = 0;
+    _labBuildStage();
+    _labUpdateMeta();
   }
 }
 
