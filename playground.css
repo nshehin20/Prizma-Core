@@ -252,8 +252,8 @@ select {
   display: flex;
 }
 
-/* ---- PHONE VIEW ---- */
-#view-phone {
+/* ---- LAB / CAPTURE VIEW ---- */
+#view-lab {
   align-items: center;
   justify-content: center;
   padding: 32px;
