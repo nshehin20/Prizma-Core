@@ -990,9 +990,11 @@ function renderModuleCanvas(moduleId) {
   const versionBar = document.getElementById('module-version-bar');
   
   // Handle version dropdown
+  console.log('[v0] renderModuleCanvas called', moduleId, 'hasVersions:', mod?.hasVersions, 'versionBar:', versionBar);
   if (versionBar) {
     if (mod && mod.hasVersions) {
       const currentVersion = moduleId === 'face-capture' ? _fcVersion : 'Original';
+      console.log('[v0] Rendering version dropdown, currentVersion:', currentVersion, 'versions:', mod.versions);
       versionBar.innerHTML = `
         <div class="version-selector">
           <label class="type-body-xs-medium" style="color:var(--color-gray-500)">Version</label>
