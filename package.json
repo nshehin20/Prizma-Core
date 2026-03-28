@@ -5,8 +5,5 @@
     "dev": "npx serve .",
     "build": "echo 'Static site, no build needed'",
     "start": "npx serve ."
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0"
   }
 }

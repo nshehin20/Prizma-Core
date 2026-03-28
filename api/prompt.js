@@ -1,4 +1,4 @@
-const Anthropic = require('@anthropic-ai/sdk');
+const https = require('https');
 
 const SYSTEM_PROMPT = `You are an AI assistant embedded in Incode Core Lab — a design system playground for identity verification (IDV) mobile flows. Users are product managers and designers (non-technical) who want to explore and modify UI components via natural language.
 
@@ -24,11 +24,11 @@ A canvas with mobile phone frames running real IDV UI flows. Users can select a 
 ## Available design tokens
 --color-brand-500 (primary blue), --color-brand-400 (hover), --color-brand-600 (pressed),
 --text-primary, --text-secondary, --surface-bg,
---radius-button (px), --radius-card (px)
+--radius-button (px value like "24px"), --radius-card (px value like "20px")
 
 ## Response format — ALWAYS return valid JSON, nothing else:
 {
-  "message": "Short friendly sentence describing what you did or why something isn't possible.",
+  "message": "Short friendly sentence describing what you did or why something is not possible.",
   "actions": [ ...action objects... ]
 }
 
@@ -49,12 +49,51 @@ User: "change the brand color to green"
 {"message":"Changed the brand color to green.","actions":[{"type":"setToken","token":"--color-brand-500","value":"#22C55E"},{"type":"setToken","token":"--color-brand-400","value":"#4ADE80"},{"type":"setToken","token":"--color-brand-600","value":"#16A34A"}]}
 
 User: "make the buttons more rounded"
-{"message":"Increased button border radius to 24px.","actions":[{"type":"setToken","token":"--radius-button","value":"24px"}]}
+{"message":"Increased button border radius.","actions":[{"type":"setToken","token":"--radius-button","value":"24px"}]}
 
 User: "show NFC flow"
-{"message":"NFC is coming soon and doesn't have screens yet. I can show you the Face Capture flow instead — just ask!","actions":[]}
+{"message":"NFC is coming soon and does not have screens yet. I can show you the Face Capture flow instead — just ask!","actions":[]}
 
-Keep responses short and friendly. If a request is unclear, do your best guess and mention it in the message.`;
+Keep responses short and friendly. If a request is unclear, make your best guess and mention it briefly.`;
+
+function callClaude(apiKey, userMessage) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 512,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: 'user', content: userMessage }],
+    });
+
+    const options = {
+      hostname: 'api.anthropic.com',
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(body),
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try {
+          resolve({ status: res.statusCode, body: JSON.parse(data) });
+        } catch (e) {
+          reject(new Error('Invalid JSON from Claude API'));
+        }
+      });
+    });
+
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -66,27 +105,28 @@ module.exports = async function handler(req, res) {
 
   const { message } = req.body || {};
   if (!message || typeof message !== 'string') {
-    return res.status(400).json({ error: 'Missing message' });
+    return res.status(400).json({ message: 'Missing message.', actions: [] });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return res.status(500).json({ message: 'API key not configured. Set ANTHROPIC_API_KEY in Vercel environment variables.', actions: [] });
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(200).json({
+      message: 'API key not configured. Add ANTHROPIC_API_KEY in Vercel Environment Variables.',
+      actions: [],
+    });
   }
-
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   try {
-    const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 512,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: message.slice(0, 500) }],
-    });
+    const { status, body } = await callClaude(apiKey, message.slice(0, 500));
 
-    const text = response.content[0]?.text || '';
+    if (status !== 200) {
+      console.error('Claude API error:', status, body);
+      return res.status(200).json({ message: 'Claude API returned an error. Check the API key.', actions: [] });
+    }
+
+    const text = body.content?.[0]?.text || '';
     let result;
     try {
-      // Strip markdown code fences if present
       const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
       result = JSON.parse(clean);
     } catch {
@@ -95,7 +135,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json(result);
   } catch (err) {
-    console.error('Claude API error:', err.message);
-    return res.status(500).json({ message: 'Something went wrong. Please try again.', actions: [] });
+    console.error('Handler error:', err.message);
+    return res.status(200).json({ message: 'Connection error. Please try again.', actions: [] });
   }
 };

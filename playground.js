@@ -1263,7 +1263,6 @@ async function submitPrompt() {
       body: JSON.stringify({ message }),
     });
 
-    if (!res.ok) throw new Error('Request failed');
     const data = await res.json();
 
     bubble.textContent = data.message || 'Done.';
