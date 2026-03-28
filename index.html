@@ -3151,6 +3151,7 @@
                   <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
                     <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
                     <span>Face Capture</span>
+                    <span class="lab-experiment-btn" onclick="event.stopPropagation(); labCreateExperiment('face-capture', 'Face Capture')">+ Experiment</span>
                   </button>
                   <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
                     <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
@@ -3172,6 +3173,24 @@
           <button class="lab-sidebar-toggle" id="lab-sidebar-toggle" onclick="labToggleSidebar()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
           </button>
+
+          <!-- Experiment canvas overlay -->
+          <div class="lab-experiment-canvas" id="lab-experiment-canvas">
+            <button class="lab-experiment-back" id="lab-experiment-back" onclick="labCloseExperiment()">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L3 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="lab-experiment-back-label">Back</span>
+            </button>
+            <div class="lab-experiment-placeholder">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 1L17 11L27 14L17 17L14 27L11 17L1 14L11 11L14 1Z" fill="#3D7EFF" opacity="0.9"/></svg>
+              <p class="lab-experiment-title" id="lab-experiment-title">New Experiment</p>
+              <p class="lab-experiment-hint">Type what you want to see in the prompt bar below</p>
+              <div class="lab-experiment-examples">
+                <span>"show the success screen in dark mode"</span>
+                <span>"change the brand color to purple"</span>
+                <span>"show all screens"</span>
+              </div>
+            </div>
+          </div>
 
           <div class="lab-canvas-inner" id="lab-canvas-inner">
             <div class="lab-stage" id="lab-stage"></div>

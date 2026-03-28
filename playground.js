@@ -1336,7 +1336,25 @@ async function submitPrompt() {
   }
 }
 
+function labCreateExperiment(moduleId, moduleLabel) {
+  // Select the module silently
+  _labActiveModule = moduleId;
+  // Show the experiment canvas overlay
+  const overlay = document.getElementById('lab-experiment-canvas');
+  document.getElementById('lab-experiment-title').textContent = moduleLabel + ' — Experiment';
+  document.getElementById('lab-experiment-back-label').textContent = 'Back to ' + moduleLabel;
+  overlay.classList.add('active');
+  // Focus prompt input
+  setTimeout(() => document.getElementById('prompt-input')?.focus(), 100);
+}
+
+function labCloseExperiment() {
+  document.getElementById('lab-experiment-canvas').classList.remove('active');
+}
+
 function executeLabAction(action) {
+  // Close experiment overlay on first action
+  labCloseExperiment();
   switch (action.type) {
 
     case 'selectModule': {

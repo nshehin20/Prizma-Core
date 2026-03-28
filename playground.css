@@ -2623,6 +2623,119 @@ select {
   color: var(--color-gray-400);
 }
 
+/* Experiment button inside sidebar item */
+.lab-experiment-btn {
+  display: none;
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font-family-dm);
+  color: #3D7EFF;
+  background: rgba(61,126,255,0.08);
+  border: 1px solid rgba(61,126,255,0.18);
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+  pointer-events: all;
+}
+
+.lab-sidebar-item:hover .lab-experiment-btn {
+  display: block;
+}
+
+.lab-experiment-btn:hover {
+  background: rgba(61,126,255,0.15);
+  border-color: rgba(61,126,255,0.35);
+}
+
+/* ── Experiment canvas overlay ── */
+.lab-experiment-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.lab-experiment-canvas.active {
+  display: flex;
+}
+
+.lab-experiment-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--font-family-dm);
+  color: #4B5060;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.lab-experiment-back:hover {
+  background: #fff;
+  color: #0D0D0D;
+}
+
+.lab-experiment-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 0 32px;
+  max-width: 420px;
+  user-select: none;
+}
+
+.lab-experiment-title {
+  font-family: var(--font-family-dm);
+  font-size: 18px;
+  font-weight: 600;
+  color: #0D0D0D;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.lab-experiment-hint {
+  font-family: var(--font-family-dm);
+  font-size: 13px;
+  color: #8A8F9E;
+  margin: 0;
+}
+
+.lab-experiment-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.lab-experiment-examples span {
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  color: #9AA0AC;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 20px;
+  padding: 5px 14px;
+  display: inline-block;
+}
+
 /* ── Main area ── */
 .lab-main {
   flex: 1;
