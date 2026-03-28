@@ -12,8 +12,11 @@
 </head>
 <body>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <!-- TOKEN PANEL BACKDROP -->
+  <div class="token-panel-backdrop" id="token-panel-backdrop" onclick="toggleTokenPanel()"></div>
+
+  <!-- TOKEN PANEL (sliding) -->
+  <aside class="sidebar" id="token-panel">
     <div class="sidebar-header">
       <div class="sidebar-logo">P</div>
       <div>
@@ -49,14 +52,14 @@
       <div class="token-section">
         <div class="token-section-title">Border Radius</div>
         <div class="token-row">
-          <label>Button radius</label>
+          <label>Button</label>
           <div class="token-input-row range-row">
             <input type="range" min="0" max="28" value="16" id="radius-btn" oninput="updateToken('--radius-button', this.value + 'px'); document.getElementById('radius-btn-val').textContent = this.value + 'px'" />
             <span class="range-val" id="radius-btn-val">16px</span>
           </div>
         </div>
         <div class="token-row">
-          <label>Card radius</label>
+          <label>Card</label>
           <div class="token-input-row range-row">
             <input type="range" min="0" max="32" value="16" id="radius-card" oninput="updateToken('--radius-card', this.value + 'px'); document.getElementById('radius-card-val').textContent = this.value + 'px'" />
             <span class="range-val" id="radius-card-val">16px</span>
@@ -72,13 +75,6 @@
             <option value="'Rethink Sans', sans-serif">Rethink Sans</option>
             <option value="system-ui, sans-serif">System UI</option>
           </select>
-        </div>
-        <div class="token-row">
-          <label>Button size</label>
-          <div class="token-input-row range-row">
-            <input type="range" min="12" max="24" value="18" id="font-btn" oninput="updateToken('--font-size-button-m', this.value + 'px'); document.getElementById('font-btn-val').textContent = this.value + 'px'" />
-            <span class="range-val" id="font-btn-val">18px</span>
-          </div>
         </div>
       </div>
       <div class="token-section">
@@ -108,17 +104,6 @@
           </div>
         </div>
       </div>
-      <!-- Theme toggle -->
-      <div class="token-section">
-        <div class="token-section-title">Theme</div>
-        <div class="token-row">
-          <label>Mode</label>
-          <div class="theme-toggle" onclick="toggleTheme(this)">
-            <span class="theme-opt theme-opt--active" data-val="light">☀️ Light</span>
-            <span class="theme-opt" data-val="dark">🌙 Dark</span>
-          </div>
-        </div>
-      </div>
 
       <button class="reset-btn" onclick="resetTokens()">Reset to defaults</button>
     </div>
@@ -131,7 +116,17 @@
         <button class="tab active" onclick="showView('lab', this)">⚗️ Lab</button>
         <button class="tab" onclick="showView('components', this)">🧩 Components</button>
       </div>
-      <div class="topbar-badge">v2.5 · Prizma DS</div>
+      <div class="topbar-right">
+        <div class="topbar-theme-toggle" id="topbar-theme-toggle">
+          <button class="topbar-theme-opt topbar-theme-opt--active" data-val="light" onclick="setTopbarTheme('light', this)">☀️ Light</button>
+          <button class="topbar-theme-opt" data-val="dark" onclick="setTopbarTheme('dark', this)">🌙 Dark</button>
+        </div>
+        <button class="topbar-token-btn" id="topbar-token-btn" onclick="toggleTokenPanel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 8v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="14" r="2" stroke="currentColor" stroke-width="2"/><path d="M6 2v10M6 16v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="10" r="2" stroke="currentColor" stroke-width="2"/><path d="M18 2v6M18 12v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Tokens
+        </button>
+        <div class="topbar-badge">v2.5 · Prizma DS</div>
+      </div>
     </div>
 
     <!-- ===== PHONE VIEW ===== -->

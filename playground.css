@@ -13,15 +13,38 @@ body {
   color: var(--color-gray-800);
 }
 
-/* ---- SIDEBAR ---- */
+/* ---- TOKEN PANEL (sliding) ---- */
 .sidebar {
-  width: 280px;
-  min-width: 280px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
   background: #1a1d27;
   color: #e0e2ea;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 200;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.token-panel-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 199;
+  backdrop-filter: blur(1px);
+}
+
+.token-panel-backdrop.open {
+  display: block;
 }
 
 .sidebar-header {
@@ -239,6 +262,67 @@ select {
   background: var(--color-gray-100);
   padding: 4px 10px;
   border-radius: 20px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-theme-toggle {
+  display: flex;
+  align-items: center;
+  background: var(--color-gray-100);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.topbar-theme-opt {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: var(--font-family-dm);
+  font-weight: 500;
+  color: var(--color-gray-400);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.15s;
+}
+
+.topbar-theme-opt--active {
+  background: #fff;
+  color: var(--color-gray-800);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.topbar-token-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 12px;
+  font-family: var(--font-family-dm);
+  font-weight: 500;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.topbar-token-btn:hover {
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-800);
+}
+
+.topbar-token-btn.active {
+  background: var(--color-brand-500);
+  border-color: var(--color-brand-500);
+  color: #fff;
 }
 
 /* ---- VIEWS ---- */

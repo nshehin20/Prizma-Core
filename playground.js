@@ -71,6 +71,43 @@ function resetTokens() {
   document.getElementById('font-btn-val').textContent = '18px';
 }
 
+function toggleTokenPanel() {
+  const panel    = document.getElementById('token-panel');
+  const backdrop = document.getElementById('token-panel-backdrop');
+  const btn      = document.getElementById('topbar-token-btn');
+  const isOpen   = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  backdrop.classList.toggle('open', !isOpen);
+  btn.classList.toggle('active', !isOpen);
+}
+
+function setTopbarTheme(val, btn) {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  if (current === val) return;
+  // Reuse existing toggleTheme logic by temporarily faking the element
+  document.querySelectorAll('.topbar-theme-opt').forEach(o => {
+    o.classList.toggle('topbar-theme-opt--active', o.dataset.val === val);
+  });
+  // Drive the actual theme change
+  const next = val;
+  document.documentElement.setAttribute('data-theme', next);
+  Object.entries(themeTokens[next]).forEach(([prop, v]) => {
+    if (v === null) root.style.removeProperty(prop);
+    else root.style.setProperty(prop, v);
+  });
+  const statusBar = document.getElementById('phone-status-bar');
+  if (statusBar) statusBar.src = next === 'dark' ? 'assets/illustrations/status-bar-dark.svg' : 'assets/illustrations/status-bar-light.svg';
+  document.querySelectorAll('img[src*="assets/icons/status/"]').forEach(img => {
+    if (next === 'dark') {
+      img.src = img.src.replace('/assets/icons/status/', '/assets/icons/status/dark/').replace('/status/dark/dark/', '/status/dark/');
+    } else {
+      img.src = img.src.replace('/assets/icons/status/dark/', '/assets/icons/status/');
+    }
+  });
+  if (typeof labRefreshStatusBars === 'function') labRefreshStatusBars();
+  populateTokenValues();
+}
+
 function showView(name, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
