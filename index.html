@@ -129,6 +129,7 @@
     <div class="topbar">
       <div class="topbar-tabs">
         <button class="tab active" onclick="showView('phone', this)">📱 Phone</button>
+        <button class="tab" onclick="showView('modules', this); initModules()">🗂 Modules</button>
         <button class="tab" onclick="showView('components', this)">🧩 Components</button>
       </div>
       <div class="topbar-badge">v2.5 · Prizma DS</div>
@@ -233,6 +234,17 @@
         </div>
       <div id="phone-swap-panel" class="phone-swap-panel"></div>
       </div>
+    </div>
+
+    <!-- ===== MODULES VIEW ===== -->
+    <div id="view-modules" class="view">
+      <div class="module-bar">
+        <button class="module-tab active" onclick="selectModule('face-capture', this)">Face Capture</button>
+        <button class="module-tab" onclick="selectModule('id-capture', this)">ID Capture</button>
+        <button class="module-tab" onclick="selectModule('nfc', this)">NFC</button>
+        <button class="module-tab" onclick="selectModule('document-capture', this)">Document Capture</button>
+      </div>
+      <div class="module-canvas" id="module-canvas"></div>
     </div>
 
     <!-- ===== COMPONENTS VIEW ===== -->
