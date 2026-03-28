@@ -1209,7 +1209,8 @@ function _labSetupInteraction() {
     const dy = e.clientY - _labDragOrigin._startY;
     if (!_labDragMoved && Math.sqrt(dx*dx + dy*dy) > 5) _labDragMoved = true;
     _labPan.x = e.clientX - _labDragOrigin.x;
-    _labPan.y = e.clientY - _labDragOrigin.y;
+    // Horizontal-only pan — vertical is locked
+    // _labPan.y stays at its initial value
     _labApplyTransform();
   });
 
@@ -1289,100 +1290,238 @@ async function _callClaudeDirect(apiKey, message) {
   }
 }
 
-let _labExpMode = false;
+// ─── Multi-experiment state ───────────────────────────────────────────────────
+let _experiments   = [];   // [{ id, label, messages: [{role,text}] }]
+let _activeExpId   = null; // null = showing original
+let _expCounter    = 0;
 
 function labCreateExperiment(moduleId, moduleLabel) {
   _labActiveModule = moduleId;
-  _labExpMode = true;
+  _expCounter++;
+  const id    = 'exp-' + _expCounter;
+  const label = 'Exp ' + _expCounter;
+  _experiments.push({ id, label, messages: [] });
 
-  // Update tab labels
-  document.getElementById('lab-exp-original-label').textContent = moduleLabel;
-  document.getElementById('lab-exp-chat-title').textContent = moduleLabel + ' — Experiment';
-
-  // Show tab bar + overlay
-  document.getElementById('lab-exp-tab-bar').classList.add('active');
-  document.getElementById('lab-experiment-overlay').classList.add('active');
-
-  // Set active tab to Experiment
-  document.getElementById('lab-exp-tab-original').classList.remove('lab-exp-tab--active');
-  document.getElementById('lab-exp-tab-exp').classList.add('lab-exp-tab--active');
-
-  // Focus the centered input
-  setTimeout(() => document.getElementById('lab-exp-input')?.focus(), 100);
+  labExpRenderSidebarItems();
+  labExpTabSwitch(id);
 }
 
-function labExpTabSwitch(tab) {
-  const tabOriginal = document.getElementById('lab-exp-tab-original');
-  const tabExp      = document.getElementById('lab-exp-tab-exp');
-  const overlay     = document.getElementById('lab-experiment-overlay');
+function labExpRenderSidebarItems() {
+  const nav = document.getElementById('lab-exp-sub-nav');
+  if (!nav) return;
+  nav.innerHTML = _experiments.map(exp => `
+    <button class="lab-exp-sub-item${_activeExpId === exp.id ? ' lab-exp-sub-item--active' : ''}"
+            onclick="labExpTabSwitch('${exp.id}')">
+      <span>${exp.label}</span>
+      <span class="lab-exp-sub-close" onclick="event.stopPropagation();labExpClose('${exp.id}')">×</span>
+    </button>
+  `).join('');
+}
 
-  if (tab === 'original') {
-    tabOriginal.classList.add('lab-exp-tab--active');
-    tabExp.classList.remove('lab-exp-tab--active');
+function labExpTabSwitch(idOrOriginal) {
+  _activeExpId = (idOrOriginal === 'original') ? null : idOrOriginal;
+  labExpRenderSidebarItems();
+
+  const vp      = document.querySelector('.lab-canvas-vp');
+  const overlay = document.getElementById('lab-experiment-overlay');
+  const panel   = document.getElementById('lab-exp-panel');
+
+  if (_activeExpId === null) {
+    // Back to original — restore everything
+    vp.classList.remove('lab-exp-active', 'lab-panel-open');
     overlay.classList.remove('active');
-  } else {
-    tabExp.classList.add('lab-exp-tab--active');
-    tabOriginal.classList.remove('lab-exp-tab--active');
-    overlay.classList.add('active');
+    panel.classList.remove('active');
+    return;
   }
+
+  const exp = _experiments.find(e => e.id === _activeExpId);
+  if (!exp) return;
+
+  if (exp.messages.length === 0) {
+    // Phase 1: no messages yet — hide phones, show centered chat card
+    vp.classList.add('lab-exp-active');
+    vp.classList.remove('lab-panel-open');
+    overlay.classList.add('active');
+    panel.classList.remove('active');
+    setTimeout(() => document.getElementById('lab-exp-overlay-input')?.focus(), 80);
+  } else {
+    // Phase 2: has messages — phones back, right panel visible
+    vp.classList.remove('lab-exp-active');
+    vp.classList.add('lab-panel-open');
+    overlay.classList.remove('active');
+    panel.classList.add('active');
+    document.getElementById('lab-exp-panel-title').textContent = exp.label;
+    labExpRenderMessages(exp);
+    setTimeout(() => document.getElementById('lab-exp-panel-input')?.focus(), 80);
+  }
+}
+
+function labExpClose(id) {
+  _experiments = _experiments.filter(e => e.id !== id);
+  if (_activeExpId === id) {
+    const last = _experiments[_experiments.length - 1];
+    labExpTabSwitch(last ? last.id : 'original');
+  } else {
+    labExpRenderSidebarItems();
+  }
+  if (_experiments.length === 0) labCloseExperiment();
 }
 
 function labCloseExperiment() {
-  _labExpMode = false;
-  document.getElementById('lab-exp-tab-bar').classList.remove('active');
+  _experiments = [];
+  _activeExpId = null;
+  _expCounter  = 0;
   document.getElementById('lab-experiment-overlay').classList.remove('active');
+  document.getElementById('lab-exp-panel').classList.remove('active');
+  document.querySelector('.lab-canvas-vp').classList.remove('lab-exp-active', 'lab-panel-open');
+  document.getElementById('lab-exp-sub-nav').innerHTML = '';
 }
 
-function labExpFill(text) {
-  const input = document.getElementById('lab-exp-input');
-  if (input) { input.value = text; input.focus(); }
+function labExpHidePanel() {
+  document.getElementById('lab-exp-panel').classList.remove('active');
+  document.querySelector('.lab-canvas-vp').classList.remove('lab-panel-open');
 }
 
+// Suggestion chip → fill overlay input and submit
+function labExpSuggest(btn) {
+  const input = document.getElementById('lab-exp-overlay-input');
+  if (input) { input.value = btn.textContent.trim(); input.focus(); }
+  labExpSubmit();
+}
+
+function labExpRenderMessages(exp) {
+  const container = document.getElementById('lab-exp-messages');
+  if (!container) return;
+  container.innerHTML = exp.messages.map(m => `
+    <div class="lab-exp-msg lab-exp-msg--${m.role}${m.thinking ? ' lab-exp-msg--thinking' : ''}">
+      <div class="lab-exp-msg-bubble">${m.text}</div>
+    </div>
+  `).join('');
+  container.scrollTop = container.scrollHeight;
+}
+
+// Submit from the centered overlay card (Phase 1 → Phase 2 transition)
 async function labExpSubmit() {
-  const input    = document.getElementById('lab-exp-input');
-  const response = document.getElementById('lab-exp-response');
-  const btn      = document.getElementById('lab-exp-submit-btn');
-  const message  = input?.value.trim();
-  if (!message || btn?.disabled) return;
+  const input = document.getElementById('lab-exp-overlay-input');
+  const btn   = document.getElementById('lab-exp-submit-btn');
+  const msg   = input?.value.trim();
+  if (!msg || btn?.disabled || !_activeExpId) return;
 
-  input.disabled = true;
-  btn.disabled   = true;
-  btn.innerHTML  = '<div class="prompt-spinner"></div>';
-  response.textContent = '...';
+  const exp = _experiments.find(e => e.id === _activeExpId);
+  if (!exp) return;
+
+  // Add user message
+  exp.messages.push({ role: 'user', text: msg });
+  input.value = '';
+
+  // Transition: hide overlay, show phones + right panel
+  const vp = document.querySelector('.lab-canvas-vp');
+  vp.classList.remove('lab-exp-active');
+  vp.classList.add('lab-panel-open');
+  document.getElementById('lab-experiment-overlay').classList.remove('active');
+  const panel = document.getElementById('lab-exp-panel');
+  panel.classList.add('active');
+  document.getElementById('lab-exp-panel-title').textContent = exp.label;
+
+  labExpRenderMessages(exp);
+  await _runExpResponse(exp);
+}
+
+// Submit from the right panel (Phase 2 follow-up messages)
+async function labExpPanelSubmit() {
+  const input = document.getElementById('lab-exp-panel-input');
+  const btn   = document.getElementById('lab-exp-panel-send');
+  const msg   = input?.value.trim();
+  if (!msg || btn?.disabled || !_activeExpId) return;
+
+  const exp = _experiments.find(e => e.id === _activeExpId);
+  if (!exp) return;
+
+  exp.messages.push({ role: 'user', text: msg });
+  input.value = '';
+  labExpRenderMessages(exp);
+  await _runExpResponse(exp);
+}
+
+async function _runExpResponse(exp) {
+  // Disable both possible inputs while waiting
+  const overlayBtn  = document.getElementById('lab-exp-submit-btn');
+  const panelInput  = document.getElementById('lab-exp-panel-input');
+  const panelBtn    = document.getElementById('lab-exp-panel-send');
+
+  if (overlayBtn) { overlayBtn.disabled = true; overlayBtn.innerHTML = '<div class="prompt-spinner"></div>'; }
+  if (panelInput) panelInput.disabled = true;
+  if (panelBtn)   { panelBtn.disabled = true; panelBtn.innerHTML = '<div class="prompt-spinner"></div>'; }
+
+  // Show thinking bubble
+  exp.messages.push({ role: 'ai', text: '...', thinking: true });
+  labExpRenderMessages(exp);
+
+  const lastUserMsg = [...exp.messages].reverse().find(m => m.role === 'user')?.text || '';
 
   try {
-    let data;
-    const localKey = window.ANTHROPIC_LOCAL_KEY;
-    if (localKey && localKey !== 'PASTE_YOUR_KEY_HERE') {
-      data = await _callClaudeDirect(localKey, message);
-    } else {
-      const res = await fetch('/api/prompt', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
-      });
-      data = await res.json();
-    }
-
-    response.textContent = data.message || 'Done.';
+    const data = await _fakeExpResponse(lastUserMsg);
+    // Replace thinking bubble with real response
+    exp.messages = exp.messages.filter(m => !m.thinking);
+    exp.messages.push({ role: 'ai', text: data.message || 'Done.' });
+    labExpRenderMessages(exp);
     if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
-    input.value = '';
-
   } catch {
-    response.textContent = 'Something went wrong — please try again.';
+    exp.messages = exp.messages.filter(m => !m.thinking);
+    exp.messages.push({ role: 'ai', text: 'Something went wrong — please try again.' });
+    labExpRenderMessages(exp);
   } finally {
-    input.disabled = false;
-    btn.disabled   = false;
-    btn.innerHTML  = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    input.focus();
+    const svgArrow = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    if (overlayBtn) { overlayBtn.disabled = false; overlayBtn.innerHTML = svgArrow; }
+    if (panelInput) panelInput.disabled = false;
+    if (panelBtn)   { panelBtn.disabled = false; panelBtn.innerHTML = svgArrow; }
+    document.getElementById('lab-exp-panel-input')?.focus();
   }
 }
 
+async function _fakeExpResponse(message) {
+  await new Promise(r => setTimeout(r, 1300));
+  const m = message.toLowerCase();
+
+  if (m.includes('dark') || m.includes('night') || m.includes('oscuro')) {
+    return { message: 'Switched to dark theme so you can see how it looks at night.', actions: [{ type: 'setTheme', theme: 'dark' }] };
+  }
+  if (m.includes('light') || m.includes('claro') || m.includes('blanco')) {
+    return { message: 'Back to the light theme.', actions: [{ type: 'setTheme', theme: 'light' }] };
+  }
+  if (m.includes('purple') || m.includes('morado') || m.includes('violeta')) {
+    return { message: 'Applied a purple brand color to the design.', actions: [{ type: 'setToken', token: '--color-brand-500', value: '#7C3AED' }, { type: 'setToken', token: '--color-brand-400', value: '#8B5CF6' }, { type: 'setToken', token: '--color-brand-600', value: '#6D28D9' }] };
+  }
+  if (m.includes('green') || m.includes('verde')) {
+    return { message: 'Applied a green brand color.', actions: [{ type: 'setToken', token: '--color-brand-500', value: '#059669' }, { type: 'setToken', token: '--color-brand-400', value: '#10B981' }, { type: 'setToken', token: '--color-brand-600', value: '#047857' }] };
+  }
+  if (m.includes('red') || m.includes('rojo')) {
+    return { message: 'Applied a red brand color.', actions: [{ type: 'setToken', token: '--color-brand-500', value: '#DC2626' }, { type: 'setToken', token: '--color-brand-400', value: '#EF4444' }, { type: 'setToken', token: '--color-brand-600', value: '#B91C1C' }] };
+  }
+  if (m.includes('reset') || m.includes('default') || m.includes('original')) {
+    return { message: 'Reset everything back to default tokens.', actions: [{ type: 'resetTokens' }] };
+  }
+  if (m.includes('expand') || m.includes('full') || m.includes('grande')) {
+    return { message: 'Expanded the module to full screen view.', actions: [{ type: 'expandModule' }] };
+  }
+  if (m.includes('screen') || m.includes('step') || m.includes('pantalla')) {
+    const num = parseInt(m.match(/\d+/)?.[0]) || 1;
+    return { message: `Navigated to screen ${num}.`, actions: [{ type: 'goToScreen', index: num - 1 }] };
+  }
+  if (m.includes('token') || m.includes('color') || m.includes('panel')) {
+    return { message: 'Opened the token panel so you can tweak colors directly.', actions: [{ type: 'openTokenPanel' }] };
+  }
+
+  const replies = [
+    'Interesting idea. In a real integration I\'d generate mock screens here — for now this is a concept preview.',
+    'Got it. This experiment canvas is where your generated screens would appear.',
+    'I can see what you\'re going for. Once wired to the real API, I\'d render that variation here.',
+    'Nice direction. This would generate a new screen variant matching your description.',
+  ];
+  return { message: replies[Math.floor(Math.random() * replies.length)], actions: [] };
+}
+
 function executeLabAction(action) {
-  // On first action: hide the overlay (phones show through) but keep the tab bar
-  document.getElementById('lab-experiment-overlay').classList.remove('active');
-  document.getElementById('lab-exp-tab-exp').classList.add('lab-exp-tab--active');
-  document.getElementById('lab-exp-tab-original').classList.remove('lab-exp-tab--active');
   switch (action.type) {
 
     case 'selectModule': {

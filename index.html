@@ -3148,11 +3148,14 @@
                 <span class="lab-sidebar-section-label">Modules</span>
               </div>
               <nav class="lab-sidebar-nav">
-                  <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
-                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
-                    <span>Face Capture</span>
-                    <span class="lab-experiment-btn" onclick="event.stopPropagation(); labCreateExperiment('face-capture', 'Face Capture')">+ Experiment</span>
-                  </button>
+                  <div class="lab-sidebar-item-group">
+                    <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+                      <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
+                      <span>Face Capture</span>
+                    </button>
+                    <button class="lab-experiment-btn" onclick="labCreateExperiment('face-capture', 'Face Capture')">+ New experiment</button>
+                    <div class="lab-exp-sub-nav" id="lab-exp-sub-nav"></div>
+                  </div>
                   <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
                     <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
                     <span>ID Capture</span>
@@ -3174,38 +3177,54 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
           </button>
 
-          <!-- Experiment tab bar (shown when in experiment mode) -->
-          <div class="lab-exp-tab-bar" id="lab-exp-tab-bar">
-            <button class="lab-exp-tab" id="lab-exp-tab-original" onclick="labExpTabSwitch('original')">
-              <span id="lab-exp-original-label">Original</span>
-            </button>
-            <button class="lab-exp-tab lab-exp-tab--active" id="lab-exp-tab-exp" onclick="labExpTabSwitch('experiment')">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 0.5L6 3.8L9.5 5L6 6.2L5 9.5L4 6.2L0.5 5L4 3.8L5 0.5Z" fill="currentColor"/></svg>
-              Experiment
-            </button>
-          </div>
-
-          <!-- Experiment overlay (covers canvas, shown before first prompt) -->
+          <!-- Experiment overlay: covers canvas, hides phones, shows chat card -->
           <div class="lab-experiment-overlay" id="lab-experiment-overlay">
-            <div class="lab-exp-chat" id="lab-exp-chat">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 1L19.5 12L31 16L19.5 20L16 31L12.5 20L1 16L12.5 12L16 1Z" fill="#3D7EFF" opacity="0.85"/></svg>
-              <h2 class="lab-exp-chat-title" id="lab-exp-chat-title">Face Capture — Experiment</h2>
-              <p class="lab-exp-chat-hint">Describe a change and I'll apply it live</p>
-              <div class="lab-exp-input-wrap">
-                <input type="text" id="lab-exp-input" class="lab-exp-input"
-                  placeholder='e.g. "show success in dark mode"'
-                  onkeydown="if(event.key==='Enter')labExpSubmit()"
-                  autocomplete="off" />
-                <button class="lab-exp-submit" id="lab-exp-submit-btn" onclick="labExpSubmit()">
+            <!-- Orb + heading -->
+            <div class="lab-exp-empty-state" id="lab-exp-empty-state">
+              <div class="lab-exp-orb"></div>
+              <h2 class="lab-exp-heading">What do you want to experiment?</h2>
+              <p class="lab-exp-subheading">Describe a change to Face Capture</p>
+            </div>
+            <!-- Input card (BeeBot-style) -->
+            <div class="lab-exp-input-card">
+              <div class="lab-exp-input-inner">
+                <span class="lab-exp-input-icon">✦</span>
+                <input type="text" id="lab-exp-overlay-input" class="lab-exp-card-input"
+                       placeholder="Initiate a query or send a command to the AI..."
+                       onkeydown="if(event.key==='Enter')labExpSubmit()"
+                       autocomplete="off" />
+              </div>
+              <div class="lab-exp-card-footer">
+                <div class="lab-exp-chips" id="lab-exp-chips">
+                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Go full dark mode</button>
+                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Remove all friction</button>
+                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Make it feel premium</button>
+                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Bold, urgent CTA</button>
+                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Try a purple brand</button>
+                </div>
+                <button class="lab-exp-card-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
                   <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
               </div>
-              <div class="lab-exp-chips">
-                <button class="lab-exp-chip" onclick="labExpFill('show the success screen in dark mode')">success in dark mode</button>
-                <button class="lab-exp-chip" onclick="labExpFill('change brand color to purple')">change brand to purple</button>
-                <button class="lab-exp-chip" onclick="labExpFill('show all screens')">show all screens</button>
-              </div>
-              <div class="lab-exp-response" id="lab-exp-response"></div>
+            </div>
+          </div>
+
+          <!-- Right bubble chat panel (shown after first message) -->
+          <div class="lab-exp-panel" id="lab-exp-panel">
+            <div class="lab-exp-panel-header">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0.5L7.2 4.3L11 6L7.2 7.7L6 11.5L4.8 7.7L1 6L4.8 4.3L6 0.5Z" fill="#3D7EFF"/></svg>
+              <span id="lab-exp-panel-title">Experiment</span>
+              <button class="lab-exp-panel-hide" onclick="labExpHidePanel()">×</button>
+            </div>
+            <div class="lab-exp-messages" id="lab-exp-messages"></div>
+            <div class="lab-exp-panel-footer">
+              <input type="text" id="lab-exp-panel-input" class="lab-exp-panel-input"
+                     placeholder="Follow up..."
+                     onkeydown="if(event.key==='Enter')labExpPanelSubmit()"
+                     autocomplete="off" />
+              <button class="lab-exp-panel-send" id="lab-exp-panel-send" onclick="labExpPanelSubmit()">
+                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
           </div>
 
