@@ -67,45 +67,10 @@ function resetTokens() {
   document.getElementById('radius-btn-val').textContent = '16px';
   document.getElementById('radius-card').value = 16;
   document.getElementById('radius-card-val').textContent = '16px';
-  document.getElementById('font-btn').value = 18;
-  document.getElementById('font-btn-val').textContent = '18px';
-}
-
-function toggleTokenPanel() {
-  const panel    = document.getElementById('token-panel');
-  const backdrop = document.getElementById('token-panel-backdrop');
-  const btn      = document.getElementById('topbar-token-btn');
-  const isOpen   = panel.classList.contains('open');
-  panel.classList.toggle('open', !isOpen);
-  backdrop.classList.toggle('open', !isOpen);
-  btn.classList.toggle('active', !isOpen);
-}
-
-function setTopbarTheme(val, btn) {
-  const current = document.documentElement.getAttribute('data-theme') || 'light';
-  if (current === val) return;
-  // Reuse existing toggleTheme logic by temporarily faking the element
+  // Also reset topbar theme to light
   document.querySelectorAll('.topbar-theme-opt').forEach(o => {
-    o.classList.toggle('topbar-theme-opt--active', o.dataset.val === val);
+    o.classList.toggle('topbar-theme-opt--active', o.dataset.val === 'light');
   });
-  // Drive the actual theme change
-  const next = val;
-  document.documentElement.setAttribute('data-theme', next);
-  Object.entries(themeTokens[next]).forEach(([prop, v]) => {
-    if (v === null) root.style.removeProperty(prop);
-    else root.style.setProperty(prop, v);
-  });
-  const statusBar = document.getElementById('phone-status-bar');
-  if (statusBar) statusBar.src = next === 'dark' ? 'assets/illustrations/status-bar-dark.svg' : 'assets/illustrations/status-bar-light.svg';
-  document.querySelectorAll('img[src*="assets/icons/status/"]').forEach(img => {
-    if (next === 'dark') {
-      img.src = img.src.replace('/assets/icons/status/', '/assets/icons/status/dark/').replace('/status/dark/dark/', '/status/dark/');
-    } else {
-      img.src = img.src.replace('/assets/icons/status/dark/', '/assets/icons/status/');
-    }
-  });
-  if (typeof labRefreshStatusBars === 'function') labRefreshStatusBars();
-  populateTokenValues();
 }
 
 function showView(name, btn) {
@@ -159,6 +124,50 @@ const themeTokens = {
     '--logo-color':    '#ffffff',
   },
 };
+
+function toggleTokenPanel() {
+  const panel    = document.getElementById('token-panel');
+  const backdrop = document.getElementById('token-panel-backdrop');
+  const btn      = document.getElementById('topbar-token-btn');
+  const isOpen   = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  backdrop.classList.toggle('open', !isOpen);
+  btn.classList.toggle('active', !isOpen);
+}
+
+function setTopbarTheme(val) {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  if (current === val) return;
+  document.documentElement.setAttribute('data-theme', val);
+  document.querySelectorAll('.topbar-theme-opt').forEach(o => {
+    o.classList.toggle('topbar-theme-opt--active', o.dataset.val === val);
+  });
+  Object.entries(themeTokens[val]).forEach(([prop, v]) => {
+    if (v === null) root.style.removeProperty(prop);
+    else root.style.setProperty(prop, v);
+  });
+  const syncMap = {
+    '--surface-bg':    ['surface-bg', 'surface-bg-hex'],
+    '--text-primary':  ['text-primary', 'text-primary-hex'],
+    '--text-secondary':['text-secondary', 'text-secondary-hex'],
+  };
+  Object.entries(themeTokens[val]).forEach(([prop, v]) => {
+    if (v === null) return;
+    const ids = syncMap[prop];
+    if (ids) ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = v; });
+  });
+  const statusBar = document.getElementById('phone-status-bar');
+  if (statusBar) statusBar.src = val === 'dark' ? 'assets/illustrations/status-bar-dark.svg' : 'assets/illustrations/status-bar-light.svg';
+  document.querySelectorAll('img[src*="assets/icons/status/"]').forEach(img => {
+    if (val === 'dark') {
+      img.src = img.src.replace('/assets/icons/status/', '/assets/icons/status/dark/').replace('/status/dark/dark/', '/status/dark/');
+    } else {
+      img.src = img.src.replace('/assets/icons/status/dark/', '/assets/icons/status/');
+    }
+  });
+  if (typeof labRefreshStatusBars === 'function') labRefreshStatusBars();
+  populateTokenValues();
+}
 
 function toggleTheme(el) {
   const opts = el.querySelectorAll('.theme-opt');
