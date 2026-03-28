@@ -1233,3 +1233,142 @@ function _labSetupInteraction() {
 
 // Lab is the default view — init after all lab code is defined
 initLab();
+
+
+// ============================================
+//  PROMPT BAR
+// ============================================
+
+let _promptResponseTimer = null;
+
+async function submitPrompt() {
+  const input  = document.getElementById('prompt-input');
+  const bubble = document.getElementById('prompt-response');
+  const btn    = document.getElementById('prompt-submit-btn');
+  const message = input.value.trim();
+  if (!message || btn.disabled) return;
+
+  // Loading state
+  input.disabled = true;
+  btn.disabled = true;
+  btn.innerHTML = '<div class="prompt-spinner"></div>';
+  bubble.textContent = '...';
+  bubble.classList.add('visible');
+  clearTimeout(_promptResponseTimer);
+
+  try {
+    const res = await fetch('/api/prompt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
+    });
+
+    if (!res.ok) throw new Error('Request failed');
+    const data = await res.json();
+
+    bubble.textContent = data.message || 'Done.';
+
+    if (Array.isArray(data.actions)) {
+      data.actions.forEach(executeLabAction);
+    }
+
+    input.value = '';
+    _promptResponseTimer = setTimeout(() => bubble.classList.remove('visible'), 5000);
+
+  } catch {
+    bubble.textContent = 'Something went wrong — please try again.';
+    _promptResponseTimer = setTimeout(() => bubble.classList.remove('visible'), 4000);
+  } finally {
+    input.disabled = false;
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    input.focus();
+  }
+}
+
+function executeLabAction(action) {
+  switch (action.type) {
+
+    case 'selectModule': {
+      const btn = document.querySelector(`[data-module="${action.moduleId}"]`);
+      if (btn) {
+        // Make sure we're on the Lab view
+        if (!document.getElementById('view-lab').classList.contains('active')) {
+          const labTab = document.querySelector('.tab');
+          if (labTab) showView('lab', labTab);
+        }
+        labSelectModule(btn);
+      }
+      break;
+    }
+
+    case 'expandModule': {
+      if (!_labExpanded) labExpand();
+      break;
+    }
+
+    case 'collapseModule': {
+      if (_labExpanded) labCollapse();
+      break;
+    }
+
+    case 'goToScreen': {
+      const mod = _labModuleData[_labActiveModule];
+      if (!mod || !mod.screens.length) break;
+      const idx = Math.max(0, Math.min(action.index, mod.screens.length - 1));
+      if (_labExpanded) labCollapse();
+      _labCurrent = idx;
+      _labBuildStage();
+      _labUpdateMeta();
+      break;
+    }
+
+    case 'setTheme': {
+      if (action.theme === 'light' || action.theme === 'dark') {
+        setTopbarTheme(action.theme);
+      }
+      break;
+    }
+
+    case 'setToken': {
+      if (action.token && action.value) {
+        updateToken(action.token, action.value);
+        // Sync hex input if one exists for this token
+        const tokenHexMap = {
+          '--color-brand-500': 'brand-500-hex',
+          '--color-brand-400': 'brand-400-hex',
+          '--color-brand-600': 'brand-600-hex',
+          '--text-primary':    'text-primary-hex',
+          '--text-secondary':  'text-secondary-hex',
+          '--surface-bg':      'surface-bg-hex',
+        };
+        const hexId = tokenHexMap[action.token];
+        if (hexId) {
+          const hexEl = document.getElementById(hexId);
+          if (hexEl) hexEl.value = action.value;
+          // Also sync the color dot
+          const dotId = hexId.replace('-hex', '');
+          const colorEl = document.getElementById(dotId);
+          if (colorEl) {
+            colorEl.value = action.value;
+            const dot = colorEl.closest('.token-pill-dot');
+            if (dot) dot.style.background = action.value;
+          }
+        }
+      }
+      break;
+    }
+
+    case 'openTokenPanel': {
+      const panel = document.getElementById('token-panel');
+      if (!panel.classList.contains('open')) toggleTokenPanel();
+      break;
+    }
+
+    case 'resetTokens': {
+      resetTokens();
+      break;
+    }
+
+  }
+}
