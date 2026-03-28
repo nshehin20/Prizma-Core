@@ -252,11 +252,11 @@ select {
   display: flex;
 }
 
-/* ---- LAB / CAPTURE VIEW ---- */
+/* ---- LAB VIEW ---- */
 #view-lab {
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
 }
 
 .phone-wrapper {
