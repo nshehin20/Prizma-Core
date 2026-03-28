@@ -679,6 +679,195 @@ function fcSuccess() {
   </div>`;
 }
 
+// ---- Selfie Capture screens (Live Camera Version) ----
+
+// Fullscreen camera view with face oval overlay - initial searching state
+function scCamSearching() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg">
+      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9)" alt="" />
+    </div>
+    <div class="sc-oval-overlay">
+      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="ovalMask">
+            <rect width="342" height="420" fill="white"/>
+            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
+          </mask>
+        </defs>
+        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask)"/>
+        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-gray-300)" stroke-width="3" stroke-dasharray="8 4" fill="none"/>
+      </svg>
+    </div>
+    <div class="sc-top-bar">
+      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
+    </div>
+    <div class="sc-bottom-panel">
+      <div class="sc-feedback-text type-feedback-s" style="color:var(--color-gray-0)">Position your face within the oval</div>
+      <div class="sc-capture-ring sc-capture-ring--inactive">
+        <div class="sc-capture-inner"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Fullscreen camera view with face detected - face aligned
+function scCamDetected() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-oval-overlay">
+      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="ovalMask2">
+            <rect width="342" height="420" fill="white"/>
+            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
+          </mask>
+        </defs>
+        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask2)"/>
+        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="var(--color-brand-500)" stroke-width="4" fill="none"/>
+      </svg>
+    </div>
+    <div class="sc-top-bar">
+      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
+    </div>
+    <div class="sc-bottom-panel">
+      <div class="sc-feedback-text type-feedback-s" style="color:var(--color-gray-0)">Hold steady...</div>
+      <div class="sc-capture-ring sc-capture-ring--ready">
+        <div class="sc-capture-inner"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Fullscreen camera view - capturing with animated ring
+function scCamCapturing() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-oval-overlay sc-oval-capturing">
+      <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="ovalMask3">
+            <rect width="342" height="420" fill="white"/>
+            <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
+          </mask>
+          <linearGradient id="captureGrad" gradientTransform="rotate(90)">
+            <stop offset="0%" stop-color="var(--color-brand-500)"/>
+            <stop offset="50%" stop-color="var(--color-brand-300)"/>
+            <stop offset="100%" stop-color="var(--color-brand-500)"/>
+          </linearGradient>
+        </defs>
+        <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask3)"/>
+        <ellipse cx="171" cy="210" rx="130" ry="170" stroke="url(#captureGrad)" stroke-width="5" fill="none" class="sc-oval-pulse"/>
+      </svg>
+    </div>
+    <div class="sc-top-bar">
+      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
+    </div>
+    <div class="sc-bottom-panel">
+      <div class="sc-feedback-text type-feedback-s" style="color:var(--color-brand-300)">Capturing...</div>
+      <div class="sc-capture-ring sc-capture-ring--capturing">
+        <div class="sc-capture-spinner"></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Preview captured photo with confirm/retry
+function scPreview() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-preview-overlay"></div>
+    <div class="sc-top-bar">
+      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
+    </div>
+    <div class="sc-bottom-panel sc-bottom-panel--preview">
+      <div class="sc-preview-actions">
+        <button class="sc-action-btn sc-action-btn--retry">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6M23 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Retake</span>
+        </button>
+        <button class="sc-action-btn sc-action-btn--confirm">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Use Photo</span>
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Analyzing/processing the selfie
+function scAnalyzing() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg" style="filter:blur(8px)">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-analyzing-overlay">
+      <div class="sc-analyzing-content">
+        <div class="sc-analyzing-ring">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="none"/>
+            <circle cx="40" cy="40" r="36" stroke="var(--color-brand-400)" stroke-width="4" fill="none" stroke-dasharray="180 226" stroke-linecap="round" class="sc-spin"/>
+          </svg>
+        </div>
+        <div class="type-feedback-l" style="color:var(--color-gray-0)">Analyzing...</div>
+        <div class="type-body-s-regular" style="color:var(--color-gray-300)">This won't take long</div>
+      </div>
+    </div>
+    <div class="sc-top-bar">
+      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
+    </div>
+  </div>`;
+}
+
+// Success state
+function scSuccess() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg" style="filter:blur(8px)">
+      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-success-overlay">
+      <div class="sc-success-content">
+        <div class="sc-success-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="var(--color-positive-500)"/>
+            <path d="M20 32l8 8 16-16" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="type-feedback-l" style="color:var(--color-gray-0)">Selfie captured!</div>
+        <div class="type-body-s-regular" style="color:var(--color-gray-300)">Your photo has been verified</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Error state with retry
+function scError() {
+  return `<div class="sc-fullscreen-cam">
+    <div class="sc-cam-bg" style="filter:blur(8px) brightness(0.6)">
+      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
+    </div>
+    <div class="sc-error-overlay">
+      <div class="sc-error-content">
+        <div class="sc-error-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="var(--color-negative-500)"/>
+            <path d="M40 24L24 40M24 24l16 16" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="type-feedback-l" style="color:var(--color-gray-0)">Face not detected</div>
+        <div class="type-body-s-regular" style="color:var(--color-gray-300)">Please try again with better lighting</div>
+        <button class="btn btn-primary" style="margin-top:24px;min-width:180px">Try Again</button>
+      </div>
+    </div>
+  </div>`;
+}
+
 
 // ---- Module registry ----
 
@@ -693,6 +882,18 @@ const modules = {
       { id: 'processing', label: 'Processing', render: fcProcessing },
       { id: 'uploading',  label: 'Uploading',  render: fcUploading },
       { id: 'success',    label: 'Success',    render: fcSuccess },
+    ]
+  },
+  'selfie-capture': {
+    label: 'Selfie Capture',
+    screens: [
+      { id: 'sc-searching',  label: 'Searching',  render: scCamSearching },
+      { id: 'sc-detected',   label: 'Detected',   render: scCamDetected },
+      { id: 'sc-capturing',  label: 'Capturing',  render: scCamCapturing },
+      { id: 'sc-preview',    label: 'Preview',    render: scPreview },
+      { id: 'sc-analyzing',  label: 'Analyzing',  render: scAnalyzing },
+      { id: 'sc-success',    label: 'Success',    render: scSuccess },
+      { id: 'sc-error',      label: 'Error',      render: scError },
     ]
   },
   'id-capture':       { label: 'ID Capture',      screens: [] },
@@ -835,6 +1036,18 @@ const _labModuleData = {
       { label: 'Processing', render: fcProcessing },
       { label: 'Uploading',  render: fcUploading },
       { label: 'Success',    render: fcSuccess },
+    ]
+  },
+  'selfie-capture': {
+    label: 'Selfie Capture',
+    screens: [
+      { label: 'Searching',  render: scCamSearching },
+      { label: 'Detected',   render: scCamDetected },
+      { label: 'Capturing',  render: scCamCapturing },
+      { label: 'Preview',    render: scPreview },
+      { label: 'Analyzing',  render: scAnalyzing },
+      { label: 'Success',    render: scSuccess },
+      { label: 'Error',      render: scError },
     ]
   },
   'id-capture':  { label: 'ID Capture',       screens: [] },

@@ -232,6 +232,7 @@
     <div id="view-modules" class="view">
       <div class="module-bar">
         <button class="module-tab active" onclick="selectModule('face-capture', this)">Face Capture</button>
+        <button class="module-tab" onclick="selectModule('selfie-capture', this)">Selfie Capture</button>
         <button class="module-tab" onclick="selectModule('id-capture', this)">ID Capture</button>
         <button class="module-tab" onclick="selectModule('nfc', this)">NFC</button>
         <button class="module-tab" onclick="selectModule('document-capture', this)">Document Capture</button>
@@ -3103,10 +3104,13 @@
       <div class="lab-sidebar">
         <div class="lab-sidebar-title">MODULES</div>
         <nav class="lab-sidebar-nav">
-          <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
-            <span>Face Capture</span><span class="lab-sidebar-count">7</span>
-          </button>
-          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
+<button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+  <span>Face Capture</span><span class="lab-sidebar-count">7</span>
+  </button>
+  <button class="lab-sidebar-item" data-module="selfie-capture" onclick="labSelectModule(this)">
+  <span>Selfie Capture</span><span class="lab-sidebar-count">7</span>
+  </button>
+  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
             <span>ID Capture</span><span class="lab-sidebar-count">—</span>
           </button>
           <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
