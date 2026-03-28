@@ -681,181 +681,20 @@ function fcSuccess() {
 
 // ---- Selfie Capture screens (Auto-Capture Version) ----
 
-// Current selfie capture version
-let _scVersion = 'v1';
+// Current face capture version
+let _fcVersion = 'Original';
 
-function setScVersion(version) {
-  _scVersion = version;
-  // Re-render the current module if it's selfie-capture
-  const activeTab = document.querySelector('.module-tab.active');
-  if (activeTab && activeTab.textContent.includes('Selfie')) {
-    renderModuleCanvas('selfie-capture');
-  }
+function setFcVersion(version) {
+  _fcVersion = version;
+  // Re-render the current module if it's face-capture
+  renderModuleCanvas('face-capture');
   // Update lab view if active
-  if (_labActiveModule === 'selfie-capture') {
+  if (_labActiveModule === 'face-capture') {
     labRenderScreens();
   }
 }
 
-// ---- ORIGINAL VERSION (Oval-based) ----
-
-function _ovalFrame(state = 'searching') {
-  const colors = {
-    searching: { stroke: 'var(--color-gray-300)', dash: '8 4' },
-    detected: { stroke: 'var(--color-brand-500)', dash: 'none' },
-    capturing: { stroke: 'var(--color-brand-400)', dash: 'none' },
-    verifying: { stroke: 'var(--color-brand-400)', dash: '12 6' },
-    success: { stroke: 'var(--color-positive-500)', dash: 'none' },
-    error: { stroke: 'var(--color-negative-500)', dash: 'none' }
-  };
-  const c = colors[state] || colors.searching;
-  const pulseClass = state === 'capturing' ? 'sc-oval-pulse' : '';
-  const rotateClass = state === 'verifying' ? 'sc-oval-rotate' : '';
-  
-  return `<div class="sc-oval-overlay">
-    <svg viewBox="0 0 342 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <mask id="ovalMask-${state}">
-          <rect width="342" height="420" fill="white"/>
-          <ellipse cx="171" cy="210" rx="130" ry="170" fill="black"/>
-        </mask>
-      </defs>
-      <rect width="342" height="420" fill="rgba(0,0,0,0.5)" mask="url(#ovalMask-${state})"/>
-      <ellipse cx="171" cy="210" rx="130" ry="170" stroke="${c.stroke}" stroke-width="${state === 'capturing' ? 5 : 3}" fill="none" 
-        ${c.dash !== 'none' ? `stroke-dasharray="${c.dash}"` : ''} 
-        class="${pulseClass} ${rotateClass}"/>
-    </svg>
-  </div>`;
-}
-
-// Original screens (oval-based)
-function scOrigSearching() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9)" alt="" />
-    </div>
-    ${_ovalFrame('searching')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-dot sc-status-dot--searching"></div>
-        <span class="type-feedback-s" style="color:var(--color-gray-0)">Looking for face...</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Position your face within the oval</div>
-    </div>
-  </div>`;
-}
-
-function scOrigDetected() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
-    </div>
-    ${_ovalFrame('detected')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-dot sc-status-dot--detected"></div>
-        <span class="type-feedback-s" style="color:var(--color-brand-400)">Face detected</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Hold steady, capturing automatically...</div>
-      <div class="sc-auto-progress">
-        <div class="sc-auto-progress-bar"></div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function scOrigCapturing() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
-    </div>
-    ${_ovalFrame('capturing')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-spinner"></div>
-        <span class="type-feedback-s" style="color:var(--color-brand-300)">Capturing...</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Please don't move</div>
-    </div>
-  </div>`;
-}
-
-function scOrigVerifying() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
-    </div>
-    ${_ovalFrame('verifying')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-spinner"></div>
-        <span class="type-feedback-s" style="color:var(--color-gray-0)">Verifying...</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Checking image quality</div>
-    </div>
-  </div>`;
-}
-
-function scOrigSuccess() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
-    </div>
-    ${_ovalFrame('success')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-check">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M16.5 5.5L7.5 14.5L3.5 10.5" stroke="var(--color-positive-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="type-feedback-s" style="color:var(--color-positive-500)">Capture complete</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Your selfie has been captured successfully</div>
-    </div>
-  </div>`;
-}
-
-function scOrigError() {
-  return `<div class="sc-fullscreen-cam">
-    <div class="sc-cam-bg">
-      <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7)" alt="" />
-    </div>
-    ${_ovalFrame('error')}
-    <div class="sc-top-bar">
-      <button class="sc-close-btn">${_CLOSE_SVG2}</button>
-    </div>
-    <div class="sc-bottom-panel sc-bottom-panel--auto">
-      <div class="sc-status-indicator">
-        <div class="sc-status-error">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M14.5 5.5L5.5 14.5M5.5 5.5l9 9" stroke="var(--color-negative-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <span class="type-feedback-s" style="color:var(--color-negative-500)">Face not detected</span>
-      </div>
-      <div class="sc-instruction type-body-s-regular" style="color:var(--color-gray-300)">Make sure your face is clearly visible</div>
-      <div class="sc-retry-hint type-body-xs-regular" style="color:var(--color-gray-400);margin-top:8px">Retrying automatically...</div>
-    </div>
-  </div>`;
-}
-
-// ---- V1 VERSION (Corner brackets with scan line) ----
+// ---- V2 VERSION (Corner brackets with scan line) ----
 
 // Reusable face frame SVG with corner brackets and scan effect
 function _faceFrame(state = 'searching') {
@@ -1041,35 +880,24 @@ function scError() {
 const modules = {
   'face-capture': {
     label: 'Face Capture',
-    screens: [
-      { id: 'tutorial',   label: 'Tutorial',   render: fcTutorial },
-      { id: 'cam-search', label: 'Searching',  render: fcCamSearching },
-      { id: 'cam-detect', label: 'Detected',   render: fcCamDetected },
-      { id: 'cam-ready',  label: 'Get Ready',  render: fcCamCapturing },
-      { id: 'processing', label: 'Processing', render: fcProcessing },
-      { id: 'uploading',  label: 'Uploading',  render: fcUploading },
-      { id: 'success',    label: 'Success',    render: fcSuccess },
-    ]
-  },
-  'selfie-capture': {
-    label: 'Selfie Capture',
     hasVersions: true,
-    versions: ['Original', 'v1'],
+    versions: ['Original', 'v2'],
     get screens() {
-      return _scVersion === 'Original' ? [
-        { id: 'sc-searching',  label: 'Searching',  render: scOrigSearching },
-        { id: 'sc-detected',   label: 'Detected',   render: scOrigDetected },
-        { id: 'sc-capturing',  label: 'Capturing',  render: scOrigCapturing },
-        { id: 'sc-verifying',  label: 'Verifying',  render: scOrigVerifying },
-        { id: 'sc-success',    label: 'Success',    render: scOrigSuccess },
-        { id: 'sc-error',      label: 'Error',      render: scOrigError },
+      return _fcVersion === 'Original' ? [
+        { id: 'tutorial',   label: 'Tutorial',   render: fcTutorial },
+        { id: 'cam-search', label: 'Searching',  render: fcCamSearching },
+        { id: 'cam-detect', label: 'Detected',   render: fcCamDetected },
+        { id: 'cam-ready',  label: 'Get Ready',  render: fcCamCapturing },
+        { id: 'processing', label: 'Processing', render: fcProcessing },
+        { id: 'uploading',  label: 'Uploading',  render: fcUploading },
+        { id: 'success',    label: 'Success',    render: fcSuccess },
       ] : [
-        { id: 'sc-searching',  label: 'Searching',  render: scCamSearching },
-        { id: 'sc-detected',   label: 'Detected',   render: scCamDetected },
-        { id: 'sc-capturing',  label: 'Capturing',  render: scCamCapturing },
-        { id: 'sc-verifying',  label: 'Verifying',  render: scVerifying },
-        { id: 'sc-success',    label: 'Success',    render: scSuccess },
-        { id: 'sc-error',      label: 'Error',      render: scError },
+        { id: 'fc-searching',  label: 'Searching',  render: scCamSearching },
+        { id: 'fc-detected',   label: 'Detected',   render: scCamDetected },
+        { id: 'fc-capturing',  label: 'Capturing',  render: scCamCapturing },
+        { id: 'fc-verifying',  label: 'Verifying',  render: scVerifying },
+        { id: 'fc-success',    label: 'Success',    render: scSuccess },
+        { id: 'fc-error',      label: 'Error',      render: scError },
       ];
     }
   },
@@ -1159,11 +987,11 @@ function renderModuleCanvas(moduleId) {
   // Handle version dropdown
   if (versionBar) {
     if (mod && mod.hasVersions) {
-      const currentVersion = moduleId === 'selfie-capture' ? _scVersion : 'v1';
+      const currentVersion = moduleId === 'face-capture' ? _fcVersion : 'Original';
       versionBar.innerHTML = `
         <div class="version-selector">
           <label class="type-body-xs-medium" style="color:var(--color-gray-500)">Version</label>
-          <select class="version-dropdown" onchange="setScVersion(this.value)">
+          <select class="version-dropdown" onchange="setFcVersion(this.value)">
             ${mod.versions.map(v => `<option value="${v}" ${v === currentVersion ? 'selected' : ''}>${v}</option>`).join('')}
           </select>
         </div>
@@ -1225,8 +1053,11 @@ const _LAB_CELL_GAP = 36;
 
 const _labModuleData = {
   'face-capture': {
-    label: 'Face Capture',
-    screens: [
+  label: 'Face Capture',
+  hasVersions: true,
+  versions: ['Original', 'v2'],
+  get screens() {
+    return _fcVersion === 'Original' ? [
       { label: 'Tutorial',   render: fcTutorial },
       { label: 'Searching',  render: fcCamSearching },
       { label: 'Detected',   render: fcCamDetected },
@@ -1234,34 +1065,20 @@ const _labModuleData = {
       { label: 'Processing', render: fcProcessing },
       { label: 'Uploading',  render: fcUploading },
       { label: 'Success',    render: fcSuccess },
-    ]
-  },
-  'selfie-capture': {
-    label: 'Selfie Capture',
-    hasVersions: true,
-    versions: ['Original', 'v1'],
-    get screens() {
-      return _scVersion === 'Original' ? [
-        { label: 'Searching',  render: scOrigSearching },
-        { label: 'Detected',   render: scOrigDetected },
-        { label: 'Capturing',  render: scOrigCapturing },
-        { label: 'Verifying',  render: scOrigVerifying },
-        { label: 'Success',    render: scOrigSuccess },
-        { label: 'Error',      render: scOrigError },
-      ] : [
-        { label: 'Searching',  render: scCamSearching },
-        { label: 'Detected',   render: scCamDetected },
-        { label: 'Capturing',  render: scCamCapturing },
-        { label: 'Verifying',  render: scVerifying },
-        { label: 'Success',    render: scSuccess },
-        { label: 'Error',      render: scError },
-      ];
-    }
+    ] : [
+      { label: 'Searching',  render: scCamSearching },
+      { label: 'Detected',   render: scCamDetected },
+      { label: 'Capturing',  render: scCamCapturing },
+      { label: 'Verifying',  render: scVerifying },
+      { label: 'Success',    render: scSuccess },
+      { label: 'Error',      render: scError },
+    ];
+  }
   },
   'id-capture':  { label: 'ID Capture',       screens: [] },
   'nfc':         { label: 'NFC',               screens: [] },
   'doc-capture': { label: 'Document Capture',  screens: [] },
-};
+  };
 
 // ---- init ----
 
