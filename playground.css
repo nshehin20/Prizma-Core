@@ -228,11 +228,6 @@ select {
   flex-shrink: 0;
 }
 
-.topbar-tabs {
-  display: flex;
-  gap: 4px;
-}
-
 .tab {
   padding: 6px 14px;
   border: none;
@@ -256,31 +251,40 @@ select {
   color: var(--color-brand-500);
 }
 
-.topbar-badge {
-  font-size: 11px;
-  color: var(--color-gray-400);
-  background: var(--color-gray-100);
-  padding: 4px 10px;
-  border-radius: 20px;
+.topbar-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+  opacity: 0.9;
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 }
 
-.topbar-theme-toggle {
+/* Canvas-based light/dark toggle (bottom-right of lab canvas) */
+.lab-theme-toggle {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
   display: flex;
   align-items: center;
-  background: var(--color-gray-100);
+  background: #fff;
+  border: 1px solid var(--color-gray-200);
   border-radius: 8px;
   padding: 3px;
   gap: 2px;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 .topbar-theme-opt {
-  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
   border-radius: 6px;
   font-size: 12px;
   font-family: var(--font-family-dm);
@@ -293,9 +297,8 @@ select {
 }
 
 .topbar-theme-opt--active {
-  background: #fff;
+  background: var(--color-gray-100);
   color: var(--color-gray-800);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .topbar-token-btn {
@@ -2350,74 +2353,163 @@ select {
   overflow: hidden;
 }
 
-/* ── Module sidebar ── */
+/* ── Module sidebar — floating card inside canvas ── */
 .lab-sidebar {
-  width: 192px;
-  min-width: 192px;
-  border-right: 1px solid rgba(0,0,0,0.07);
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  bottom: 24px;
+  width: 230px;
+  z-index: 15;
+  border-radius: 12px;
+  border: 1px solid #E4E7EC;
   display: flex;
   flex-direction: column;
-  padding: 28px 0 0;
-  background: #fafafa;
-  flex-shrink: 0;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
 }
 
-.lab-sidebar-title {
-  font-family: 'SF Mono', 'Consolas', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: rgba(0,0,0,0.22);
-  text-transform: uppercase;
-  padding: 0 20px 14px;
+/* Toggle button — sits just outside the sidebar to the right */
+.lab-sidebar-toggle {
+  position: absolute;
+  top: 24px;
+  left: calc(24px + 230px + 8px);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #E4E7EC;
+  background: #fff;
+  color: #8A8F98;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: color 0.15s, background 0.15s;
 }
+
+.lab-sidebar-toggle:hover {
+  color: #0D0D0D;
+  background: #F5F7FA;
+}
+
+/* Collapsed state — hide sidebar, move toggle to left edge */
+.lab-canvas-vp.lab-sidebar--collapsed .lab-sidebar {
+  display: none;
+}
+
+.lab-canvas-vp.lab-sidebar--collapsed .lab-sidebar-toggle {
+  left: 24px;
+}
+
+.lab-sidebar-header {
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+.lab-sidebar-flow-title {
+  font-family: var(--font-family-dm);
+  font-size: 15px;
+  font-weight: 700;
+  color: #0D0D0D;
+  letter-spacing: -0.01em;
+}
+
+.lab-sidebar-flow-sub {
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #8A8F98;
+}
+
+.lab-sidebar-divider {
+  height: 1px;
+  background: #EAECEF;
+  margin: 0;
+}
+
+.lab-sidebar-section {
+  padding: 12px 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-sidebar-section-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 8px;
+}
+
+.lab-sidebar-section-label {
+  font-family: var(--font-family-dm);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #8A8F98;
+  text-transform: uppercase;
+}
+
 
 .lab-sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
+  padding: 0 8px 4px;
 }
 
 .lab-sidebar-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px 10px 18px;
-  border: none;
-  border-left: 2px solid transparent;
+  gap: 10px;
+  padding: 13px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
   background: none;
   text-align: left;
   font-family: var(--font-family-dm);
   font-size: 13px;
   font-weight: 500;
-  color: rgba(0,0,0,0.42);
+  color: #4B5060;
   cursor: pointer;
   transition: all 0.15s ease;
   width: 100%;
 }
 
+.lab-drag-handle {
+  color: #C8CBD2;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
 .lab-sidebar-item:hover {
-  color: rgba(0,0,0,0.75);
-  background: rgba(0,0,0,0.03);
+  background: #F5F7FA;
+  color: #0D0D0D;
+}
+
+.lab-sidebar-item:hover .lab-drag-handle {
+  color: #9AA0AC;
 }
 
 .lab-sidebar-item--active {
-  color: #000;
+  background: #fff;
+  border-color: #EAECEF;
+  color: #0D0D0D;
   font-weight: 600;
-  border-left-color: #000;
-  background: rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.lab-sidebar-item--active .lab-drag-handle {
+  color: #9AA0AC;
 }
 
 .lab-sidebar-item--soon {
-  opacity: 0.38;
-  cursor: not-allowed;
-}
-
-.lab-sidebar-count {
-  font-family: 'SF Mono', 'Consolas', monospace;
-  font-size: 10px;
-  color: rgba(0,0,0,0.25);
-  font-weight: 400;
+  opacity: 0.45;
+  cursor: default;
 }
 
 /* ── Main area ── */
@@ -2430,13 +2522,13 @@ select {
 
 /* ── Lab bar ── */
 .lab-bar {
-  height: 44px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-  background: #fafafa;
+  border-bottom: 1px solid #EAECEF;
+  background: #fff;
   flex-shrink: 0;
 }
 
@@ -2447,24 +2539,21 @@ select {
 }
 
 .lab-bar-module {
-  font-family: 'SF Mono', 'Consolas', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: rgba(0,0,0,0.65);
+  font-family: var(--font-family-dm);
+  font-size: 13px;
+  font-weight: 600;
+  color: #0D0D0D;
 }
 
 .lab-bar-dot {
-  color: rgba(0,0,0,0.18);
-  font-size: 10px;
+  color: #C8CBD2;
+  font-size: 12px;
 }
 
 .lab-bar-meta {
-  font-family: 'SF Mono', 'Consolas', monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: rgba(0,0,0,0.32);
-  text-transform: uppercase;
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  color: #8A8F98;
 }
 
 .lab-figma-btn {
@@ -2521,13 +2610,15 @@ select {
 }
 
 .lab-expand-btn--active {
-  background: #000;
-  color: #fff;
-  border-color: #000;
+  background: rgba(255,255,255,0.9);
+  color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.12);
 }
 
 .lab-expand-btn--active:hover {
-  background: #1a1a1a;
+  border-color: rgba(0,0,0,0.22);
+  color: #000;
+  background: #fff;
 }
 
 /* ── Canvas viewport (dot grid) ── */
@@ -2535,9 +2626,9 @@ select {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background-color: #fafafa;
-  background-image: radial-gradient(circle, rgba(0,0,0,0.12) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-color: #F5F6F8;
+  background-image: radial-gradient(circle, #C5C8D0 1px, transparent 1px);
+  background-size: 16px 16px;
   cursor: default;
 }
 
@@ -2594,10 +2685,11 @@ select {
   height: 844px;
   background: var(--surface-bg, #fff);
   border-radius: 54px;
-  border: 1.5px solid rgba(0,0,0,0.09);
+  border: 1px solid rgba(0,0,0,0.07);
   box-shadow:
-    0 8px 40px rgba(0,0,0,0.07),
-    0 2px 8px rgba(0,0,0,0.04);
+    0 24px 64px rgba(0,0,0,0.13),
+    0 4px 16px rgba(0,0,0,0.06),
+    0 1px 3px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
   overflow: hidden;

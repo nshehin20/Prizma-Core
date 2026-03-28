@@ -112,20 +112,14 @@
   <!-- MAIN -->
   <main class="main">
     <div class="topbar">
-      <div class="topbar-tabs">
-        <button class="tab active" onclick="showView('lab', this)">⚗️ Lab</button>
-        <button class="tab" onclick="showView('components', this)">🧩 Components</button>
-      </div>
+      <img src="incode-logo.svg" class="topbar-logo" alt="Incode" />
       <div class="topbar-right">
-        <div class="topbar-theme-toggle" id="topbar-theme-toggle">
-          <button class="topbar-theme-opt topbar-theme-opt--active" data-val="light" onclick="setTopbarTheme('light', this)">☀️ Light</button>
-          <button class="topbar-theme-opt" data-val="dark" onclick="setTopbarTheme('dark', this)">🌙 Dark</button>
-        </div>
+        <button class="tab active" onclick="showView('lab', this)">Lab</button>
+        <button class="tab" onclick="showView('components', this)">Prizma</button>
         <button class="topbar-token-btn" id="topbar-token-btn" onclick="toggleTokenPanel()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 8v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="14" r="2" stroke="currentColor" stroke-width="2"/><path d="M6 2v10M6 16v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="10" r="2" stroke="currentColor" stroke-width="2"/><path d="M18 2v6M18 12v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Tokens
         </button>
-        <div class="topbar-badge">v2.5 · Prizma DS</div>
       </div>
     </div>
 
@@ -3099,43 +3093,62 @@
     <!-- ===== LAB VIEW ===== -->
     <div id="view-lab" class="view active">
 
-      <!-- Module selector sidebar -->
-      <div class="lab-sidebar">
-        <div class="lab-sidebar-title">MODULES</div>
-        <nav class="lab-sidebar-nav">
-          <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
-            <span>Face Capture</span><span class="lab-sidebar-count">7</span>
-          </button>
-          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
-            <span>ID Capture</span><span class="lab-sidebar-count">—</span>
-          </button>
-          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
-            <span>NFC</span><span class="lab-sidebar-count">—</span>
-          </button>
-          <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="doc-capture" onclick="labSelectModule(this)">
-            <span>Document Capture</span><span class="lab-sidebar-count">—</span>
-          </button>
-        </nav>
-      </div>
-
-      <!-- Main lab area -->
+      <!-- Main lab area (full width, no sidebar in flex row) -->
       <div class="lab-main">
 
         <!-- Lab bar -->
         <div class="lab-bar">
           <div class="lab-bar-info">
-            <span class="lab-bar-module" id="lab-bar-module">FACE CAPTURE</span>
+            <span class="lab-bar-module" id="lab-bar-module">Face Capture</span>
             <span class="lab-bar-dot">·</span>
             <span class="lab-bar-meta" id="lab-bar-meta"></span>
           </div>
           <button class="lab-figma-btn" onclick="">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" fill="currentColor" opacity=".9"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" opacity=".7"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="currentColor"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" fill="currentColor" opacity=".7"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" opacity=".5"/></svg>
-            Open in Figma
+            Open full flow in Figma
           </button>
         </div>
 
         <!-- Dot-grid canvas viewport -->
         <div class="lab-canvas-vp" id="lab-canvas-vp">
+
+          <!-- Floating module sidebar -->
+          <div class="lab-sidebar" id="lab-sidebar">
+            <div class="lab-sidebar-header">
+              <div class="lab-sidebar-flow-title">Flow</div>
+              <div class="lab-sidebar-flow-sub">Select the modules from your flow to preview the screens.</div>
+            </div>
+            <div class="lab-sidebar-divider"></div>
+            <div class="lab-sidebar-section">
+              <div class="lab-sidebar-section-hd">
+                <span class="lab-sidebar-section-label">Modules</span>
+              </div>
+              <nav class="lab-sidebar-nav">
+                  <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
+                    <span>Face Capture</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
+                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
+                    <span>ID Capture</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc" onclick="labSelectModule(this)">
+                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
+                    <span>NFC</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="doc-capture" onclick="labSelectModule(this)">
+                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
+                    <span>Document Capture</span>
+                  </button>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Sidebar toggle button (outside, to the right of the sidebar) -->
+          <button class="lab-sidebar-toggle" id="lab-sidebar-toggle" onclick="labToggleSidebar()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+          </button>
+
           <div class="lab-canvas-inner" id="lab-canvas-inner">
             <div class="lab-stage" id="lab-stage"></div>
           </div>
@@ -3159,6 +3172,18 @@
             <span class="lab-screen-index" id="lab-screen-index"></span>
             <span class="lab-screen-sep">—</span>
             <span class="lab-screen-label" id="lab-screen-label"></span>
+          </div>
+
+          <!-- Light / Dark toggle (bottom-right of canvas) -->
+          <div class="lab-theme-toggle" id="topbar-theme-toggle">
+            <button class="topbar-theme-opt topbar-theme-opt--active" data-val="light" onclick="setTopbarTheme('light', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/></svg>
+              Light
+            </button>
+            <button class="topbar-theme-opt" data-val="dark" onclick="setTopbarTheme('dark', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              Dark
+            </button>
           </div>
 
           <!-- Zoom controls -->
