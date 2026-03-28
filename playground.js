@@ -736,6 +736,326 @@ function fcSuccess() {
 }
 
 
+// ============================================================
+//  FACE CAPTURE — FULL SCREEN CAMERA VERSION
+//  Sophisticated full-screen camera experience with immersive UI.
+//  Features: edge-to-edge camera, floating UI elements, animated
+//  guidance overlays, and cinematic transitions.
+// ============================================================
+
+// Shared elements for full-screen camera
+const _FS_CLOSE_BTN = `<button class="fs-close-btn">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>`;
+
+const _FS_FACE_GUIDE = `<svg class="fs-face-guide" viewBox="0 0 280 360" fill="none">
+  <defs>
+    <linearGradient id="faceGuideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--color-brand-400);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:var(--color-brand-600);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="140" cy="180" rx="120" ry="160" stroke="url(#faceGuideGrad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="20 10" fill="none" class="fs-guide-ellipse"/>
+</svg>`;
+
+const _FS_FACE_GUIDE_SOLID = `<svg class="fs-face-guide fs-face-guide--solid" viewBox="0 0 280 360" fill="none">
+  <defs>
+    <linearGradient id="faceGuideSolid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--color-positive-400);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:var(--color-positive-500);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="140" cy="180" rx="120" ry="160" stroke="url(#faceGuideSolid)" stroke-width="5" fill="none"/>
+</svg>`;
+
+const _FS_CORNERS = `<div class="fs-corners">
+  <div class="fs-corner fs-corner--tl"></div>
+  <div class="fs-corner fs-corner--tr"></div>
+  <div class="fs-corner fs-corner--bl"></div>
+  <div class="fs-corner fs-corner--br"></div>
+</div>`;
+
+const _FS_SCANNING_LINES = `<div class="fs-scan-overlay">
+  <div class="fs-scan-line"></div>
+</div>`;
+
+function _fsVerifiedTag() {
+  return `<div class="fs-verified-tag">
+    ${_VERIFIED_SVG}
+    <span>verified by</span>
+    ${_TAG_LOGO_SVG}
+  </div>`;
+}
+
+// Full-Screen: Tutorial
+function fcFsTutorial() {
+  return `<div class="fs-container fs-container--light">
+    <div class="fs-content">
+      <div class="fs-header">
+        <div class="fs-logo">${_LOGO_SVG}</div>
+        ${_FS_CLOSE_BTN}
+      </div>
+      
+      <div class="fs-main">
+        <div class="fs-illustration-wrap">
+          <div class="fs-illustration-glow"></div>
+          <img src="assets/illustrations/selfie/selfie-animated.svg" class="fs-illustration" alt="" />
+        </div>
+        
+        <div class="fs-text-block">
+          <h1 class="fs-title">Take a selfie</h1>
+          <p class="fs-subtitle">Position your face within the frame. The photo will be captured automatically.</p>
+        </div>
+        
+        <div class="fs-tips">
+          <div class="fs-tip">
+            <div class="fs-tip-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <span>Good lighting</span>
+          </div>
+          <div class="fs-tip">
+            <div class="fs-tip-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <span>Neutral expression</span>
+          </div>
+          <div class="fs-tip">
+            <div class="fs-tip-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 8.89 5.46a7.5 7.5 0 0 0 3.11-2.46" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>No glasses or hats</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="fs-footer">
+        <button class="fs-primary-btn">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/></svg>
+          Open Camera
+        </button>
+        ${_fsVerifiedTag()}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Camera Searching (No face detected yet)
+function fcFsCamSearching() {
+  return `<div class="fs-container fs-container--camera">
+    <div class="fs-camera-bg">
+      <img src="assets/images/selfie-empty.png" class="fs-camera-feed fs-camera-feed--empty" alt="" />
+    </div>
+    
+    <div class="fs-camera-ui">
+      <div class="fs-camera-header">
+        <div class="fs-camera-header-spacer"></div>
+        ${_FS_CLOSE_BTN}
+      </div>
+      
+      <div class="fs-camera-main">
+        <div class="fs-face-frame">
+          ${_FS_CORNERS}
+          ${_FS_FACE_GUIDE}
+        </div>
+      </div>
+      
+      <div class="fs-camera-footer">
+        <div class="fs-instruction">
+          <div class="fs-instruction-icon fs-instruction-icon--searching">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2"/></svg>
+          </div>
+          <span>Position your face in the frame</span>
+        </div>
+        ${_fsVerifiedTag()}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Camera Detected (Face found, aligning)
+function fcFsCamDetected() {
+  return `<div class="fs-container fs-container--camera">
+    <div class="fs-camera-bg">
+      <img src="assets/images/selfie-filled-ds.png" class="fs-camera-feed" alt="" />
+    </div>
+    
+    <div class="fs-camera-ui">
+      <div class="fs-camera-header">
+        <div class="fs-camera-header-spacer"></div>
+        ${_FS_CLOSE_BTN}
+      </div>
+      
+      <div class="fs-camera-main">
+        <div class="fs-face-frame fs-face-frame--detected">
+          ${_FS_CORNERS}
+          ${_FS_FACE_GUIDE_SOLID}
+        </div>
+      </div>
+      
+      <div class="fs-camera-footer">
+        <div class="fs-instruction fs-instruction--success">
+          <div class="fs-instruction-icon fs-instruction-icon--detected">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m9 11 3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span>Perfect! Hold still...</span>
+        </div>
+        ${_fsVerifiedTag()}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Camera Capturing (Taking photo)
+function fcFsCamCapturing() {
+  return `<div class="fs-container fs-container--camera">
+    <div class="fs-camera-bg">
+      <img src="assets/images/selfie-filled-ds.png" class="fs-camera-feed" alt="" />
+      ${_FS_SCANNING_LINES}
+    </div>
+    
+    <div class="fs-camera-ui">
+      <div class="fs-camera-header">
+        <div class="fs-camera-header-spacer"></div>
+        ${_FS_CLOSE_BTN}
+      </div>
+      
+      <div class="fs-camera-main">
+        <div class="fs-face-frame fs-face-frame--capturing">
+          ${_FS_CORNERS}
+          <div class="fs-capture-ring">
+            <svg class="fs-capture-ring-svg" viewBox="0 0 280 360" fill="none">
+              <ellipse cx="140" cy="180" rx="120" ry="160" stroke="var(--color-brand-500)" stroke-width="6" fill="none" class="fs-capture-progress"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      
+      <div class="fs-camera-footer">
+        <div class="fs-instruction fs-instruction--capturing">
+          <div class="fs-instruction-spinner"></div>
+          <span>Capturing...</span>
+        </div>
+        ${_fsVerifiedTag()}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Processing
+function fcFsProcessing() {
+  return `<div class="fs-container fs-container--processing">
+    <div class="fs-processing-content">
+      <div class="fs-processing-visual">
+        <div class="fs-processing-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--color-gray-200)" stroke-width="4"/>
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--color-brand-500)" stroke-width="4" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="84.823" class="fs-processing-arc"/>
+          </svg>
+        </div>
+        <div class="fs-processing-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="var(--color-brand-500)" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="var(--color-brand-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="fs-processing-text">
+        <h2 class="fs-processing-title">Analyzing photo</h2>
+        <p class="fs-processing-subtitle">This will only take a moment</p>
+      </div>
+      <div class="fs-processing-steps">
+        <div class="fs-step fs-step--done">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Photo captured</span>
+        </div>
+        <div class="fs-step fs-step--active">
+          <div class="fs-step-spinner"></div>
+          <span>Verifying quality</span>
+        </div>
+        <div class="fs-step">
+          <div class="fs-step-dot"></div>
+          <span>Uploading</span>
+        </div>
+      </div>
+    </div>
+    <div class="fs-footer fs-footer--centered">
+      ${_fsVerifiedTag()}
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Uploading
+function fcFsUploading() {
+  return `<div class="fs-container fs-container--processing">
+    <div class="fs-processing-content">
+      <div class="fs-processing-visual">
+        <div class="fs-upload-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--color-gray-200)" stroke-width="4"/>
+            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--color-brand-500)" stroke-width="4" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="33.929" class="fs-upload-arc"/>
+          </svg>
+        </div>
+        <div class="fs-processing-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="var(--color-brand-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="fs-processing-text">
+        <h2 class="fs-processing-title">Uploading</h2>
+        <p class="fs-processing-subtitle">Securely transferring your photo</p>
+      </div>
+      <div class="fs-processing-steps">
+        <div class="fs-step fs-step--done">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Photo captured</span>
+        </div>
+        <div class="fs-step fs-step--done">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Quality verified</span>
+        </div>
+        <div class="fs-step fs-step--active">
+          <div class="fs-step-spinner"></div>
+          <span>Uploading</span>
+        </div>
+      </div>
+    </div>
+    <div class="fs-footer fs-footer--centered">
+      ${_fsVerifiedTag()}
+    </div>
+  </div>`;
+}
+
+// Full-Screen: Success
+function fcFsSuccess() {
+  return `<div class="fs-container fs-container--success">
+    <div class="fs-success-content">
+      <div class="fs-success-visual">
+        <div class="fs-success-ring"></div>
+        <div class="fs-success-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="fs-success-particles">
+          <div class="fs-particle"></div>
+          <div class="fs-particle"></div>
+          <div class="fs-particle"></div>
+          <div class="fs-particle"></div>
+          <div class="fs-particle"></div>
+          <div class="fs-particle"></div>
+        </div>
+      </div>
+      <div class="fs-success-text">
+        <h2 class="fs-success-title">All done!</h2>
+        <p class="fs-success-subtitle">Your selfie has been verified successfully</p>
+      </div>
+    </div>
+    <div class="fs-footer">
+      <button class="fs-primary-btn fs-primary-btn--success">
+        Continue
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      ${_fsVerifiedTag()}
+    </div>
+  </div>`;
+}
+
+
 // ---- Module registry ----
 
 const modules = {
@@ -749,6 +1069,18 @@ const modules = {
       { id: 'processing', label: 'Processing', render: fcProcessing },
       { id: 'uploading',  label: 'Uploading',  render: fcUploading },
       { id: 'success',    label: 'Success',    render: fcSuccess },
+    ]
+  },
+  'face-capture-fs': {
+    label: 'Face Capture — Full Screen',
+    screens: [
+      { id: 'fs-tutorial',   label: 'Tutorial',   render: fcFsTutorial },
+      { id: 'fs-cam-search', label: 'Searching',  render: fcFsCamSearching },
+      { id: 'fs-cam-detect', label: 'Detected',   render: fcFsCamDetected },
+      { id: 'fs-cam-capture',label: 'Capturing',  render: fcFsCamCapturing },
+      { id: 'fs-processing', label: 'Processing', render: fcFsProcessing },
+      { id: 'fs-uploading',  label: 'Uploading',  render: fcFsUploading },
+      { id: 'fs-success',    label: 'Success',    render: fcFsSuccess },
     ]
   },
   'id-capture':       { label: 'ID Capture',      screens: [] },
@@ -912,6 +1244,19 @@ const _labModuleData = {
       { label: 'Processing', render: fcProcessing },
       { label: 'Uploading',  render: fcUploading },
       { label: 'Success',    render: fcSuccess },
+    ]
+  },
+  // Full-Screen Camera variant — sophisticated immersive camera UI
+  'face-capture-fs': {
+    label: 'Face Capture — Full Screen',
+    screens: [
+      { label: 'Tutorial',   render: fcFsTutorial },
+      { label: 'Searching',  render: fcFsCamSearching },
+      { label: 'Detected',   render: fcFsCamDetected },
+      { label: 'Capturing',  render: fcFsCamCapturing },
+      { label: 'Processing', render: fcFsProcessing },
+      { label: 'Uploading',  render: fcFsUploading },
+      { label: 'Success',    render: fcFsSuccess },
     ]
   },
   // Add new modules here — copy the face-capture pattern above
