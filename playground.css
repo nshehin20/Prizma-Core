@@ -2623,7 +2623,7 @@ select {
   color: var(--color-gray-400);
 }
 
-/* Experiment button inside sidebar item */
+/* ── Experiment button inside sidebar item ── */
 .lab-experiment-btn {
   display: none;
   margin-left: auto;
@@ -2640,100 +2640,171 @@ select {
   transition: background 0.12s, border-color 0.12s;
   pointer-events: all;
 }
-
-.lab-sidebar-item:hover .lab-experiment-btn {
-  display: block;
-}
-
+.lab-sidebar-item:hover .lab-experiment-btn { display: block; }
 .lab-experiment-btn:hover {
   background: rgba(61,126,255,0.15);
   border-color: rgba(61,126,255,0.35);
 }
 
-/* ── Experiment canvas overlay ── */
-.lab-experiment-canvas {
+/* ── Experiment tab bar ── */
+.lab-exp-tab-bar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: none;
+  align-items: center;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,0,0,0.09);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.lab-exp-tab-bar.active { display: flex; }
+
+.lab-exp-tab {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  font-weight: 500;
+  color: #7A7F8E;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.lab-exp-tab:hover { color: #0D0D0D; }
+.lab-exp-tab--active {
+  background: #fff;
+  color: #3D7EFF;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* ── Experiment overlay (full canvas, pre-prompt) ── */
+.lab-experiment-overlay {
   position: absolute;
   inset: 0;
   z-index: 20;
   display: none;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   pointer-events: all;
 }
+.lab-experiment-overlay.active { display: flex; }
 
-.lab-experiment-canvas.active {
-  display: flex;
-}
-
-.lab-experiment-back {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 8px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  font-family: var(--font-family-dm);
-  color: #4B5060;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-.lab-experiment-back:hover {
-  background: #fff;
-  color: #0D0D0D;
-}
-
-.lab-experiment-placeholder {
+/* ── Centered chat card ── */
+.lab-exp-chat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-align: center;
-  padding: 0 32px;
-  max-width: 420px;
+  width: min(480px, calc(100% - 80px));
   user-select: none;
 }
 
-.lab-experiment-title {
+.lab-exp-chat-title {
   font-family: var(--font-family-dm);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: #0D0D0D;
   margin: 0;
   letter-spacing: -0.02em;
 }
 
-.lab-experiment-hint {
+.lab-exp-chat-hint {
   font-family: var(--font-family-dm);
   font-size: 13px;
-  color: #8A8F9E;
+  color: #9AA0AC;
   margin: 0;
 }
 
-.lab-experiment-examples {
+.lab-exp-input-wrap {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 4px;
+  align-items: center;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid rgba(61,126,255,0.3);
+  border-radius: 14px;
+  padding: 10px 10px 10px 16px;
+  box-shadow: 0 4px 20px rgba(61,126,255,0.1), 0 1px 4px rgba(0,0,0,0.06);
+  gap: 10px;
+}
+.lab-exp-input-wrap:focus-within {
+  border-color: #3D7EFF;
+  box-shadow: 0 4px 20px rgba(61,126,255,0.18), 0 1px 4px rgba(0,0,0,0.06);
 }
 
-.lab-experiment-examples span {
+.lab-exp-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-family-dm);
+  font-size: 14px;
+  color: #0D0D0D;
+  caret-color: #3D7EFF;
+  min-width: 0;
+}
+.lab-exp-input::placeholder { color: #B0B6C3; }
+
+.lab-exp-submit {
+  width: 36px;
+  height: 36px;
+  background: #3D7EFF;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.lab-exp-submit:hover { background: #5590FF; }
+.lab-exp-submit:disabled { background: #C8CBD2; cursor: not-allowed; }
+.lab-exp-submit .prompt-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.lab-exp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+.lab-exp-chip {
   font-family: var(--font-family-dm);
   font-size: 12px;
-  color: #9AA0AC;
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(0,0,0,0.06);
+  color: #7A7F8E;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 20px;
-  padding: 5px 14px;
-  display: inline-block;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.lab-exp-chip:hover { background: #fff; color: #3D7EFF; border-color: rgba(61,126,255,0.25); }
+
+.lab-exp-response {
+  font-family: var(--font-family-dm);
+  font-size: 13px;
+  color: #7A7F8E;
+  min-height: 20px;
+  transition: opacity 0.2s;
 }
 
 /* ── Main area ── */
@@ -3087,11 +3158,12 @@ select {
 
 .lab-expanded .lab-zoom-bar { display: flex; }
 
-/* ── Zoom controls (only in expand mode) ── */
+/* ── Zoom controls (only in expand mode, center-bottom to avoid overlap) ── */
 .lab-zoom-bar {
   position: absolute;
   bottom: 16px;
-  right: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   display: none;
   align-items: center;
   border: 1px solid rgba(0,0,0,0.09);
@@ -3139,13 +3211,13 @@ select {
    ============================================ */
 
 .prompt-bar {
+  display: none !important; /* replaced by lab-exp-chat centered input */
   position: fixed;
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 300;
   width: min(560px, calc(100vw - 48px));
-  display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 8px;

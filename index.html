@@ -3174,21 +3174,38 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
           </button>
 
-          <!-- Experiment canvas overlay -->
-          <div class="lab-experiment-canvas" id="lab-experiment-canvas">
-            <button class="lab-experiment-back" id="lab-experiment-back" onclick="labCloseExperiment()">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L3 7L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span id="lab-experiment-back-label">Back</span>
+          <!-- Experiment tab bar (shown when in experiment mode) -->
+          <div class="lab-exp-tab-bar" id="lab-exp-tab-bar">
+            <button class="lab-exp-tab" id="lab-exp-tab-original" onclick="labExpTabSwitch('original')">
+              <span id="lab-exp-original-label">Original</span>
             </button>
-            <div class="lab-experiment-placeholder">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 1L17 11L27 14L17 17L14 27L11 17L1 14L11 11L14 1Z" fill="#3D7EFF" opacity="0.9"/></svg>
-              <p class="lab-experiment-title" id="lab-experiment-title">New Experiment</p>
-              <p class="lab-experiment-hint">Type what you want to see in the prompt bar below</p>
-              <div class="lab-experiment-examples">
-                <span>"show the success screen in dark mode"</span>
-                <span>"change the brand color to purple"</span>
-                <span>"show all screens"</span>
+            <button class="lab-exp-tab lab-exp-tab--active" id="lab-exp-tab-exp" onclick="labExpTabSwitch('experiment')">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 0.5L6 3.8L9.5 5L6 6.2L5 9.5L4 6.2L0.5 5L4 3.8L5 0.5Z" fill="currentColor"/></svg>
+              Experiment
+            </button>
+          </div>
+
+          <!-- Experiment overlay (covers canvas, shown before first prompt) -->
+          <div class="lab-experiment-overlay" id="lab-experiment-overlay">
+            <div class="lab-exp-chat" id="lab-exp-chat">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 1L19.5 12L31 16L19.5 20L16 31L12.5 20L1 16L12.5 12L16 1Z" fill="#3D7EFF" opacity="0.85"/></svg>
+              <h2 class="lab-exp-chat-title" id="lab-exp-chat-title">Face Capture — Experiment</h2>
+              <p class="lab-exp-chat-hint">Describe a change and I'll apply it live</p>
+              <div class="lab-exp-input-wrap">
+                <input type="text" id="lab-exp-input" class="lab-exp-input"
+                  placeholder='e.g. "show success in dark mode"'
+                  onkeydown="if(event.key==='Enter')labExpSubmit()"
+                  autocomplete="off" />
+                <button class="lab-exp-submit" id="lab-exp-submit-btn" onclick="labExpSubmit()">
+                  <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
               </div>
+              <div class="lab-exp-chips">
+                <button class="lab-exp-chip" onclick="labExpFill('show the success screen in dark mode')">success in dark mode</button>
+                <button class="lab-exp-chip" onclick="labExpFill('change brand color to purple')">change brand to purple</button>
+                <button class="lab-exp-chip" onclick="labExpFill('show all screens')">show all screens</button>
+              </div>
+              <div class="lab-exp-response" id="lab-exp-response"></div>
             </div>
           </div>
 
@@ -3245,28 +3262,6 @@
   <script src="config.local.js" onerror="void 0"></script>
   <script src="playground.js"></script>
 
-  <!-- PROMPT BAR -->
-  <div class="prompt-bar" id="prompt-bar">
-    <div class="prompt-response-bubble" id="prompt-response"></div>
-    <div class="prompt-bar-inner">
-      <svg class="prompt-spark" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 0.5L8.2 5.3L13 7L8.2 8.7L7 13.5L5.8 8.7L1 7L5.8 5.3L7 0.5Z" fill="#3D7EFF"/>
-      </svg>
-      <input
-        type="text"
-        class="prompt-input"
-        id="prompt-input"
-        placeholder='Try "show face capture" or "switch to dark mode"'
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitPrompt()}"
-        autocomplete="off"
-      />
-      <button class="prompt-submit-btn" id="prompt-submit-btn" onclick="submitPrompt()" aria-label="Send">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
-          <path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
-  </div>
 
 </body>
 </html>

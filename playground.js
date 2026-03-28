@@ -1236,10 +1236,8 @@ initLab();
 
 
 // ============================================
-//  PROMPT BAR
+//  EXPERIMENT — Claude integration
 // ============================================
-
-let _promptResponseTimer = null;
 
 const _PROMPT_SYSTEM = `You are an AI assistant embedded in Incode Core Lab — a design system playground for identity verification (IDV) mobile flows. Users are product managers and designers (non-technical) who want to explore and modify UI components via natural language.
 
@@ -1291,24 +1289,70 @@ async function _callClaudeDirect(apiKey, message) {
   }
 }
 
-async function submitPrompt() {
-  const input  = document.getElementById('prompt-input');
-  const bubble = document.getElementById('prompt-response');
-  const btn    = document.getElementById('prompt-submit-btn');
-  const message = input.value.trim();
-  if (!message || btn.disabled) return;
+let _labExpMode = false;
+
+function labCreateExperiment(moduleId, moduleLabel) {
+  _labActiveModule = moduleId;
+  _labExpMode = true;
+
+  // Update tab labels
+  document.getElementById('lab-exp-original-label').textContent = moduleLabel;
+  document.getElementById('lab-exp-chat-title').textContent = moduleLabel + ' — Experiment';
+
+  // Show tab bar + overlay
+  document.getElementById('lab-exp-tab-bar').classList.add('active');
+  document.getElementById('lab-experiment-overlay').classList.add('active');
+
+  // Set active tab to Experiment
+  document.getElementById('lab-exp-tab-original').classList.remove('lab-exp-tab--active');
+  document.getElementById('lab-exp-tab-exp').classList.add('lab-exp-tab--active');
+
+  // Focus the centered input
+  setTimeout(() => document.getElementById('lab-exp-input')?.focus(), 100);
+}
+
+function labExpTabSwitch(tab) {
+  const tabOriginal = document.getElementById('lab-exp-tab-original');
+  const tabExp      = document.getElementById('lab-exp-tab-exp');
+  const overlay     = document.getElementById('lab-experiment-overlay');
+
+  if (tab === 'original') {
+    tabOriginal.classList.add('lab-exp-tab--active');
+    tabExp.classList.remove('lab-exp-tab--active');
+    overlay.classList.remove('active');
+  } else {
+    tabExp.classList.add('lab-exp-tab--active');
+    tabOriginal.classList.remove('lab-exp-tab--active');
+    overlay.classList.add('active');
+  }
+}
+
+function labCloseExperiment() {
+  _labExpMode = false;
+  document.getElementById('lab-exp-tab-bar').classList.remove('active');
+  document.getElementById('lab-experiment-overlay').classList.remove('active');
+}
+
+function labExpFill(text) {
+  const input = document.getElementById('lab-exp-input');
+  if (input) { input.value = text; input.focus(); }
+}
+
+async function labExpSubmit() {
+  const input    = document.getElementById('lab-exp-input');
+  const response = document.getElementById('lab-exp-response');
+  const btn      = document.getElementById('lab-exp-submit-btn');
+  const message  = input?.value.trim();
+  if (!message || btn?.disabled) return;
 
   input.disabled = true;
-  btn.disabled = true;
-  btn.innerHTML = '<div class="prompt-spinner"></div>';
-  bubble.textContent = '...';
-  bubble.classList.add('visible');
-  clearTimeout(_promptResponseTimer);
+  btn.disabled   = true;
+  btn.innerHTML  = '<div class="prompt-spinner"></div>';
+  response.textContent = '...';
 
   try {
     let data;
     const localKey = window.ANTHROPIC_LOCAL_KEY;
-
     if (localKey && localKey !== 'PASTE_YOUR_KEY_HERE') {
       data = await _callClaudeDirect(localKey, message);
     } else {
@@ -1320,41 +1364,25 @@ async function submitPrompt() {
       data = await res.json();
     }
 
-    bubble.textContent = data.message || 'Done.';
+    response.textContent = data.message || 'Done.';
     if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
     input.value = '';
-    _promptResponseTimer = setTimeout(() => bubble.classList.remove('visible'), 5000);
 
   } catch {
-    bubble.textContent = 'Something went wrong — please try again.';
-    _promptResponseTimer = setTimeout(() => bubble.classList.remove('visible'), 4000);
+    response.textContent = 'Something went wrong — please try again.';
   } finally {
     input.disabled = false;
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    btn.disabled   = false;
+    btn.innerHTML  = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     input.focus();
   }
 }
 
-function labCreateExperiment(moduleId, moduleLabel) {
-  // Select the module silently
-  _labActiveModule = moduleId;
-  // Show the experiment canvas overlay
-  const overlay = document.getElementById('lab-experiment-canvas');
-  document.getElementById('lab-experiment-title').textContent = moduleLabel + ' — Experiment';
-  document.getElementById('lab-experiment-back-label').textContent = 'Back to ' + moduleLabel;
-  overlay.classList.add('active');
-  // Focus prompt input
-  setTimeout(() => document.getElementById('prompt-input')?.focus(), 100);
-}
-
-function labCloseExperiment() {
-  document.getElementById('lab-experiment-canvas').classList.remove('active');
-}
-
 function executeLabAction(action) {
-  // Close experiment overlay on first action
-  labCloseExperiment();
+  // On first action: hide the overlay (phones show through) but keep the tab bar
+  document.getElementById('lab-experiment-overlay').classList.remove('active');
+  document.getElementById('lab-exp-tab-exp').classList.add('lab-exp-tab--active');
+  document.getElementById('lab-exp-tab-original').classList.remove('lab-exp-tab--active');
   switch (action.type) {
 
     case 'selectModule': {
