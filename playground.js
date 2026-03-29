@@ -769,12 +769,17 @@ function _idCapFrame(borderColor, imgSrc) {
 }
 
 // Shared: dark camera screen (front or back, empty or detected)
-function _idCameraScreen(title, subtitle, state, side) {
-  const detected = state === 'detected';
+// showTimer: true = show countdown timer instead of ? button
+function _idCameraScreen(title, subtitle, state, side, showTimer) {
+  const detected = state === 'detected' || showTimer;
   const imgSrc = detected
     ? (side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png')
     : null;
   const borderColor = detected ? '#006AFF' : null;
+  const bottomEl = showTimer
+    ? `<img src="assets/icons/camera/timer.svg" width="90" height="90" alt=""/>`
+    : `<img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>`;
+  const bottomAlign = showTimer ? 'justify-content:center' : 'justify-content:flex-end';
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
     <div style="height:44px;flex-shrink:0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
@@ -786,8 +791,8 @@ function _idCameraScreen(title, subtitle, state, side) {
         ${_idCapFrame(borderColor, imgSrc)}
         ${_idEncryptedBadge(true)}
       </div>
-      <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
-        <img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>
+      <div style="flex:1;display:flex;align-items:flex-end;${bottomAlign}">
+        ${bottomEl}
       </div>
     </div>
   </div>`;
@@ -869,12 +874,17 @@ function idFrontCamEmpty() {
   return _idCameraScreen('Frame the front of your ID', 'The capture will happen automatically', 'empty', 'front');
 }
 
-// Screen 4/13 — Front Camera: Detected
+// Screen 4/14 — Front Camera: Detected
 function idFrontCamFilled() {
   return _idCameraScreen('Frame the front of your ID', 'The capture will happen automatically', 'detected', 'front');
 }
 
-// Screen 5/13 — Front Processing
+// Screen 5/14 — Front Camera: Capturing (countdown)
+function idFrontCamCapturing() {
+  return _idCameraScreen('Hold still', 'Capturing your ID…', 'detected', 'front', true);
+}
+
+// Screen 6/14 — Front Processing
 function idFrontProcessing() {
   return _idProcessingScreen('Processing..', 25, 'front');
 }
@@ -976,9 +986,10 @@ const modules = {
     screens: [
       { id: 'doc-select',        label: 'Doc Select',       render: idDocSelect },
       { id: 'front-tutorial',    label: 'Front Tutorial',   render: idFrontTutorial },
-      { id: 'front-empty',       label: 'Front: Empty',     render: idFrontCamEmpty },
-      { id: 'front-filled',      label: 'Front: Detected',  render: idFrontCamFilled },
-      { id: 'front-processing',  label: 'Front Processing', render: idFrontProcessing },
+      { id: 'front-empty',       label: 'Front: Empty',      render: idFrontCamEmpty },
+      { id: 'front-filled',      label: 'Front: Detected',   render: idFrontCamFilled },
+      { id: 'front-capturing',   label: 'Front: Capturing',  render: idFrontCamCapturing },
+      { id: 'front-processing',  label: 'Front Processing',  render: idFrontProcessing },
       { id: 'front-uploading',   label: 'Front Uploading',  render: idFrontUploading },
       { id: 'front-success',     label: 'Front Success',    render: idFrontSuccess },
       { id: 'flip',              label: 'Flip',             render: idFlip },
