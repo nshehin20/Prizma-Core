@@ -923,19 +923,11 @@ function idFrontSuccess() {
   return _idSuccessScreen("Now let's capture the back", 'assets/illustrations/id-front.png', 'Scan the back');
 }
 
-// Screen 8/13 — Flip
+// Screen 9/14 — Flip
 function idFlip() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0;background:#fff">
-    <div style="display:flex;flex-direction:column;gap:20px">
-      ${_navBar('logo-only')}
-      <div style="text-align:center">
-        <div class="type-h2" style="color:var(--text-primary)">Now flip your ID</div>
-      </div>
-    </div>
-    <div style="flex:1;display:flex;align-items:center;justify-content:center">
-      <img src="assets/illustrations/id-tutorial/step-3.svg" style="width:100%;max-width:320px;object-fit:contain" alt="Flip"/>
-    </div>
-    ${_verifiedTag()}
+  return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;background:#fff;padding:24px;text-align:center">
+    <div class="type-h2" style="color:#262831">Show the back of your ID</div>
+    <img src="assets/illustrations/id-flip.svg" width="260" height="138" alt="Flip ID"/>
   </div>`;
 }
 
