@@ -184,7 +184,7 @@
 
 <div class="preview-header">
   <h1>ID Capture — Screen Review</h1>
-  <p>11 screens · Use arrow keys or click to navigate</p>
+  <p>13 screens · Use arrow keys or click to navigate</p>
 </div>
 
 <div class="step-dots" id="stepDots"></div>
@@ -228,17 +228,19 @@
 <script>
   // ── Screen definitions (mirrors modules['id-capture'].screens) ──
   const screens = [
-    { label: 'Doc Select',      render: idDocSelect },
-    { label: 'Front Tutorial',  render: idFrontTutorial },
-    { label: 'Front: Empty',    render: idFrontCamEmpty },
-    { label: 'Front: Detected', render: idFrontCamFilled },
-    { label: 'Front Processing',render: idFrontProcessing },
-    { label: 'Front Success',   render: idFrontSuccess },
-    { label: 'Flip',            render: idFlip },
-    { label: 'Back: Empty',     render: idBackCamEmpty },
-    { label: 'Back: Detected',  render: idBackCamFilled },
-    { label: 'Back Processing', render: idBackProcessing },
-    { label: 'Back Success',    render: idBackSuccess },
+    { label: 'Doc Select',       render: idDocSelect },
+    { label: 'Front Tutorial',   render: idFrontTutorial },
+    { label: 'Front: Empty',     render: idFrontCamEmpty },
+    { label: 'Front: Detected',  render: idFrontCamFilled },
+    { label: 'Front Processing', render: idFrontProcessing },
+    { label: 'Front Uploading',  render: idFrontUploading },
+    { label: 'Front Success',    render: idFrontSuccess },
+    { label: 'Flip',             render: idFlip },
+    { label: 'Back: Empty',      render: idBackCamEmpty },
+    { label: 'Back: Detected',   render: idBackCamFilled },
+    { label: 'Back Processing',  render: idBackProcessing },
+    { label: 'Back Uploading',   render: idBackUploading },
+    { label: 'Back Success',     render: idBackSuccess },
   ];
 
   let current = 0;
