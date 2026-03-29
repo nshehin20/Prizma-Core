@@ -746,13 +746,13 @@ function fcSuccess() {
 // dark=true → white text (camera dark screens)
 // dark=false → secondary text color (light screens)
 function _idEncryptedBadge(dark) {
-  const color = dark ? 'rgba(255,255,255,0.65)' : 'var(--text-secondary)';
-  return `<div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 0;flex-shrink:0">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-      <rect x="2" y="6" width="10" height="7" rx="1.5" fill="none" stroke="${color}" stroke-width="1.2"/>
-      <path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="${color}" stroke-width="1.2" stroke-linecap="round"/>
+  const color = dark ? '#ffffff' : 'var(--text-secondary)';
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 0;flex-shrink:0">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" fill="none" stroke="${color}" stroke-width="1.3"/>
+      <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="${color}" stroke-width="1.3" stroke-linecap="round"/>
     </svg>
-    <span class="type-body-s-bold" style="color:${color}">All data is encrypted</span>
+    <span class="type-body-m-regular" style="color:${color}">All data is encrypted</span>
   </div>`;
 }
 
@@ -767,20 +767,20 @@ function _idCapFrame(borderColor, imgSrc) {
 
 // Shared: dark camera screen (front or back, empty or detected)
 function _idCameraScreen(title, subtitle, state, side) {
-  const borderColor = state === 'detected' ? '#006AFF' : 'rgba(255,255,255,0.45)';
+  const borderColor = state === 'detected' ? '#006AFF' : 'rgba(255,255,255,0.8)';
   const imgSrc = state === 'detected'
     ? (side === 'back' ? 'assets/illustrations/id-back.svg' : 'assets/illustrations/id-front.svg')
     : null;
-  return `<div style="flex:1;display:flex;flex-direction:column;background:#0D0D0D;padding:0 24px">
+  return `<div style="flex:1;display:flex;flex-direction:column;background:#111;padding:0 24px">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:28px">
       <div class="type-h2" style="color:#fff">${title}</div>
-      <div class="type-body-m-regular" style="color:#a3a8b8;margin-top:6px">${subtitle}</div>
+      <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
     </div>
     ${_idCapFrame(borderColor, imgSrc)}
     ${_idEncryptedBadge(true)}
     <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-bottom:8px">
-      <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;cursor:pointer">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="rgba(255,255,255,0.65)" stroke-width="1.4"/><path d="M8 7.5v3.5M8 5.5h.01" stroke="rgba(255,255,255,0.65)" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="white" stroke-width="1.2" stroke-opacity="0.8"/><path d="M9 12.5v-4M9 7h.01" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.9"/></svg>
       </div>
     </div>
   </div>`;
@@ -859,7 +859,7 @@ function idFrontTutorial() {
 
 // Screen 3/13 — Front Camera: Empty
 function idFrontCamEmpty() {
-  return _idCameraScreen('Frame the front of your ID', 'This will happen automatically', 'empty', 'front');
+  return _idCameraScreen('Frame the front of your ID', 'The capture will happen automatically', 'empty', 'front');
 }
 
 // Screen 4/13 — Front Camera: Detected
@@ -913,7 +913,7 @@ function idFlip() {
 
 // Screen 9/13 — Back Camera: Empty
 function idBackCamEmpty() {
-  return _idCameraScreen('Frame the back of your ID', 'This will happen automatically', 'empty', 'back');
+  return _idCameraScreen('Frame the back of your ID', 'The capture will happen automatically', 'empty', 'back');
 }
 
 // Screen 10/13 — Back Camera: Detected
