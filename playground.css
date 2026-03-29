@@ -2735,9 +2735,8 @@ select {
   display: inline-flex; align-items: center; justify-content: center;
   width: 16px; height: 16px;
   border-radius: 4px;
-  font-size: 14px; line-height: 16px;
-  opacity: 0.55;
-  margin-left: 1px;
+  opacity: 0.6;
+  margin-left: 2px;
   flex-shrink: 0;
   transition: opacity 0.1s, background 0.1s;
 }

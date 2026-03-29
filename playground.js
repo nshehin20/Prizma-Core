@@ -1374,7 +1374,7 @@ function labExpRenderSidebarItems() {
     <button class="lab-exp-tab${_activeExpId === exp.id ? ' lab-exp-tab--active' : ''}"
             onclick="labExpTabSwitch('${exp.id}')">
       ${exp.label}
-      <span class="lab-exp-tab-close" onclick="event.stopPropagation();labExpClose('${exp.id}')">×</span>
+      <span class="lab-exp-tab-close" onclick="event.stopPropagation();labExpClose('${exp.id}')"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
     </button>
   `).join('');
 
