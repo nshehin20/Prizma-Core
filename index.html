@@ -137,9 +137,11 @@
   <main class="main">
     <div class="topbar">
       <img src="incode-logo.svg" class="topbar-logo" alt="Incode" />
-      <div class="topbar-right">
+      <div class="topbar-tabs">
         <button class="tab active" onclick="showView('lab', this)">Lab</button>
         <button class="tab" onclick="showView('components', this)">Prizma</button>
+      </div>
+      <div class="topbar-right">
         <button class="topbar-token-btn" id="topbar-token-btn" onclick="toggleTokenPanel()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 8v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="6" cy="14" r="2" stroke="currentColor" stroke-width="2"/><path d="M6 2v10M6 16v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="10" r="2" stroke="currentColor" stroke-width="2"/><path d="M18 2v6M18 12v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Tokens
@@ -3152,9 +3154,11 @@
                     <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
                       <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
                       <span>Face Capture</span>
+                      <span class="lab-sidebar-item-add" onclick="event.stopPropagation(); labCreateExperiment('face-capture', 'Face Capture')" title="New experiment">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                      </span>
                     </button>
-                    <button class="lab-experiment-btn" onclick="labCreateExperiment('face-capture', 'Face Capture')">+ New experiment</button>
-                    <div class="lab-exp-sub-nav" id="lab-exp-sub-nav"></div>
+                    <div id="lab-exp-sub-nav"></div><!-- kept for JS compat -->
                   </div>
                   <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="id-capture" onclick="labSelectModule(this)">
                     <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
@@ -3181,30 +3185,27 @@
           <div class="lab-experiment-overlay" id="lab-experiment-overlay">
             <!-- Orb + heading -->
             <div class="lab-exp-empty-state" id="lab-exp-empty-state">
-              <div class="lab-exp-orb"></div>
-              <h2 class="lab-exp-heading">What do you want to experiment?</h2>
-              <p class="lab-exp-subheading">Describe a change to Face Capture</p>
+              <p class="lab-exp-tagline" id="lab-exp-tagline"></p>
+              <h2 class="lab-exp-heading" id="lab-exp-heading">What do you want to experiment in?</h2>
             </div>
-            <!-- Input card (BeeBot-style) -->
-            <div class="lab-exp-input-card">
-              <div class="lab-exp-input-inner">
-                <span class="lab-exp-input-icon">✦</span>
-                <input type="text" id="lab-exp-overlay-input" class="lab-exp-card-input"
-                       placeholder="Initiate a query or send a command to the AI..."
+            <!-- Input bar -->
+            <div class="lab-exp-input-wrap">
+              <div class="lab-exp-bar" id="lab-exp-bar">
+                <svg class="lab-exp-bar-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/></svg>
+                <input type="text" id="lab-exp-overlay-input" class="lab-exp-bar-input"
+                       placeholder="Describe what you want to explore…"
                        onkeydown="if(event.key==='Enter')labExpSubmit()"
                        autocomplete="off" />
-              </div>
-              <div class="lab-exp-card-footer">
-                <div class="lab-exp-chips" id="lab-exp-chips">
-                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Go full dark mode</button>
-                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Remove all friction</button>
-                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Make it feel premium</button>
-                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Bold, urgent CTA</button>
-                  <button class="lab-exp-chip" onclick="labExpSuggest(this)">Try a purple brand</button>
-                </div>
-                <button class="lab-exp-card-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
+                <button class="lab-exp-bar-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
                   <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
+              </div>
+              <div class="lab-exp-chips" id="lab-exp-chips">
+                <button class="lab-exp-chip" onclick="labExpSuggest(this)">Go full dark mode</button>
+                <button class="lab-exp-chip" onclick="labExpSuggest(this)">Remove all friction</button>
+                <button class="lab-exp-chip" onclick="labExpSuggest(this)">Make it feel premium</button>
+                <button class="lab-exp-chip" onclick="labExpSuggest(this)">Bold, urgent CTA</button>
+                <button class="lab-exp-chip" onclick="labExpSuggest(this)">Try a purple brand</button>
               </div>
             </div>
           </div>
@@ -3213,8 +3214,12 @@
           <div class="lab-exp-panel" id="lab-exp-panel">
             <div class="lab-exp-panel-header">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0.5L7.2 4.3L11 6L7.2 7.7L6 11.5L4.8 7.7L1 6L4.8 4.3L6 0.5Z" fill="#3D7EFF"/></svg>
-              <span id="lab-exp-panel-title">Experiment</span>
-              <button class="lab-exp-panel-hide" onclick="labExpHidePanel()">×</button>
+              <span id="lab-exp-panel-title"
+                    contenteditable="true"
+                    spellcheck="false"
+                    onblur="labExpRenameFromPanel(this)"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
+              >Experiment</span>
             </div>
             <div class="lab-exp-messages" id="lab-exp-messages"></div>
             <div class="lab-exp-panel-footer">
@@ -3227,6 +3232,23 @@
               </button>
             </div>
           </div>
+
+          <!-- Delete experiment confirmation modal -->
+          <div class="lab-delete-backdrop" id="lab-delete-backdrop" onclick="labExpDeleteCancel()">
+            <div class="lab-delete-modal" onclick="event.stopPropagation()">
+              <p class="lab-delete-title">Delete experiment?</p>
+              <p class="lab-delete-body" id="lab-delete-body">This will remove all generated screens and chat history.</p>
+              <div class="lab-delete-actions">
+                <button class="lab-delete-btn-cancel" onclick="labExpDeleteCancel()">Cancel</button>
+                <button class="lab-delete-btn-confirm" id="lab-delete-btn-confirm">Delete</button>
+              </div>
+            </div>
+          </div>
+
+<!-- Panel toggle button (outside, to the left of the panel — mirrors sidebar-toggle) -->
+          <button class="lab-exp-panel-toggle" id="lab-exp-panel-toggle" onclick="labToggleExpPanel()" title="Toggle experiment panel">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg>
+          </button>
 
           <div class="lab-canvas-inner" id="lab-canvas-inner">
             <div class="lab-stage" id="lab-stage"></div>
@@ -3264,6 +3286,9 @@
               Dark
             </button>
           </div>
+
+          <!-- Floating experiment tab bar — centered bottom of canvas -->
+          <div class="lab-exp-tab-bar" id="lab-exp-tab-bar"></div>
 
           <!-- Zoom controls -->
           <div class="lab-zoom-bar">

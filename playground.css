@@ -322,9 +322,9 @@ select {
 }
 
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
   padding: 0 24px;
   height: 52px;
   background: #fff;
@@ -332,27 +332,39 @@ select {
   flex-shrink: 0;
 }
 
+.topbar-logo {
+  align-self: center;
+}
+
+.topbar-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
 .tab {
-  padding: 6px 14px;
+  padding: 0 20px;
   border: none;
+  border-bottom: 2px solid transparent;
   background: none;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: 0;
+  font-size: 14px;
   font-family: var(--font-family-dm);
-  font-weight: 500;
-  color: var(--color-gray-500);
+  font-weight: 400;
+  color: #60667c;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
 
 .tab:hover {
-  background: var(--color-gray-100);
-  color: var(--color-gray-800);
+  color: #262831;
 }
 
 .tab.active {
-  background: var(--color-brand-50);
-  color: var(--color-brand-500);
+  color: #262831;
+  font-weight: 500;
+  border-bottom-color: #006AFF;
 }
 
 .topbar-logo {
@@ -360,11 +372,13 @@ select {
   width: auto;
   display: block;
   opacity: 0.9;
+  align-self: center;
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
 }
 
@@ -2507,6 +2521,17 @@ select {
   left: 24px;
 }
 
+/* Input focused — fade out sidebar and its toggle */
+.lab-canvas-vp.lab-input-focused .lab-sidebar,
+.lab-canvas-vp.lab-input-focused .lab-sidebar-toggle {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.lab-sidebar, .lab-sidebar-toggle {
+  transition: opacity 0.25s;
+}
+
 .lab-sidebar-header {
   padding: 16px 16px 14px;
   display: flex;
@@ -2623,64 +2648,101 @@ select {
   color: var(--color-gray-400);
 }
 
-/* ── Experiment add button (below module, shown on group hover) ── */
+/* ── Inline + button on module item hover ── */
+.lab-sidebar-item-add {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  display: flex; /* always in layout — no size jump */
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  color: #9AA0AC;
+  opacity: 0; /* hidden until hover */
+  transition: opacity 0.12s, background 0.12s, color 0.12s;
+}
+.lab-sidebar-item:hover .lab-sidebar-item-add { opacity: 1; }
+.lab-sidebar-item-add:hover { background: #E8EEFF; color: #3D7EFF; }
+
+/* ── Experiment sidebar group ── */
 .lab-sidebar-item-group {
   display: flex;
   flex-direction: column;
 }
 .lab-experiment-btn {
-  display: none;
-  font-size: 11px;
+  display: none; /* removed — kept for safety, no longer in HTML */
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px 5px 36px;
+  font-size: 12px;
   font-weight: 500;
   font-family: var(--font-family-dm);
   color: #3D7EFF;
   background: none;
   border: none;
   text-align: left;
-  padding: 0 12px 8px 32px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.12s;
+  border-radius: 7px;
+  width: 100%;
+  margin-bottom: 2px;
+  transition: background 0.12s, color 0.12s;
 }
-.lab-sidebar-item-group:hover .lab-experiment-btn { display: block; }
-.lab-experiment-btn:hover { opacity: 1; }
+.lab-sidebar-item-group:hover .lab-experiment-btn { display: flex; }
+.lab-experiment-btn:hover { background: #EEF3FF; color: #2563EB; }
 
-/* ── Experiment tab bar (top strip, full width) ── */
-/* ── Experiment sidebar sub-items ── */
-.lab-exp-sub-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  padding: 2px 0 4px 20px;
+/* ── Floating experiment tab bar — centered bottom of canvas ── */
+.lab-exp-tab-bar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: none; /* hidden until experiments exist */
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
 }
-.lab-exp-sub-item {
+.lab-exp-tab-bar.visible { display: flex; }
+
+.lab-exp-tab {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 5px 10px;
-  border-radius: 7px;
+  gap: 6px;
+  padding: 6px 14px;
   border: none;
+  border-radius: 8px;
   background: none;
   font-family: var(--font-family-dm);
   font-size: 12px;
   font-weight: 500;
   color: #8A8F99;
   cursor: pointer;
-  text-align: left;
-  width: 100%;
+  white-space: nowrap;
   transition: background 0.12s, color 0.12s;
 }
-.lab-exp-sub-item:hover { background: rgba(0,0,0,0.04); color: #0D0D0D; }
-.lab-exp-sub-item--active { background: #EEF3FF; color: #3D7EFF; }
-.lab-exp-sub-close {
+.lab-exp-tab:hover { background: #F5F7FA; color: #0D0D0D; }
+.lab-exp-tab--active {
+  background: #006AFF;
+  color: #fff;
+}
+.lab-exp-tab--active:hover { background: #0058d6; color: #fff; }
+
+.lab-exp-tab-close {
   display: inline-flex; align-items: center; justify-content: center;
   width: 16px; height: 16px;
-  border-radius: 4px; font-size: 13px; line-height: 1;
-  color: #B0B6C3; opacity: 0;
-  transition: opacity 0.1s, background 0.1s, color 0.1s;
+  border-radius: 4px;
+  font-size: 14px; line-height: 16px;
+  opacity: 0.55;
+  margin-left: 1px;
+  flex-shrink: 0;
+  transition: opacity 0.1s, background 0.1s;
 }
-.lab-exp-sub-item:hover .lab-exp-sub-close { opacity: 1; }
-.lab-exp-sub-close:hover { background: rgba(0,0,0,0.08); color: #0D0D0D; }
+.lab-exp-tab:hover .lab-exp-tab-close { opacity: 1; }
+.lab-exp-tab-close:hover { background: rgba(255,255,255,0.2); }
 
 
 /* ── Experiment mode: hide phones, keep dot-grid canvas intact ── */
@@ -2691,8 +2753,7 @@ select {
 .lab-canvas-vp.lab-exp-active .lab-screen-info,
 .lab-canvas-vp.lab-exp-active .lab-zoom-bar { display: none !important; }
 
-/* Shift canvas when panel is open */
-.lab-canvas-vp.lab-panel-open .lab-canvas-inner { margin-right: 290px; }
+/* Panel floats on top — no canvas shift */
 
 /* ── Experiment overlay: transparent so dot-grid shows through ── */
 .lab-experiment-overlay {
@@ -2709,78 +2770,157 @@ select {
 .lab-exp-empty-state {
   display: flex; flex-direction: column;
   align-items: center; gap: 10px;
+  padding: 0 40px; /* room for orb blur glow to breathe */
 }
+/* Nebula orb — soft blurry watercolor blob, blue + purple */
 .lab-exp-orb {
-  width: 68px; height: 68px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #c4b5fd 0%, #818cf8 35%, #3D7EFF 65%, #60a5fa 100%);
-  box-shadow: 0 0 48px rgba(124,58,237,0.38), 0 0 90px rgba(61,126,255,0.2);
-  animation: lab-orb-float 3.5s ease-in-out infinite;
-  margin-bottom: 4px;
+  position: relative;
+  width: 110px; height: 110px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+  /* The orb itself: blurry organic blob */
+  background: conic-gradient(
+    from 200deg at 40% 55%,
+    #7c3aed 0%,
+    #4f46e5 18%,
+    #3D7EFF 36%,
+    #38bdf8 54%,
+    #818cf8 72%,
+    #6d28d9 88%,
+    #7c3aed 100%
+  );
+  filter: blur(12px) saturate(1.4);
+  animation: lab-orb-morph 8s ease-in-out infinite;
+  opacity: 0.85;
 }
-@keyframes lab-orb-float {
-  0%,100% { transform: translateY(0) scale(1); box-shadow: 0 0 48px rgba(124,58,237,0.38),0 0 90px rgba(61,126,255,0.2); }
-  50%      { transform: translateY(-8px) scale(1.06); box-shadow: 0 0 68px rgba(124,58,237,0.54),0 0 120px rgba(61,126,255,0.3); }
+/* Outer soft glow halo */
+.lab-exp-orb::before {
+  content: '';
+  position: absolute;
+  inset: -32px;
+  background: radial-gradient(ellipse 70% 60% at 45% 50%,
+    rgba(109,40,217,0.35) 0%,
+    rgba(61,126,255,0.22) 40%,
+    rgba(56,189,248,0.12) 65%,
+    transparent 80%
+  );
+  border-radius: 50%;
+  filter: blur(22px);
+  animation: lab-orb-glow 8s ease-in-out infinite;
+}
+/* Second color pocket — cyan spot offset */
+.lab-exp-orb::after {
+  content: '';
+  position: absolute;
+  inset: -54px;
+  background:
+    radial-gradient(ellipse 45% 38% at 70% 30%, rgba(56,189,248,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 25% 65%, rgba(124,58,237,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 50% 50%, rgba(61,126,255,0.10) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(32px);
+  animation: lab-orb-glow 8s ease-in-out infinite 1.5s reverse;
+}
+@keyframes lab-orb-morph {
+  0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: scale(1) rotate(0deg); }
+  16%     { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: scale(1.09) rotate(5deg); }
+  33%     { border-radius: 50% 60% 30% 70% / 30% 40% 70% 60%; transform: scale(0.93) rotate(-4deg); }
+  50%     { border-radius: 70% 30% 50% 60% / 40% 70% 30% 50%; transform: scale(1.07) rotate(9deg); }
+  66%     { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; transform: scale(1.03) rotate(-6deg); }
+  83%     { border-radius: 55% 45% 35% 65% / 45% 55% 65% 35%; transform: scale(0.96) rotate(3deg); }
+}
+@keyframes lab-orb-glow {
+  0%,100% { opacity: 0.7; transform: scale(1); }
+  50%     { opacity: 1;   transform: scale(1.25); }
 }
 .lab-exp-heading {
-  font-family: var(--font-family-dm); font-size: 20px; font-weight: 700;
+  font-family: var(--font-family-dm); font-size: 22px; font-weight: 600;
   color: #0D0D0D; text-align: center; line-height: 1.3; margin: 0;
+  letter-spacing: -0.3px;
 }
-.lab-exp-heading em { color: #3D7EFF; font-style: normal; }
+.lab-exp-heading em { color: inherit; font-style: normal; font-weight: inherit; }
+.lab-exp-tagline {
+  font-family: var(--font-family-dm); font-size: 12px; font-weight: 500;
+  color: #A0A8B8; text-align: center; margin: 0;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
 .lab-exp-subheading {
-  font-family: var(--font-family-dm); font-size: 13px; color: #9AA0AC;
-  text-align: center; margin: 0;
+  font-family: var(--font-family-dm); font-size: 13px; color: #A0A8B8;
+  text-align: center; margin: 0; font-weight: 400;
 }
 
-/* ── BeeBot-style input card ── */
-.lab-exp-input-card {
-  width: 580px; max-width: calc(100% - 80px);
+/* ── Input bar ── */
+.lab-exp-input-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 14px; width: 560px; max-width: calc(100% - 80px);
+}
+.lab-exp-bar {
+  width: 100%;
+  display: flex; align-items: center; gap: 10px;
   background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 18px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.05);
-  padding: 16px 16px 12px;
-  display: flex; flex-direction: column; gap: 14px;
+  border: 1.5px solid #E8EBF2;
+  border-radius: 16px;
+  padding: 0 8px 0 16px;
+  height: 54px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  animation: lab-bar-glow 3.5s ease-in-out infinite;
 }
-.lab-exp-input-inner {
-  display: flex; align-items: flex-start; gap: 10px; min-height: 44px;
+.lab-exp-bar:focus-within {
+  border-color: rgba(0,106,255,0.5);
+  animation: lab-bar-glow-active 2s ease-in-out infinite;
 }
-.lab-exp-input-icon { color: #7C6CF8; font-size: 15px; flex-shrink: 0; padding-top: 2px; }
-.lab-exp-card-input {
+@keyframes lab-bar-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,106,255,0), 0 2px 12px rgba(0,0,0,0.06); }
+  50%       { box-shadow: 0 0 20px 4px rgba(0,106,255,0.1), 0 2px 12px rgba(0,0,0,0.06); }
+}
+@keyframes lab-bar-glow-active {
+  0%, 100% { box-shadow: 0 0 16px 4px rgba(0,106,255,0.12), 0 0 0 4px rgba(0,106,255,0.07); }
+  50%       { box-shadow: 0 0 36px 10px rgba(0,106,255,0.2), 0 0 0 4px rgba(0,106,255,0.1); }
+}
+.lab-exp-bar-icon {
+  flex-shrink: 0; opacity: 0.85;
+}
+.lab-exp-bar-input {
   flex: 1; border: none; background: none;
   font-family: var(--font-family-dm); font-size: 14px; color: #0D0D0D;
   outline: none; min-width: 0;
 }
-.lab-exp-card-input::placeholder { color: #B8BCC8; }
-.lab-exp-card-footer {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-}
-
-/* Suggestion chips */
-.lab-exp-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.lab-exp-chip {
-  font-size: 12px; font-family: var(--font-family-dm); font-weight: 500;
-  color: #5B6070; background: #F5F7FA;
-  border: 1px solid rgba(0,0,0,0.07); border-radius: 20px;
-  padding: 5px 12px; cursor: pointer; white-space: nowrap;
-  transition: background 0.12s, border-color 0.12s, color 0.12s;
-}
-.lab-exp-chip:hover { background: #EEF3FF; border-color: rgba(61,126,255,0.25); color: #3D7EFF; }
-
-/* Card send button */
-.lab-exp-card-send {
-  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-  background: linear-gradient(135deg, #5B4EF8 0%, #3D7EFF 100%);
+.lab-exp-bar-input::placeholder { color: #B0B8C8; }
+.lab-exp-bar-send {
+  width: 36px; height: 36px; border-radius: 11px; flex-shrink: 0;
+  background: #006AFF;
   border: none; color: #fff; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(91,78,248,0.4);
-  transition: opacity 0.15s, transform 0.1s;
+  transition: opacity 0.15s, transform 0.12s;
 }
-.lab-exp-card-send:hover { opacity: 0.88; transform: scale(1.05); }
-.lab-exp-card-send:disabled { background: #D8DCE6; box-shadow: none; cursor: not-allowed; transform: none; }
-.lab-exp-card-send .prompt-spinner {
+.lab-exp-bar-send:hover { opacity: 0.88; transform: scale(1.04); }
+.lab-exp-bar-send:disabled { background: #D8DCE6; cursor: not-allowed; transform: none; }
+.lab-exp-bar-send .prompt-spinner {
   width: 13px; height: 13px;
   border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
   border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+
+/* Suggestion chips */
+.lab-exp-chips {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+}
+.lab-exp-chip {
+  font-size: 12px; font-family: var(--font-family-dm); font-weight: 500;
+  color: #4E5566;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid #DDE1EA;
+  border-radius: 20px;
+  padding: 9px 18px; cursor: pointer; white-space: nowrap;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.12s;
+}
+.lab-exp-chip:hover {
+  background: #fff;
+  border-color: rgba(0,106,255,0.3);
+  color: #006AFF;
+  transform: translateY(-1px);
 }
 
 /* ── Right bubble chat panel ── */
@@ -2801,14 +2941,218 @@ select {
 .lab-exp-panel-header span {
   font-family: var(--font-family-dm); font-size: 13px; font-weight: 600;
   color: #0D0D0D; flex: 1;
+  outline: none;
+  border-radius: 4px;
+  padding: 1px 3px;
+  min-width: 0;
+  cursor: text;
 }
-.lab-exp-panel-hide {
-  width: 22px; height: 22px; border: none; background: none;
-  border-radius: 6px; font-size: 16px; color: #9AA0AC; line-height: 1;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background 0.12s, color 0.12s;
+.lab-exp-panel-header span:focus {
+  background: #F5F7FA;
 }
-.lab-exp-panel-hide:hover { background: #F5F7FA; color: #0D0D0D; }
+/* ── Delete confirmation modal ── */
+.lab-delete-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.lab-delete-backdrop.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.lab-delete-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 320px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(6px) scale(0.97);
+  transition: transform 0.15s;
+}
+.lab-delete-backdrop.active .lab-delete-modal {
+  transform: translateY(0) scale(1);
+}
+.lab-delete-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0d0d0d;
+  font-family: var(--font-family-dm);
+}
+.lab-delete-body {
+  margin: 0;
+  font-size: 13px;
+  color: #60667c;
+  font-family: var(--font-family-dm);
+  line-height: 1.5;
+}
+.lab-delete-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.lab-delete-btn-cancel,
+.lab-delete-btn-confirm {
+  flex: 1;
+  padding: 9px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-family-dm);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.lab-delete-btn-cancel {
+  background: #F2F4F7;
+  color: #0d0d0d;
+}
+.lab-delete-btn-cancel:hover { opacity: 0.75; }
+.lab-delete-btn-confirm {
+  background: #006AFF;
+  color: #fff;
+}
+.lab-delete-btn-confirm:hover { opacity: 0.85; }
+
+/* ── Centered generating indicator ── */
+.lab-exp-generating {
+  position: absolute;
+  bottom: 28px;
+  left: 50%; transform: translateX(-50%);
+  z-index: 30;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px 9px 12px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 100px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lab-exp-generating.active { display: flex; }
+.lab-exp-generating-icon {
+  font-size: 12px;
+  color: #3D7EFF;
+  animation: lab-gen-pulse 1.4s ease-in-out infinite;
+}
+.lab-exp-generating-label {
+  font-family: var(--font-family-dm);
+  font-size: 12px;
+  font-weight: 500;
+  color: #555B6B;
+}
+.lab-exp-generating-dots {
+  display: flex; align-items: center; gap: 3px;
+}
+.lab-exp-generating-dots span {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #3D7EFF;
+  animation: lab-gen-dot 1.2s ease-in-out infinite;
+}
+.lab-exp-generating-dots span:nth-child(2) { animation-delay: 0.2s; }
+.lab-exp-generating-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes lab-gen-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+  40%           { opacity: 1;    transform: scale(1); }
+}
+@keyframes lab-gen-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+/* ── In-chat generating pill ── */
+.lab-exp-msg--thinking { align-items: center; }
+.lab-exp-msg-generating {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #fff;
+  border: 1px solid #E4E8F0;
+  border-radius: 100px;
+  padding: 11px 20px 11px 15px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  animation: lab-pill-appear 0.3s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+@keyframes lab-pill-appear {
+  from { opacity: 0; transform: translateY(8px) scale(0.88); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+.lab-exp-msg-generating svg {
+  flex-shrink: 0;
+  animation: lab-spark-twinkle 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+@keyframes lab-spark-twinkle {
+  0%   { opacity: 0.5; transform: scale(0.85) rotate(-8deg); }
+  25%  { opacity: 1;   transform: scale(1.25) rotate(6deg);  }
+  50%  { opacity: 0.7; transform: scale(0.9)  rotate(-4deg); }
+  75%  { opacity: 1;   transform: scale(1.2)  rotate(5deg);  }
+  100% { opacity: 0.5; transform: scale(0.85) rotate(-8deg); }
+}
+.lab-exp-msg-generating .lab-exp-generating-label {
+  font-family: var(--font-family-dm); font-size: 13px;
+  font-weight: 500; color: #1A1D2A; letter-spacing: -0.01em;
+}
+.lab-exp-msg-generating .lab-exp-generating-dots {
+  display: flex; align-items: center; gap: 4px;
+}
+.lab-exp-msg-generating .lab-exp-generating-dots span {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: #006AFF;
+  animation: lab-gen-dot 1.4s ease-in-out infinite;
+}
+.lab-exp-msg-generating .lab-exp-generating-dots span:nth-child(2) { animation-delay: 0.22s; }
+.lab-exp-msg-generating .lab-exp-generating-dots span:nth-child(3) { animation-delay: 0.44s; }
+
+.lab-exp-thinking-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #9AA0AC;
+  display: inline-block;
+  animation: lab-gen-dot 1.2s ease-in-out infinite;
+}
+.lab-exp-thinking-dot:nth-child(2) { animation-delay: 0.2s; }
+.lab-exp-thinking-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Panel toggle — mirrors .lab-sidebar-toggle exactly, sits to the left of the panel */
+.lab-exp-panel-toggle {
+  position: absolute;
+  top: 16px;
+  right: calc(16px + 274px + 8px); /* panel right offset + panel width + gap */
+  z-index: 26;
+  display: none; /* hidden until phase-2 */
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid #E4E7EC;
+  background: #fff;
+  color: #8A8F98;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: color 0.15s, background 0.15s, right 0.2s ease;
+}
+.lab-exp-panel-toggle:hover { color: #0D0D0D; background: #F5F7FA; }
+
+/* Phase-2 active — show the toggle */
+.lab-canvas-vp.lab-exp-phase2 .lab-exp-panel-toggle { display: flex; }
+
+/* Panel collapsed — move toggle to right edge (mirrors sidebar collapsed → left: 24px) */
+.lab-canvas-vp.lab-exp-phase2:not(.lab-panel-open) .lab-exp-panel-toggle {
+  right: 16px;
+}
 
 .lab-exp-messages {
   flex: 1; overflow-y: auto; padding: 14px;
@@ -2825,6 +3169,29 @@ select {
 .lab-exp-msg--ai .lab-exp-msg-bubble { background: #F5F7FA; color: #1A1D24; border-bottom-left-radius: 3px; }
 .lab-exp-msg--user .lab-exp-msg-bubble { background: linear-gradient(135deg,#3D7EFF,#5B4EF8); color:#fff; border-bottom-right-radius:3px; }
 .lab-exp-msg--thinking .lab-exp-msg-bubble { color: #B8BCC8; }
+
+/* Clarify choice buttons */
+.lab-exp-clarify-btns {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.lab-exp-clarify-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 11px; border-radius: 9px;
+  border: 1px solid #E2E6EF;
+  background: #fff; color: #2A2D38;
+  font-family: var(--font-family-dm); font-size: 12px; font-weight: 500;
+  cursor: pointer; text-align: left;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.lab-exp-clarify-btn:hover {
+  border-color: rgba(0,106,255,0.3); background: #F0F5FF; color: #006AFF;
+}
+.lab-exp-clarify-btn--explore {
+  border-color: rgba(0,106,255,0.25); background: #F5F8FF; color: #006AFF;
+}
+.lab-exp-clarify-btn--explore:hover {
+  background: #006AFF; color: #fff; border-color: #006AFF;
+}
 
 .lab-exp-panel-footer {
   display: flex; align-items: center; gap: 8px;
@@ -2923,7 +3290,7 @@ select {
 
 .lab-expand-btn {
   position: absolute;
-  top: 16px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -3017,6 +3384,25 @@ select {
   cursor: pointer;
 }
 
+/* Generating pulse — breathes while Claude is working */
+.lab-phone-cell--generating .lab-phone-frame {
+  animation: lab-cell-generating 1.6s ease-in-out infinite;
+}
+@keyframes lab-cell-generating {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(0,106,255,0.25), 0 0 18px 4px rgba(0,106,255,0.12), 0 0 40px 8px rgba(0,106,255,0.06); }
+  50%       { box-shadow: 0 0 0 3px rgba(0,106,255,0.7),  0 0 48px 16px rgba(0,106,255,0.28), 0 0 80px 24px rgba(0,106,255,0.12); }
+}
+
+/* Modified glow — flashes when Claude updates a screen */
+.lab-phone-cell--modified .lab-phone-frame {
+  animation: lab-cell-modified 2s ease-out forwards;
+}
+@keyframes lab-cell-modified {
+  0%   { box-shadow: 0 0 0 2px rgba(0,106,255,0.9), 0 0 32px 10px rgba(0,106,255,0.4); }
+  60%  { box-shadow: 0 0 0 2px rgba(0,106,255,0.35), 0 0 16px 4px rgba(0,106,255,0.12); }
+  100% { box-shadow: 0 2px 12px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06); }
+}
+
 .lab-phone-cell--clickable:hover .lab-phone-frame {
   border-color: rgba(0,106,255,0.35);
 }
@@ -3063,6 +3449,79 @@ select {
   overflow: hidden;
   background: var(--surface-bg, #fff);
   min-height: 0;
+  position: relative; /* so generated absolute-positioned content is anchored here */
+}
+
+/* ── Screen reveal: scan-line wipe ── */
+.lab-phone-screen { overflow: hidden; }
+
+.lab-screen-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Old layer dims as new one reveals */
+.lab-screen-layer--old { z-index: 1; transition: opacity 0.8s ease-out, filter 0.8s ease-out; }
+.lab-screen-layer--old-exit { opacity: 0.25; filter: brightness(0.6); }
+
+/* New layer clips from top, scan line acts as the reveal edge */
+.lab-screen-layer--new {
+  z-index: 2;
+  clip-path: inset(0 0 100% 0);
+}
+.lab-screen-layer--new-active {
+  clip-path: inset(0 0 0% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Glowing scan line that sweeps top → bottom */
+.lab-scan-line {
+  position: absolute;
+  left: -5px; right: -5px;
+  height: 3px;
+  top: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(0, 106, 255, 0.5) 15%,
+    rgba(180, 220, 255, 1) 50%,
+    rgba(0, 106, 255, 0.5) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 8px 3px rgba(0, 106, 255, 0.5),
+    0 0 24px 8px rgba(0, 106, 255, 0.2),
+    0 0 48px 16px rgba(0, 106, 255, 0.08);
+  opacity: 0;
+}
+.lab-scan-line--active {
+  animation: lab-scan-sweep 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+@keyframes lab-scan-sweep {
+  0%   { top: 0%;   opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Ensure generated screen HTML always fills the screen area */
+.lab-phone-screen > div,
+.lab-phone-screen > section,
+.lab-phone-screen > main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* If the outer div uses position:absolute/relative with inset, let it fill naturally */
+.lab-phone-screen > div[style*="position:absolute"],
+.lab-phone-screen > div[style*="position: absolute"] {
+  flex: none;
+  height: 100%;
+  width: 100%;
 }
 
 .lab-phone-home {
