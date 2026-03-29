@@ -846,7 +846,7 @@ function idFrontTutorial() {
         <div class="type-h5" style="color:var(--text-secondary);margin-top:12px">Ensure your ID is readable</div>
       </div>
     </div>
-    <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;margin:0 -24px">
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden">
       <img src="assets/illustrations/id-tutorial/step-1.svg" style="width:100%;height:auto;display:block" alt=""/>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0">
