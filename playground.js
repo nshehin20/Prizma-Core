@@ -1650,8 +1650,10 @@ function labExpRenderMessages(exp) {
           `<button class="lab-exp-ai-chip" onclick="labExpAiSuggest(this)">${s}</button>`).join('')}</div>`
       : '';
     return `<div class="lab-exp-msg lab-exp-msg--ai">
-      <div class="lab-exp-msg-bubble">${m.text}</div>
-      ${diffHtml}${suggestHtml}
+      <div class="lab-exp-msg-ai-body">
+        <div class="lab-exp-msg-bubble">${m.text}</div>
+        ${diffHtml}${suggestHtml}
+      </div>
     </div>`;
   }).join('');
 

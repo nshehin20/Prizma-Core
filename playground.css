@@ -3161,11 +3161,16 @@ select {
 }
 .lab-exp-msg { display: flex; gap: 8px; align-items: flex-start; }
 .lab-exp-msg--user { flex-direction: row-reverse; }
+.lab-exp-msg-ai-body {
+  display: flex; flex-direction: column; gap: 6px;
+  max-width: 220px;
+}
 .lab-exp-msg-bubble {
   font-family: var(--font-family-dm); font-size: 13px; line-height: 1.5;
   padding: 8px 12px; border-radius: 12px;
   max-width: 200px; word-break: break-word;
 }
+.lab-exp-msg-ai-body .lab-exp-msg-bubble { max-width: 100%; }
 .lab-exp-msg--ai .lab-exp-msg-bubble { background: #F5F7FA; color: #1A1D24; border-bottom-left-radius: 3px; }
 .lab-exp-msg--user .lab-exp-msg-bubble { background: linear-gradient(135deg,#3D7EFF,#5B4EF8); color:#fff; border-bottom-right-radius:3px; }
 .lab-exp-msg--thinking .lab-exp-msg-bubble { color: #B8BCC8; }
