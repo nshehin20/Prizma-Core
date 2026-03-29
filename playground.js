@@ -1041,10 +1041,10 @@ function _labBuildStage() {
     <div class="lab-phone-cell" data-idx="${i}" onclick="_labCellClick(${i})">
       <div class="lab-phone-index-lbl">${String(i+1).padStart(2,'0')}</div>
       <div class="lab-phone-frame">
+        <div class="lab-phone-screen">${s.html}</div>
         <div class="lab-phone-notch">
           <img class="lab-status-img" src="${src}" width="390" height="54" style="display:block;width:100%" alt=""/>
         </div>
-        <div class="lab-phone-screen">${s.html}</div>
         <div class="lab-phone-home"></div>
       </div>
       <div class="lab-phone-name-lbl">${s.label.toUpperCase()}</div>
