@@ -746,8 +746,8 @@ function fcSuccess() {
 // dark=true → white text (camera dark screens)
 // dark=false → secondary text color (light screens)
 function _idEncryptedBadge(dark) {
-  const color = dark ? '#ffffff' : 'var(--text-secondary)';
-  const lockFilter = dark ? '' : 'filter:brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(500%) hue-rotate(190deg)';
+  const color = dark ? '#ffffff' : '#262831';
+  const lockFilter = dark ? '' : 'filter:brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(300%) hue-rotate(190deg)';
   return `<div style="display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 0;flex-shrink:0">
     <img src="assets/icons/camera/lock.svg" width="16" height="16" style="${lockFilter}" alt=""/>
     <span class="type-body-m-regular" style="color:${color}">All data is encrypted</span>
@@ -804,13 +804,13 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
 
 // Shared: processing / uploading screen (white background, no navBar)
 function _idProcessingScreen(label, progressPct, side) {
-  const imgSrc = side === 'back' ? 'assets/illustrations/id-back.svg' : 'assets/illustrations/id-front.svg';
+  const imgSrc = side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png';
   return `<div style="flex:1;display:flex;flex-direction:column;background:#fff;padding:0 24px">
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:28px;gap:10px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;gap:24px">
       <div style="width:164px;height:8px;border-radius:99px;background:#EAECF0;overflow:hidden;flex-shrink:0">
         <div style="height:100%;width:${progressPct}%;background:#189f60;border-radius:99px"></div>
       </div>
-      <div class="type-h2" style="color:var(--text-primary);text-align:center">${label}</div>
+      <div class="type-h2" style="color:#262831;text-align:center">${label}</div>
     </div>
     ${_idCapFrame('#189f60', imgSrc)}
     ${_idEncryptedBadge(false)}
