@@ -3462,57 +3462,49 @@ select {
   flex-direction: column;
 }
 
-/* Old layer dims as new one reveals */
-.lab-screen-layer--old { z-index: 1; transition: opacity 0.9s ease-out, filter 0.9s ease-out, transform 0.9s ease-out; }
-.lab-screen-layer--old-exit { opacity: 0.15; filter: brightness(0.5) blur(1px); transform: scale(0.97); }
+/* Old layer fades out as new one scans in */
+.lab-screen-layer--old { z-index: 1; transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out; }
+.lab-screen-layer--old-exit { opacity: 0; filter: brightness(0.4) blur(2px); }
 
-/* New layer: morphing wipe — curved leading edge bulges as it sweeps */
+/* New layer clips from top, scan line acts as the reveal edge */
 .lab-screen-layer--new {
   z-index: 2;
-  clip-path: inset(0 0 100% 0 round 0 0 0 0);
+  clip-path: inset(0 0 100% 0);
 }
 .lab-screen-layer--new-active {
-  animation: lab-morph-reveal 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-@keyframes lab-morph-reveal {
-  0%   { clip-path: inset(0 0 100% 0 round 0 0 0 0); }
-  25%  { clip-path: inset(0 0 65%  0 round 0 0 88px 88px); }
-  55%  { clip-path: inset(0 0 28%  0 round 0 0 60px 60px); }
-  80%  { clip-path: inset(0 0 6%   0 round 0 0 20px 20px); }
-  100% { clip-path: inset(0 0 0%   0 round 0 0 0 0); }
+  clip-path: inset(0 0 0% 0);
+  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* Glow wave that rides the morphing edge */
+/* Glowing scan line that sweeps top → bottom */
 .lab-scan-line {
   position: absolute;
   left: -5px; right: -5px;
-  height: 48px;
+  height: 3px;
   top: 0;
   z-index: 10;
   pointer-events: none;
-  background: linear-gradient(to bottom,
+  background: linear-gradient(to right,
     transparent 0%,
-    rgba(0, 106, 255, 0.12) 25%,
-    rgba(120, 190, 255, 0.65) 46%,
-    rgba(200, 230, 255, 0.95) 50%,
-    rgba(120, 190, 255, 0.65) 54%,
-    rgba(0, 106, 255, 0.12) 75%,
+    rgba(0, 106, 255, 0.5) 15%,
+    rgba(180, 220, 255, 1) 50%,
+    rgba(0, 106, 255, 0.5) 85%,
     transparent 100%
   );
-  filter: blur(1.5px);
   box-shadow:
-    0 0 16px 6px rgba(0, 106, 255, 0.35),
-    0 0 40px 16px rgba(0, 106, 255, 0.15);
+    0 0 8px 3px rgba(0, 106, 255, 0.5),
+    0 0 24px 8px rgba(0, 106, 255, 0.2),
+    0 0 48px 16px rgba(0, 106, 255, 0.08);
   opacity: 0;
 }
 .lab-scan-line--active {
-  animation: lab-scan-sweep 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation: lab-scan-sweep 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }
 @keyframes lab-scan-sweep {
-  0%   { top: -48px; opacity: 0; }
-  8%   { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { top: 100%;  opacity: 0; }
+  0%   { top: 0%;   opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 /* Ensure generated screen HTML always fills the screen area */
