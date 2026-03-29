@@ -1944,6 +1944,9 @@ function executeLabAction(action) {
           const existingCell = document.querySelector(`.lab-phone-cell[data-idx="${action.index}"]`);
           const existingScreen = existingCell?.querySelector('.lab-phone-screen');
 
+          // Mark frame as generated so it gets full-bleed layout
+          existingCell?.querySelector('.lab-phone-frame')?.classList.add('lab-phone-frame--generated');
+
           if (existingScreen) {
             // Old layer sits underneath, dims as new reveals
             const oldLayer = document.createElement('div');
