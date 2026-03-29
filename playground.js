@@ -752,7 +752,7 @@ function _idEncryptedBadge(dark) {
       <rect x="2" y="6" width="10" height="7" rx="1.5" fill="none" stroke="${color}" stroke-width="1.2"/>
       <path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="${color}" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
-    <span style="font-size:12px;font-weight:500;color:${color}">All data is encrypted</span>
+    <span class="type-body-s-bold" style="color:${color}">All data is encrypted</span>
   </div>`;
 }
 
@@ -774,7 +774,7 @@ function _idCameraScreen(title, subtitle, state, side) {
   return `<div style="flex:1;display:flex;flex-direction:column;background:#0D0D0D;padding:0 24px">
     <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:28px">
       <div class="type-h2" style="color:#fff">${title}</div>
-      <div style="margin-top:6px;font-size:14px;font-weight:400;color:#a3a8b8">${subtitle}</div>
+      <div class="type-body-m-regular" style="color:#a3a8b8;margin-top:6px">${subtitle}</div>
     </div>
     ${_idCapFrame(borderColor, imgSrc)}
     ${_idEncryptedBadge(true)}
@@ -804,27 +804,34 @@ function _idProcessingScreen(label, progressPct, side) {
 
 // Screen 1/13 — Document Select
 function idDocSelect() {
-  const arrow = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7.5 15l5-5-5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-  const card = (icon, title, sub) => `
-    <div style="background:#F5F6F8;border-radius:24px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-      <img src="${icon}" style="width:64px;height:44px;object-fit:contain;flex-shrink:0" alt=""/>
-      <div style="flex:1;min-width:0">
-        <div class="type-body-m-bold" style="color:var(--text-primary)">${title}</div>
-        <div class="type-body-s-regular" style="color:var(--text-secondary);margin-top:3px">${sub}</div>
+  // 44×24px blue pill arrow (per Figma: w-44 h-24 cta_arrow)
+  const ctaArrow = `<div style="width:44px;height:24px;border-radius:99px;background:var(--color-brand-500);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3.5 8L6.5 5 3.5 2" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>`;
+  // Illustration: 118×86px container, image small/centered inside
+  const illus = (src) => `<div style="width:118px;height:86px;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <img src="${src}" style="max-width:90px;max-height:70px;object-fit:contain" alt=""/>
+  </div>`;
+  const card = (src, title, sub) => `
+    <div style="background:#FCFCFD;border:1px solid #EBECEF;border-radius:24px;padding:16px 24px 16px 12px;display:flex;align-items:center;box-shadow:0 2px 7px rgba(0,0,0,0.05),0 2px 35px rgba(33,39,59,0.05);width:100%">
+      ${illus(src)}
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;align-items:flex-end;min-width:0">
+        <div style="width:100%;display:flex;flex-direction:column;gap:4px;text-align:right">
+          <div class="type-h5" style="color:var(--text-primary)">${title}</div>
+          <div class="type-body-m-regular" style="color:var(--text-secondary)">${sub}</div>
+        </div>
+        ${ctaArrow}
       </div>
-      <div style="width:36px;height:36px;border-radius:50%;background:var(--color-brand-500);display:flex;align-items:center;justify-content:center;flex-shrink:0">${arrow}</div>
     </div>`;
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0;background:#fff">
-    ${_navBar('logo-only')}
-    <div style="padding:20px 0 28px">
-      <div class="type-h2" style="color:var(--text-primary)">Choose your document</div>
-      <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Select the document you'd like to scan</div>
+    <div style="display:flex;flex-direction:column;gap:24px;flex-shrink:0">
+      ${_navBar('logo-only')}
+      <div class="type-h2" style="color:var(--text-primary);text-align:center">Choose the document<br>for scanning</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      ${card('assets/illustrations/id.svg', 'Identity Card', 'National ID or Driver\'s License')}
+    <div style="flex:1;display:flex;flex-direction:column;gap:24px;justify-content:flex-end;padding-bottom:24px">
+      ${card('assets/illustrations/id.svg', 'Identity Card', 'National Identity Card,<br>or Driver\'s License')}
       ${card('assets/illustrations/passport.svg', 'Passport', 'Your country Passport')}
     </div>
-    <div style="flex:1"></div>
     ${_verifiedTag()}
   </div>`;
 }
@@ -832,19 +839,19 @@ function idDocSelect() {
 // Screen 2/13 — Front Tutorial
 function idFrontTutorial() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0;background:#fff">
-    <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:24px;flex-shrink:0">
       ${_navBar('logo-only')}
-      <div style="text-align:center">
+      <div style="text-align:center;padding:16px 0">
         <div class="type-h2" style="color:var(--text-primary)">Show the front of your ID</div>
-        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Make sure your ID is flat and fully visible</div>
+        <div class="type-h5" style="color:var(--text-secondary);margin-top:12px">Ensure your ID is readable</div>
       </div>
     </div>
-    <div style="flex:1;display:flex;align-items:center;justify-content:center">
-      <img src="assets/illustrations/id-tutorial/step-1.svg" style="width:100%;max-width:320px;object-fit:contain" alt=""/>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;margin:0 -24px">
+      <img src="assets/illustrations/id-tutorial/step-1.svg" style="width:100%;height:auto;display:block" alt=""/>
     </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="type-body-m-regular" style="text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
-      <button class="btn btn-primary btn-full">Start scanning</button>
+    <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0">
+      <div class="type-h4" style="color:var(--text-secondary);text-align:center;padding:12px 0">The photo will be taken automatically</div>
+      <button class="btn btn-primary btn-full">Let's scan</button>
       ${_verifiedTag()}
     </div>
   </div>`;
@@ -877,7 +884,7 @@ function idFrontSuccess() {
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding-bottom:12px">
       <img src="assets/icons/status/Status-42.svg" width="40" height="40" alt="Success"/>
       <div class="type-h2" style="color:var(--text-primary)">Successfully processed!</div>
-      <div style="font-size:14px;font-weight:400;color:#60667c">Now let's capture the back</div>
+      <div class="type-body-m-regular" style="color:var(--text-secondary)">Now let's capture the back</div>
     </div>
     ${_idCapFrame('#189f60', 'assets/illustrations/id-front.svg')}
     ${_idEncryptedBadge(false)}
@@ -931,7 +938,7 @@ function idBackSuccess() {
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding-bottom:12px">
       <img src="assets/icons/status/Status-42.svg" width="40" height="40" alt="Success"/>
       <div class="type-h2" style="color:var(--text-primary)">Successfully processed!</div>
-      <div style="font-size:14px;font-weight:400;color:#60667c">Let's continue</div>
+      <div class="type-body-m-regular" style="color:var(--text-secondary)">Let's continue</div>
     </div>
     ${_idCapFrame('#189f60', 'assets/illustrations/id-back.svg')}
     ${_idEncryptedBadge(false)}
