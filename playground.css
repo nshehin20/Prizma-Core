@@ -3452,7 +3452,29 @@ select {
   position: relative; /* so generated absolute-positioned content is anchored here */
 }
 
-/* ── Screen reveal: scan-line wipe ── */
+/* ── Generated experiment screens: full-bleed, chrome overlaid ── */
+.lab-phone-frame--generated .lab-phone-screen {
+  position: absolute;
+  inset: 0;
+  flex: none;
+  min-height: unset;
+}
+.lab-phone-frame--generated .lab-phone-notch {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 5;
+  pointer-events: none;
+  flex-shrink: unset;
+}
+.lab-phone-frame--generated .lab-phone-home {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 5;
+  pointer-events: none;
+  flex-shrink: unset;
+}
+
+/* ── Screen reveal: white flash ── */
 .lab-phone-screen { overflow: hidden; }
 
 .lab-screen-layer {

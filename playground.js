@@ -1037,10 +1037,13 @@ function _labBuildStage() {
   const src     = _labStatusSrc();
   const screens = _labActiveScreens();
 
+  const activeExp   = _experiments.find(e => e.id === _activeExpId);
+  const isGenerated = (i) => !!(activeExp?.customScreens || activeExp?.screenOverrides?.[i]);
+
   stage.innerHTML = screens.map((s, i) => `
     <div class="lab-phone-cell" data-idx="${i}" onclick="_labCellClick(${i})">
       <div class="lab-phone-index-lbl">${String(i+1).padStart(2,'0')}</div>
-      <div class="lab-phone-frame">
+      <div class="lab-phone-frame${isGenerated(i) ? ' lab-phone-frame--generated' : ''}">
         <div class="lab-phone-notch">
           <img class="lab-status-img" src="${src}" width="390" height="54" style="display:block;width:100%" alt=""/>
         </div>
