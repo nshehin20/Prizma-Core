@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ID Capture — Screen Review</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<link rel="stylesheet" href="playground.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #EAECF0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 48px 24px;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* ── Header ── */
+  .preview-header {
+    text-align: center;
+  }
+  .preview-header h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #0D0D0D;
+  }
+  .preview-header p {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 4px;
+  }
+
+  /* ── Step dots ── */
+  .step-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.15);
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .step-dot.active {
+    background: var(--color-brand-500, #006AFF);
+    transform: scale(1.4);
+  }
+  .step-dot.visited {
+    background: rgba(0, 106, 255, 0.35);
+  }
+
+  /* ── Phone wrapper ── */
+  .phone-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* Scale the .mf-outer to 80% so it fits comfortably */
+  .phone-scale {
+    transform: scale(0.8);
+    transform-origin: top center;
+    /* compensate for scale offset */
+    margin-bottom: calc((844px * 0.8) - 844px);
+  }
+
+  /* ── Nav arrows ── */
+  .nav-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.12s, transform 0.1s, opacity 0.15s;
+    color: #0D0D0D;
+    flex-shrink: 0;
+  }
+  .nav-arrow:hover { background: #F5F6F8; }
+  .nav-arrow:active { transform: scale(0.93); }
+  .nav-arrow:disabled { opacity: 0.25; cursor: default; transform: none; }
+
+  /* ── Screen label ── */
+  .screen-label {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .screen-label-index {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9CA3AF;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .screen-label-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0D0D0D;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Keyboard hint ── */
+  .kb-hint {
+    font-size: 11px;
+    color: #9CA3AF;
+    text-align: center;
+  }
+  .kb-hint kbd {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #D1D5DB;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: inherit;
+    font-size: 10px;
+    color: #374151;
+  }
+
+  /* ── Screen transition ── */
+  .mf-screen {
+    position: relative;
+  }
+  .screen-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .screen-layer--old {
+    z-index: 1;
+    animation: screen-out 0.22s ease-in forwards;
+  }
+  .screen-layer--new {
+    z-index: 2;
+    animation: screen-in 0.28s ease-out forwards;
+  }
+  @keyframes screen-out {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(-18px); }
+  }
+  @keyframes screen-in {
+    from { opacity: 0; transform: translateX(22px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .screen-layer--old-back {
+    z-index: 1;
+    animation: screen-out-back 0.22s ease-in forwards;
+  }
+  .screen-layer--new-back {
+    z-index: 2;
+    animation: screen-in-back 0.28s ease-out forwards;
+  }
+  @keyframes screen-out-back {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(18px); }
+  }
+  @keyframes screen-in-back {
+    from { opacity: 0; transform: translateX(-22px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <h1>ID Capture — Screen Review</h1>
+  <p>11 screens · Use arrow keys or click to navigate</p>
+</div>
+
+<div class="step-dots" id="stepDots"></div>
+
+<div class="phone-stage">
+  <button class="nav-arrow" id="btnPrev" onclick="navigate(-1)" disabled>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M11 13.5L6.5 9 11 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <div class="phone-scale">
+    <div class="mf-outer">
+      <div class="mf-frame">
+        <div class="mf-notch">
+          <img src="assets/illustrations/status-bar-light.svg" width="390" height="54" style="display:block;width:100%" alt=""/>
+        </div>
+        <div class="mf-screen" id="phoneScreen"></div>
+        <div class="mf-home"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav-arrow" id="btnNext" onclick="navigate(1)">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M7 4.5L11.5 9 7 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div class="screen-label">
+  <div class="screen-label-index" id="labelIndex"></div>
+  <div class="screen-label-name"  id="labelName"></div>
+</div>
+
+<div class="kb-hint">
+  <kbd>←</kbd> prev &nbsp;·&nbsp; <kbd>→</kbd> next
+</div>
+
+<script src="playground.js"></script>
+<script>
+  // ── Screen definitions (mirrors modules['id-capture'].screens) ──
+  const screens = [
+    { label: 'Doc Select',      render: idDocSelect },
+    { label: 'Front Tutorial',  render: idFrontTutorial },
+    { label: 'Front: Empty',    render: idFrontCamEmpty },
+    { label: 'Front: Detected', render: idFrontCamFilled },
+    { label: 'Front Processing',render: idFrontProcessing },
+    { label: 'Front Success',   render: idFrontSuccess },
+    { label: 'Flip',            render: idFlip },
+    { label: 'Back: Empty',     render: idBackCamEmpty },
+    { label: 'Back: Detected',  render: idBackCamFilled },
+    { label: 'Back Processing', render: idBackProcessing },
+    { label: 'Back Success',    render: idBackSuccess },
+  ];
+
+  let current = 0;
+
+  // ── Build dot indicators ──
+  const dotsEl = document.getElementById('stepDots');
+  screens.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 0 ? ' active' : '');
+    d.title = screens[i].label;
+    d.addEventListener('click', () => navigateTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function renderScreen(index, direction) {
+    const phoneScreen = document.getElementById('phoneScreen');
+    const newHtml = screens[index].render();
+
+    // Remove any lingering old layer immediately before adding new ones
+    const oldLayer = phoneScreen.querySelector('.screen-layer');
+
+    if (oldLayer && direction !== null) {
+      // Animate out old, animate in new
+      oldLayer.className = 'screen-layer ' + (direction > 0 ? 'screen-layer--old' : 'screen-layer--old-back');
+
+      const newLayer = document.createElement('div');
+      newLayer.className = 'screen-layer ' + (direction > 0 ? 'screen-layer--new' : 'screen-layer--new-back');
+      newLayer.innerHTML = newHtml;
+      phoneScreen.appendChild(newLayer);
+
+      // After animation, clean up
+      setTimeout(() => {
+        oldLayer.remove();
+        newLayer.className = 'screen-layer';
+      }, 300);
+    } else {
+      // First render or jump — no animation
+      phoneScreen.innerHTML = `<div class="screen-layer">${newHtml}</div>`;
+    }
+
+    // Update dots
+    document.querySelectorAll('.step-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+      d.classList.toggle('visited', i < index);
+    });
+
+    // Update label
+    document.getElementById('labelIndex').textContent =
+      `${index + 1} / ${screens.length}`;
+    document.getElementById('labelName').textContent = screens[index].label;
+
+    // Update arrows
+    document.getElementById('btnPrev').disabled = index === 0;
+    document.getElementById('btnNext').disabled = index === screens.length - 1;
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next < 0 || next >= screens.length) return;
+    navigateTo(next, dir);
+  }
+
+  function navigateTo(index, dir) {
+    const dir2 = dir !== undefined ? dir : (index > current ? 1 : -1);
+    current = index;
+    renderScreen(current, dir2);
+  }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') navigate(1);
+    if (e.key === 'ArrowLeft')  navigate(-1);
+  });
+
+  // Initial render
+  renderScreen(0, null);
+</script>
+</body>
+</html>
