@@ -771,16 +771,27 @@ function _idCameraScreen(title, subtitle, state, side) {
   const imgSrc = state === 'detected'
     ? (side === 'back' ? 'assets/illustrations/id-back.svg' : 'assets/illustrations/id-front.svg')
     : null;
-  return `<div style="flex:1;display:flex;flex-direction:column;background:#111;padding:0 24px">
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:28px">
-      <div class="type-h2" style="color:#fff">${title}</div>
-      <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
-    </div>
-    ${_idCapFrame(borderColor, imgSrc)}
-    ${_idEncryptedBadge(true)}
-    <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end;padding-bottom:8px">
-      <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="white" stroke-width="1.2" stroke-opacity="0.8"/><path d="M9 12.5v-4M9 7h.01" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.9"/></svg>
+  const questionBtn = `<div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="white" stroke-width="1.2" stroke-opacity="0.85"/><path d="M6.5 7a2.5 2.5 0 0 1 5 0c0 1.5-2.5 1.5-2.5 3M9 13h.01" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.9"/></svg>
+  </div>`;
+  return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
+    <!-- empty nav row matching Figma h-44px -->
+    <div style="height:44px;flex-shrink:0"></div>
+    <!-- content: justify-between, padding 24px -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
+      <!-- top: flex:1, title pushed to bottom with pb-40px -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:40px">
+        <div class="type-h2" style="color:#fff">${title}</div>
+        <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
+      </div>
+      <!-- frame + badge -->
+      <div style="flex-shrink:0">
+        ${_idCapFrame(borderColor, imgSrc)}
+        ${_idEncryptedBadge(true)}
+      </div>
+      <!-- bottom: flex:1, ? button bottom-right -->
+      <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
+        ${questionBtn}
       </div>
     </div>
   </div>`;
