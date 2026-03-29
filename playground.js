@@ -776,10 +776,6 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
     ? (side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png')
     : null;
   const borderColor = detected ? '#006AFF' : null;
-  const bottomEl = showTimer
-    ? `<img src="assets/icons/camera/timer.svg" width="90" height="90" alt=""/>`
-    : `<img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>`;
-  const bottomAlign = showTimer ? 'justify-content:center' : 'justify-content:flex-end';
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
     <div style="height:44px;flex-shrink:0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
@@ -790,9 +786,10 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
       <div style="flex-shrink:0">
         ${_idCapFrame(borderColor, imgSrc)}
         ${_idEncryptedBadge(true)}
+        ${showTimer ? `<div style="display:flex;justify-content:center;padding-top:8px"><img src="assets/icons/camera/timer.svg" width="90" height="90" alt=""/></div>` : ''}
       </div>
-      <div style="flex:1;display:flex;align-items:flex-end;${bottomAlign}">
-        ${bottomEl}
+      <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
+        ${showTimer ? '' : `<img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>`}
       </div>
     </div>
   </div>`;
