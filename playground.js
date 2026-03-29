@@ -746,28 +746,31 @@ function fcSuccess() {
 
 function _idEncryptedBadge() {
   return `<div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 0;flex-shrink:0">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="7" rx="1.5" fill="none" stroke="#9CA3AF" stroke-width="1.2"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="#9CA3AF" stroke-width="1.2" stroke-linecap="round"/></svg>
-    <span style="font-family:'DM Sans',sans-serif;font-size:12px;color:#9CA3AF">All data is encrypted</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="7" rx="1.5" fill="none" stroke="var(--text-secondary)" stroke-width="1.2"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="var(--text-secondary)" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span class="type-body-s-regular" style="color:var(--text-secondary)">All data is encrypted</span>
   </div>`;
 }
 
-// Shared: dark full-screen camera view for front/back scanning
-function _idCameraScreen(label, cardContent) {
+// Shared: dark full-screen camera view for front/back scanning.
+// Pass filled=true when the ID has been detected — bracket corners switch to brand color.
+function _idCameraScreen(label, cardContent, filled) {
+  const bracketColor = filled ? 'var(--color-brand-500)' : '#fff';
+  const borderStyle = `2.5px solid ${bracketColor}`;
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111;overflow:hidden">
     <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
       <button style="background:none;border:none;cursor:pointer;padding:4px;color:white">${_BACK_SVG2}</button>
       <button style="background:none;border:none;cursor:pointer;padding:4px;color:white">${_CLOSE_SVG2}</button>
     </div>
     <div style="padding:0 24px 20px;text-align:center;flex-shrink:0">
-      <div style="font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:#fff;line-height:1.3">${label}</div>
-      <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px">This capture will happen automatically</div>
+      <div class="type-h3" style="color:#fff">${label}</div>
+      <div class="type-body-s-regular" style="color:rgba(255,255,255,0.55);margin-top:4px">This capture will happen automatically</div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px">
       <div style="position:relative;width:100%;max-width:340px;aspect-ratio:1.586">
-        <div style="position:absolute;top:0;left:0;width:26px;height:26px;border-top:2.5px solid #fff;border-left:2.5px solid #fff;border-radius:3px 0 0 0"></div>
-        <div style="position:absolute;top:0;right:0;width:26px;height:26px;border-top:2.5px solid #fff;border-right:2.5px solid #fff;border-radius:0 3px 0 0"></div>
-        <div style="position:absolute;bottom:0;left:0;width:26px;height:26px;border-bottom:2.5px solid #fff;border-left:2.5px solid #fff;border-radius:0 0 0 3px"></div>
-        <div style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-bottom:2.5px solid #fff;border-right:2.5px solid #fff;border-radius:0 0 3px 0"></div>
+        <div style="position:absolute;top:0;left:0;width:26px;height:26px;border-top:${borderStyle};border-left:${borderStyle};border-radius:3px 0 0 0;transition:border-color 0.25s"></div>
+        <div style="position:absolute;top:0;right:0;width:26px;height:26px;border-top:${borderStyle};border-right:${borderStyle};border-radius:0 3px 0 0;transition:border-color 0.25s"></div>
+        <div style="position:absolute;bottom:0;left:0;width:26px;height:26px;border-bottom:${borderStyle};border-left:${borderStyle};border-radius:0 0 0 3px;transition:border-color 0.25s"></div>
+        <div style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-bottom:${borderStyle};border-right:${borderStyle};border-radius:0 0 3px 0;transition:border-color 0.25s"></div>
         ${cardContent}
       </div>
     </div>
@@ -775,20 +778,21 @@ function _idCameraScreen(label, cardContent) {
   </div>`;
 }
 
-// Shared: light-bg processing/analyzing screen
+// Shared: light-bg processing/analyzing screen with nav bar and progress bar.
 function _idProcessingScreen(label, idIllustration, progressPct) {
-  return `<div style="display:flex;flex-direction:column;flex:1;min-height:0">
-    <div style="height:4px;background:rgba(0,0,0,0.07);flex-shrink:0">
-      <div style="height:100%;width:${progressPct}%;background:#22c55e;transition:width 0.4s ease"></div>
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
+    ${_navBar('logo-only')}
+    <div style="height:4px;background:rgba(0,0,0,0.07);flex-shrink:0;margin:0 -24px;border-radius:0">
+      <div style="height:100%;width:${progressPct}%;background:var(--color-brand-500);transition:width 0.4s ease"></div>
     </div>
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 28px;gap:24px">
-      <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--text-primary)">${label}</div>
-      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+      <div class="type-h3" style="color:var(--text-primary);text-align:center">${label}</div>
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:var(--radius-card);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)">
         <img src="${idIllustration}" style="width:100%;display:block" alt=""/>
       </div>
     </div>
-    <div style="padding:0 24px">${_idEncryptedBadge()}</div>
-    <div style="height:20px"></div>
+    <div style="padding-bottom:8px">${_idEncryptedBadge()}</div>
+    ${_verifiedTag()}
   </div>`;
 }
 
@@ -796,21 +800,22 @@ function _idProcessingScreen(label, idIllustration, progressPct) {
 function idDocSelect() {
   const chevron = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 11l4-4-4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const card = (icon, title, sub) => `
-    <div style="background:#F5F6F8;border-radius:var(--radius-card);padding:16px;display:flex;align-items:center;gap:14px">
+    <div style="background:var(--surface-card, #F5F6F8);border-radius:var(--radius-card);padding:16px;display:flex;align-items:center;gap:14px">
       <img src="${icon}" style="width:52px;height:36px;object-fit:contain;flex-shrink:0" alt=""/>
       <div style="flex:1;min-width:0">
-        <div style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary)">${title}</div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-secondary);margin-top:2px">${sub}</div>
+        <div class="type-body-m-bold" style="color:var(--text-primary)">${title}</div>
+        <div class="type-body-s-regular" style="color:var(--text-secondary);margin-top:2px">${sub}</div>
       </div>
       <div style="width:34px;height:34px;border-radius:50%;background:var(--color-brand-500);display:flex;align-items:center;justify-content:center;flex-shrink:0">${chevron}</div>
     </div>`;
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:0;min-height:0">
     ${_navBar('logo-only')}
     <div style="padding:20px 0 28px">
-      <div class="type-h2" style="color:var(--text-primary)">Choose the document for scanning</div>
+      <div class="type-h2" style="color:var(--text-primary)">Choose your document</div>
+      <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Select the document you'd like to scan</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px">
-      ${card('assets/illustrations/id.svg',       'Identity Card', 'National Identity Card, or Driver\'s License')}
+      ${card('assets/illustrations/id.svg',       'Identity Card', 'National ID Card or Driver\'s License')}
       ${card('assets/illustrations/passport.svg',  'Passport',      'Your country Passport')}
     </div>
     <div style="flex:1"></div>
@@ -825,7 +830,7 @@ function idFrontTutorial() {
       ${_navBar('logo-only')}
       <div style="text-align:center">
         <div class="type-h2" style="color:var(--text-primary)">Show the front of your ID</div>
-        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Ensure your ID is readable</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Make sure your ID is flat and fully visible</div>
       </div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center">
@@ -833,7 +838,7 @@ function idFrontTutorial() {
     </div>
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="type-body-m-regular" style="text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
-      <button class="btn btn-primary btn-full">Let's scan</button>
+      <button class="btn btn-primary btn-full">Start scanning</button>
       ${_verifiedTag()}
     </div>
   </div>`;
@@ -842,33 +847,36 @@ function idFrontTutorial() {
 // Screen 3/11 — Front Camera: Empty
 function idFrontCamEmpty() {
   return _idCameraScreen('Frame the front of your ID',
-    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`);
+    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`,
+    false);
 }
 
 // Screen 4/11 — Front Camera: ID Detected
+// Corner brackets change to brand color to confirm detection.
 function idFrontCamFilled() {
-  return _idCameraScreen('Frame the front of your ID',
+  return _idCameraScreen('Front detected',
     `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:4px;overflow:hidden">
       <img src="assets/illustrations/id-front.svg" style="width:100%;height:100%;object-fit:cover" alt=""/>
-    </div>`);
+    </div>`,
+    true);
 }
 
 // Screen 5/11 — Front Processing
 function idFrontProcessing() {
-  return _idProcessingScreen('Processing..', 'assets/illustrations/id-front.svg', 55);
+  return _idProcessingScreen('Processing front side...', 'assets/illustrations/id-front.svg', 45);
 }
 
 // Screen 6/11 — Front Success
 function idFrontSuccess() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
     ${_navBar('logo-only')}
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:8px 0">
-      <img src="assets/icons/status/Status-42.svg" width="56" height="56" alt="Success"/>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:8px 0">
+      <img src="assets/icons/status/Status-42.svg" width="64" height="64" alt="Success"/>
       <div style="text-align:center">
-        <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary)">Successfully processed!</div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-secondary);margin-top:6px">Now let's capture the back</div>
+        <div class="type-h2" style="color:var(--text-primary)">Front captured!</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:8px">Now let's scan the back of your ID</div>
       </div>
-      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);margin-top:4px">
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:var(--radius-card);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07)">
         <img src="assets/illustrations/id-front.svg" style="width:100%;display:block" alt=""/>
       </div>
     </div>
@@ -882,46 +890,58 @@ function idFrontSuccess() {
 
 // Screen 7/11 — Flip Instruction
 function idFlip() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
-    ${_navBar('logo-only')}
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px">
-      <div class="type-h2" style="color:var(--text-primary);text-align:center">Show the back of your ID</div>
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      ${_navBar('logo-only')}
+      <div style="text-align:center">
+        <div class="type-h2" style="color:var(--text-primary)">Now flip your ID</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">We need to scan both sides</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center">
       <img src="assets/illustrations/id-tutorial/step-3.svg" style="width:100%;max-width:320px;object-fit:contain" alt="Flip ID"/>
     </div>
-    ${_verifiedTag()}
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="type-body-m-regular" style="text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
+      <button class="btn btn-primary btn-full">Scan the back</button>
+      ${_verifiedTag()}
+    </div>
   </div>`;
 }
 
 // Screen 8/11 — Back Camera: Empty
 function idBackCamEmpty() {
   return _idCameraScreen('Frame the back of your ID',
-    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`);
+    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`,
+    false);
 }
 
 // Screen 9/11 — Back Camera: ID Detected
+// Corner brackets change to brand color to confirm detection.
 function idBackCamFilled() {
-  return _idCameraScreen('Frame the back of your ID',
+  return _idCameraScreen('Back detected',
     `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:4px;overflow:hidden">
       <img src="assets/illustrations/id-back.svg" style="width:100%;height:100%;object-fit:cover" alt=""/>
-    </div>`);
+    </div>`,
+    true);
 }
 
 // Screen 10/11 — Back Processing
 function idBackProcessing() {
-  return _idProcessingScreen('Processing..', 'assets/illustrations/id-back.svg', 85);
+  return _idProcessingScreen('Processing back side...', 'assets/illustrations/id-back.svg', 85);
 }
 
 // Screen 11/11 — Back Success / Complete
 function idBackSuccess() {
   return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
     ${_navBar('logo-only')}
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:8px 0">
-      <img src="assets/icons/status/Status-42.svg" width="56" height="56" alt="Success"/>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:8px 0">
+      <img src="assets/icons/status/Status-42.svg" width="64" height="64" alt="Success"/>
       <div style="text-align:center">
-        <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary)">Successfully processed!</div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-secondary);margin-top:6px">ID capture complete</div>
+        <div class="type-h2" style="color:var(--text-primary)">ID verified!</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:8px">Both sides captured successfully</div>
       </div>
-      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);margin-top:4px">
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:var(--radius-card);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07)">
         <img src="assets/illustrations/id-back.svg" style="width:100%;display:block" alt=""/>
       </div>
     </div>
