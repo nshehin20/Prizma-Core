@@ -770,9 +770,11 @@ function _idCapFrame(borderColor, imgSrc) {
 
 // Shared: dark camera screen (front or back, empty or detected)
 function _idCameraScreen(title, subtitle, state, side) {
-  const imgSrc = state === 'detected'
-    ? (side === 'back' ? 'assets/illustrations/id-back.svg' : 'assets/illustrations/id-front.svg')
+  const detected = state === 'detected';
+  const imgSrc = detected
+    ? (side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png')
     : null;
+  const borderColor = detected ? '#006AFF' : null;
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
     <div style="height:44px;flex-shrink:0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
@@ -781,7 +783,7 @@ function _idCameraScreen(title, subtitle, state, side) {
         <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
       </div>
       <div style="flex-shrink:0">
-        ${_idCapFrame(null, imgSrc)}
+        ${_idCapFrame(borderColor, imgSrc)}
         ${_idEncryptedBadge(true)}
       </div>
       <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
