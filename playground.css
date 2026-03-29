@@ -3438,20 +3438,18 @@ select {
 }
 
 .lab-phone-notch {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  z-index: 5;
-  pointer-events: none;
+  flex-shrink: 0;
   line-height: 0;
 }
 
 .lab-phone-screen {
-  position: absolute;
-  inset: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background: var(--surface-bg, #fff);
+  min-height: 0;
+  position: relative; /* so generated absolute-positioned content is anchored here */
 }
 
 /* ── Screen reveal: scan-line wipe ── */
@@ -3523,21 +3521,19 @@ select {
 }
 
 .lab-phone-home {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
   height: 34px;
-  z-index: 5;
-  pointer-events: none;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--surface-bg, #fff);
 }
 
 .lab-phone-home::after {
   content: '';
   width: 120px;
   height: 4px;
-  background: rgba(128,128,128,0.45);
+  background: rgba(0,0,0,0.14);
   border-radius: 2px;
 }
 
