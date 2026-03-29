@@ -2712,7 +2712,7 @@ select {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 8px 6px 12px;
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   background: none;
@@ -2730,6 +2730,7 @@ select {
   color: #fff;
 }
 .lab-exp-tab--active:hover { background: #0058d6; color: #fff; }
+.lab-exp-tab--closeable { padding-right: 8px; }
 
 .lab-exp-tab-close {
   display: inline-flex; align-items: center; justify-content: center;
