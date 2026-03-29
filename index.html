@@ -3190,12 +3190,17 @@
             </div>
             <!-- Input bar -->
             <div class="lab-exp-input-wrap">
+              <div id="lab-overlay-img-preview" class="lab-exp-img-preview" style="display:none"></div>
               <div class="lab-exp-bar" id="lab-exp-bar">
                 <svg class="lab-exp-bar-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/></svg>
                 <input type="text" id="lab-exp-overlay-input" class="lab-exp-bar-input"
                        placeholder="Describe what you want to explore…"
                        onkeydown="if(event.key==='Enter')labExpSubmit()"
                        autocomplete="off" />
+                <input type="file" id="lab-overlay-img-input" accept="image/*" style="display:none" onchange="labExpHandleImage(this,'overlay')">
+                <button class="lab-exp-bar-attach" onclick="document.getElementById('lab-overlay-img-input').click()" title="Attach image">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><path d="M1 10l3.5-3.5L7 9l2.5-2.5L14 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
                 <button class="lab-exp-bar-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
                   <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
@@ -3223,13 +3228,20 @@
             </div>
             <div class="lab-exp-messages" id="lab-exp-messages"></div>
             <div class="lab-exp-panel-footer">
-              <input type="text" id="lab-exp-panel-input" class="lab-exp-panel-input"
-                     placeholder="Follow up..."
-                     onkeydown="if(event.key==='Enter')labExpPanelSubmit()"
-                     autocomplete="off" />
-              <button class="lab-exp-panel-send" id="lab-exp-panel-send" onclick="labExpPanelSubmit()">
-                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
+              <div id="lab-panel-img-preview" class="lab-exp-img-preview" style="display:none"></div>
+              <div class="lab-exp-panel-input-row">
+                <input type="file" id="lab-panel-img-input" accept="image/*" style="display:none" onchange="labExpHandleImage(this,'panel')">
+                <button class="lab-panel-attach" onclick="document.getElementById('lab-panel-img-input').click()" title="Attach image">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><path d="M1 10l3.5-3.5L7 9l2.5-2.5L14 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <input type="text" id="lab-exp-panel-input" class="lab-exp-panel-input"
+                       placeholder="Follow up..."
+                       onkeydown="if(event.key==='Enter')labExpPanelSubmit()"
+                       autocomplete="off" />
+                <button class="lab-exp-panel-send" id="lab-exp-panel-send" onclick="labExpPanelSubmit()">
+                  <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
             </div>
           </div>
 

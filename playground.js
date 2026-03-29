@@ -1299,6 +1299,11 @@ let _experiments   = [];
 let _activeExpId   = null;
 let _expCounter    = 0;
 
+// ── Image upload + diff state ─────────────────────────────────────────────────
+let _pendingImage = null; // { data, type, previewUrl }
+const _diffStore  = {};   // diffId → { oldHtml, newHtml, label }
+let   _diffIdCtr  = 0;
+
 // Lab is the default view — init after all lab code is defined
 initLab();
 
@@ -1330,12 +1335,80 @@ Available tokens: --color-brand-500, --color-brand-400, --color-brand-600, --tex
 ALWAYS respond with valid JSON only:
 { "message": "Short friendly sentence.", "actions": [ ...action objects... ] }`;
 
+// ── Image upload ──────────────────────────────────────────────────────────────
+function labExpHandleImage(input, ctx) {
+  const file = input.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl   = e.target.result;
+    const data      = dataUrl.slice(dataUrl.indexOf(',') + 1);
+    const type      = file.type || 'image/jpeg';
+    const previewUrl = URL.createObjectURL(file);
+    _pendingImage   = { data, type, previewUrl };
+    const previewEl = document.getElementById(ctx === 'overlay' ? 'lab-overlay-img-preview' : 'lab-panel-img-preview');
+    if (previewEl) {
+      previewEl.innerHTML = `
+        <img src="${previewUrl}" class="lab-exp-preview-thumb" alt=""/>
+        <button class="lab-exp-preview-remove" onclick="labExpRemoveImage('${ctx}')">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>`;
+      previewEl.style.display = 'flex';
+    }
+    input.value = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+function labExpRemoveImage(ctx) {
+  if (_pendingImage?.previewUrl) URL.revokeObjectURL(_pendingImage.previewUrl);
+  _pendingImage = null;
+  const previewEl = document.getElementById(ctx === 'overlay' ? 'lab-overlay-img-preview' : 'lab-panel-img-preview');
+  if (previewEl) { previewEl.innerHTML = ''; previewEl.style.display = 'none'; }
+}
+
+// ── Diff view ─────────────────────────────────────────────────────────────────
+function _renderDiffFrame(container, html) {
+  const S = 0.215, W = 390, H = 760;
+  container.style.cssText = `width:${Math.round(W*S)}px;height:${Math.round(H*S)}px;overflow:hidden;border-radius:8px;background:#000;flex-shrink:0`;
+  const iframe = document.createElement('iframe');
+  iframe.scrolling = 'no';
+  iframe.style.cssText = `border:none;width:${W}px;height:${H}px;transform:scale(${S});transform-origin:top left;pointer-events:none`;
+  iframe.srcdoc = `<!DOCTYPE html><html><head><style>*{box-sizing:border-box;margin:0}body{width:${W}px;height:${H}px;overflow:hidden}</style></head><body>${html}</body></html>`;
+  container.innerHTML = '';
+  container.appendChild(iframe);
+}
+
+function labExpShowDiff(diffId, which, btn) {
+  const diff = _diffStore[diffId];
+  if (!diff) return;
+  btn.closest('.lab-exp-diff-btns').querySelectorAll('.lab-exp-diff-btn')
+     .forEach(b => b.classList.toggle('lab-exp-diff-btn--active', b === btn));
+  const el = document.getElementById('diff-' + diffId);
+  if (el) _renderDiffFrame(el, which === 'before' ? diff.oldHtml : diff.newHtml);
+}
+
+function labExpAiSuggest(btn) {
+  const text  = btn.textContent.trim();
+  const input = document.getElementById('lab-exp-panel-input');
+  if (!input) return;
+  input.value = text;
+  input.focus();
+  labExpPanelSubmit();
+}
+
 async function _callClaude(history) {
-  // history: [{role:'user'|'ai', text}] — maps to Claude's messages format
-  const messages = history.map(m => ({
-    role: m.role === 'ai' ? 'assistant' : 'user',
-    content: m.text,
-  }));
+  const messages = history.map(m => {
+    if (m.role === 'ai') return { role: 'assistant', content: m.text };
+    if (m.image) return {
+      role: 'user',
+      content: [
+        { type: 'image', source: { type: 'base64', media_type: m.image.type, data: m.image.data } },
+        { type: 'text', text: m.text || '' },
+      ],
+    };
+    return { role: 'user', content: m.text };
+  });
 
   const res = await fetch('/api/prompt', {
     method: 'POST',
@@ -1548,10 +1621,49 @@ function labExpRenderMessages(exp) {
         </div>
       </div>`;
     }
-    return `<div class="lab-exp-msg lab-exp-msg--${m.role}">
+    if (m.role === 'user') {
+      const imgHtml = m.imagePreviewUrl
+        ? `<img src="${m.imagePreviewUrl}" class="lab-exp-msg-img-thumb" alt=""/>`
+        : '';
+      const textHtml = (m.text && m.text !== '(see attached image)') ? m.text : '';
+      return `<div class="lab-exp-msg lab-exp-msg--user">
+        <div class="lab-exp-msg-bubble">${imgHtml}${textHtml}</div>
+      </div>`;
+    }
+    // AI message
+    const diffHtml = (m.diffs?.length ? m.diffs : []).map(diffId => {
+      const diff = _diffStore[diffId];
+      if (!diff) return '';
+      return `<div class="lab-exp-diff">
+        <div class="lab-exp-diff-header">
+          <span class="lab-exp-diff-label">${diff.label}</span>
+          <div class="lab-exp-diff-btns">
+            <button class="lab-exp-diff-btn" onclick="labExpShowDiff('${diffId}','before',this)">Before</button>
+            <button class="lab-exp-diff-btn lab-exp-diff-btn--active" onclick="labExpShowDiff('${diffId}','after',this)">After</button>
+          </div>
+        </div>
+        <div class="lab-exp-diff-preview" id="diff-${diffId}"></div>
+      </div>`;
+    }).join('');
+    const suggestHtml = m.suggestions?.length
+      ? `<div class="lab-exp-ai-suggestions">${m.suggestions.map(s =>
+          `<button class="lab-exp-ai-chip" onclick="labExpAiSuggest(this)">${s}</button>`).join('')}</div>`
+      : '';
+    return `<div class="lab-exp-msg lab-exp-msg--ai">
       <div class="lab-exp-msg-bubble">${m.text}</div>
+      ${diffHtml}${suggestHtml}
     </div>`;
   }).join('');
+
+  // Populate diff "after" previews
+  exp.messages.forEach(m => {
+    (m.diffs || []).forEach(diffId => {
+      const el   = document.getElementById('diff-' + diffId);
+      const diff = _diffStore[diffId];
+      if (el && diff && !el.hasChildNodes()) _renderDiffFrame(el, diff.newHtml);
+    });
+  });
+
   container.scrollTop = container.scrollHeight;
 }
 
@@ -1594,12 +1706,18 @@ async function labExpSubmit() {
   const input = document.getElementById('lab-exp-overlay-input');
   const btn   = document.getElementById('lab-exp-submit-btn');
   const msg   = input?.value.trim();
-  if (!msg || btn?.disabled || !_activeExpId) return;
+  if ((!msg && !_pendingImage) || btn?.disabled || !_activeExpId) return;
 
   const exp = _experiments.find(e => e.id === _activeExpId);
   if (!exp) return;
 
-  exp.messages.push({ role: 'user', text: msg });
+  const userMsg = { role: 'user', text: msg || '(see attached image)' };
+  if (_pendingImage) {
+    userMsg.image = { data: _pendingImage.data, type: _pendingImage.type };
+    userMsg.imagePreviewUrl = _pendingImage.previewUrl;
+    labExpRemoveImage('overlay');
+  }
+  exp.messages.push(userMsg);
   input.value = '';
 
   // Transition: hide overlay, show phones + right panel (phase-2)
@@ -1624,12 +1742,18 @@ async function labExpPanelSubmit() {
   const input = document.getElementById('lab-exp-panel-input');
   const btn   = document.getElementById('lab-exp-panel-send');
   const msg   = input?.value.trim();
-  if (!msg || btn?.disabled || !_activeExpId) return;
+  if ((!msg && !_pendingImage) || btn?.disabled || !_activeExpId) return;
 
   const exp = _experiments.find(e => e.id === _activeExpId);
   if (!exp) return;
 
-  exp.messages.push({ role: 'user', text: msg });
+  const userMsg = { role: 'user', text: msg || '(see attached image)' };
+  if (_pendingImage) {
+    userMsg.image = { data: _pendingImage.data, type: _pendingImage.type };
+    userMsg.imagePreviewUrl = _pendingImage.previewUrl;
+    labExpRemoveImage('panel');
+  }
+  exp.messages.push(userMsg);
   input.value = '';
 
   if (_isTokenRequest(msg)) {
@@ -1660,9 +1784,15 @@ async function _runExpResponse(exp) {
   try {
     const data = await _callClaude(exp.messages.filter(m => !m.thinking));
     exp.messages = exp.messages.filter(m => !m.thinking);
-    exp.messages.push({ role: 'ai', text: data.message || 'Done.' });
+    const aiMsg = { role: 'ai', text: data.message || 'Done.' };
+    if (Array.isArray(data.suggestions) && data.suggestions.length) {
+      aiMsg.suggestions = data.suggestions.slice(0, 3);
+    }
+    exp.messages.push(aiMsg);
     labExpRenderMessages(exp);
     if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
+    // Re-render to show diffs captured during action execution
+    labExpRenderMessages(exp);
   } catch (err) {
     exp.messages = exp.messages.filter(m => !m.thinking);
     exp.messages.push({ role: 'ai', text: 'Something went wrong — please try again.' });
@@ -1948,10 +2078,25 @@ function executeLabAction(action) {
           existingCell?.querySelector('.lab-phone-frame')?.classList.add('lab-phone-frame--generated');
 
           if (existingScreen) {
+            // Capture old HTML for diff view
+            const oldHtml = existingScreen.innerHTML;
+            const activeExpForDiff = _experiments.find(e => e.id === _activeExpId);
+            if (activeExpForDiff) {
+              const aiMsgs = activeExpForDiff.messages.filter(m => m.role === 'ai' && !m.thinking && !m.clarify);
+              const lastAi = aiMsgs[aiMsgs.length - 1];
+              if (lastAi) {
+                if (!lastAi.diffs) lastAi.diffs = [];
+                const diffId = 'diff_' + (++_diffIdCtr);
+                const screens = _labActiveScreens();
+                _diffStore[diffId] = { oldHtml, newHtml: action.html, label: screens[action.index]?.label || `Screen ${action.index + 1}` };
+                lastAi.diffs.push(diffId);
+              }
+            }
+
             // Old layer sits underneath, dims as new reveals
             const oldLayer = document.createElement('div');
             oldLayer.className = 'lab-screen-layer lab-screen-layer--old';
-            oldLayer.innerHTML = existingScreen.innerHTML;
+            oldLayer.innerHTML = oldHtml;
             existingScreen.innerHTML = '';
             existingScreen.appendChild(oldLayer);
 
