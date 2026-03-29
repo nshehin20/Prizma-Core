@@ -1955,23 +1955,25 @@ function executeLabAction(action) {
             newLayer.innerHTML = action.html;
             existingScreen.appendChild(newLayer);
 
-            // Glowing scan line sweeps top → bottom
-            const scanLine = document.createElement('div');
-            scanLine.className = 'lab-scan-line';
-            existingScreen.appendChild(scanLine);
+            // White flash overlay
+            const flash = document.createElement('div');
+            flash.className = 'lab-flash';
+            existingScreen.appendChild(flash);
 
             // Trigger reflow then start animations
             existingScreen.offsetHeight;
-            newLayer.classList.add('lab-screen-layer--new-active');
             oldLayer.classList.add('lab-screen-layer--old-exit');
-            scanLine.classList.add('lab-scan-line--active');
+            flash.classList.add('lab-flash--active');
+
+            // New screen appears just after the flash peak
+            setTimeout(() => newLayer.classList.add('lab-screen-layer--new-active'), 80);
 
             // Cleanup
             setTimeout(() => {
               existingScreen.innerHTML = action.html;
               existingCell.classList.add('lab-phone-cell--modified');
               setTimeout(() => existingCell.classList.remove('lab-phone-cell--modified'), 2000);
-            }, 900);
+            }, 700);
 
             _labUpdateMeta();
           } else {

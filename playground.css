@@ -3462,49 +3462,45 @@ select {
   flex-direction: column;
 }
 
-/* Old layer fades out as new one scans in */
-.lab-screen-layer--old { z-index: 1; transition: opacity 0.8s ease-in-out, filter 0.8s ease-in-out; }
-.lab-screen-layer--old-exit { opacity: 0; filter: brightness(0.4) blur(2px); }
+/* Old layer overexposes then vanishes into the flash */
+.lab-screen-layer--old {
+  z-index: 1;
+  transition: opacity 0.18s ease-in, filter 0.18s ease-in;
+}
+.lab-screen-layer--old-exit {
+  opacity: 0;
+  filter: brightness(6) saturate(0);
+}
 
-/* New layer clips from top, scan line acts as the reveal edge */
+/* New layer fades in after the flash peak */
 .lab-screen-layer--new {
   z-index: 2;
-  clip-path: inset(0 0 100% 0);
-}
-.lab-screen-layer--new-active {
-  clip-path: inset(0 0 0% 0);
-  transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-/* Glowing scan line that sweeps top → bottom */
-.lab-scan-line {
-  position: absolute;
-  left: -5px; right: -5px;
-  height: 3px;
-  top: 0;
-  z-index: 10;
-  pointer-events: none;
-  background: linear-gradient(to right,
-    transparent 0%,
-    rgba(0, 106, 255, 0.5) 15%,
-    rgba(180, 220, 255, 1) 50%,
-    rgba(0, 106, 255, 0.5) 85%,
-    transparent 100%
-  );
-  box-shadow:
-    0 0 8px 3px rgba(0, 106, 255, 0.5),
-    0 0 24px 8px rgba(0, 106, 255, 0.2),
-    0 0 48px 16px rgba(0, 106, 255, 0.08);
   opacity: 0;
 }
-.lab-scan-line--active {
-  animation: lab-scan-sweep 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+.lab-screen-layer--new-active {
+  animation: lab-new-appear 0.5s ease-out forwards;
 }
-@keyframes lab-scan-sweep {
-  0%   { top: 0%;   opacity: 0; }
-  5%   { opacity: 1; }
-  95%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+@keyframes lab-new-appear {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* White flash burst */
+.lab-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: #fff;
+  opacity: 0;
+}
+.lab-flash--active {
+  animation: lab-flash-burst 0.65s ease-out forwards;
+}
+@keyframes lab-flash-burst {
+  0%   { opacity: 0; }
+  18%  { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 /* Ensure generated screen HTML always fills the screen area */
