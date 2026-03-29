@@ -3526,14 +3526,14 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface-bg, #fff);
+  background: transparent;
 }
 
 .lab-phone-home::after {
   content: '';
   width: 120px;
   height: 4px;
-  background: rgba(0,0,0,0.14);
+  background: rgba(128,128,128,0.35);
   border-radius: 2px;
 }
 
