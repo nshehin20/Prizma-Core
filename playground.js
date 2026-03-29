@@ -736,6 +736,203 @@ function fcSuccess() {
 }
 
 
+// ============================================================
+// ID Capture module — 11 screens
+// Screens built with existing DS assets:
+//   id.svg, passport.svg, id-front.svg, id-back.svg
+//   id-tutorial/step-1.svg (front), step-2.svg (back), step-3.svg (flip)
+//   icons/status/Status-42.svg (success)
+// ============================================================
+
+function _idEncryptedBadge() {
+  return `<div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 0;flex-shrink:0">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="10" height="7" rx="1.5" fill="none" stroke="#9CA3AF" stroke-width="1.2"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" stroke="#9CA3AF" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span style="font-family:'DM Sans',sans-serif;font-size:12px;color:#9CA3AF">All data is encrypted</span>
+  </div>`;
+}
+
+// Shared: dark full-screen camera view for front/back scanning
+function _idCameraScreen(label, cardContent) {
+  return `<div style="flex:1;display:flex;flex-direction:column;background:#111;overflow:hidden">
+    <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+      <button style="background:none;border:none;cursor:pointer;padding:4px;color:white">${_BACK_SVG2}</button>
+      <button style="background:none;border:none;cursor:pointer;padding:4px;color:white">${_CLOSE_SVG2}</button>
+    </div>
+    <div style="padding:0 24px 20px;text-align:center;flex-shrink:0">
+      <div style="font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;color:#fff;line-height:1.3">${label}</div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px">This capture will happen automatically</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:0 20px">
+      <div style="position:relative;width:100%;max-width:340px;aspect-ratio:1.586">
+        <div style="position:absolute;top:0;left:0;width:26px;height:26px;border-top:2.5px solid #fff;border-left:2.5px solid #fff;border-radius:3px 0 0 0"></div>
+        <div style="position:absolute;top:0;right:0;width:26px;height:26px;border-top:2.5px solid #fff;border-right:2.5px solid #fff;border-radius:0 3px 0 0"></div>
+        <div style="position:absolute;bottom:0;left:0;width:26px;height:26px;border-bottom:2.5px solid #fff;border-left:2.5px solid #fff;border-radius:0 0 0 3px"></div>
+        <div style="position:absolute;bottom:0;right:0;width:26px;height:26px;border-bottom:2.5px solid #fff;border-right:2.5px solid #fff;border-radius:0 0 3px 0"></div>
+        ${cardContent}
+      </div>
+    </div>
+    <div style="padding:16px 24px 20px;flex-shrink:0">${_idEncryptedBadge()}</div>
+  </div>`;
+}
+
+// Shared: light-bg processing/analyzing screen
+function _idProcessingScreen(label, idIllustration, progressPct) {
+  return `<div style="display:flex;flex-direction:column;flex:1;min-height:0">
+    <div style="height:4px;background:rgba(0,0,0,0.07);flex-shrink:0">
+      <div style="height:100%;width:${progressPct}%;background:#22c55e;transition:width 0.4s ease"></div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 28px;gap:24px">
+      <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:600;color:var(--text-primary)">${label}</div>
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)">
+        <img src="${idIllustration}" style="width:100%;display:block" alt=""/>
+      </div>
+    </div>
+    <div style="padding:0 24px">${_idEncryptedBadge()}</div>
+    <div style="height:20px"></div>
+  </div>`;
+}
+
+// Screen 1/11 — Document Select
+function idDocSelect() {
+  const chevron = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 11l4-4-4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const card = (icon, title, sub) => `
+    <div style="background:#F5F6F8;border-radius:var(--radius-card);padding:16px;display:flex;align-items:center;gap:14px">
+      <img src="${icon}" style="width:52px;height:36px;object-fit:contain;flex-shrink:0" alt=""/>
+      <div style="flex:1;min-width:0">
+        <div style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:var(--text-primary)">${title}</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text-secondary);margin-top:2px">${sub}</div>
+      </div>
+      <div style="width:34px;height:34px;border-radius:50%;background:var(--color-brand-500);display:flex;align-items:center;justify-content:center;flex-shrink:0">${chevron}</div>
+    </div>`;
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:0;min-height:0">
+    ${_navBar('logo-only')}
+    <div style="padding:20px 0 28px">
+      <div class="type-h2" style="color:var(--text-primary)">Choose the document for scanning</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${card('assets/illustrations/id.svg',       'Identity Card', 'National Identity Card, or Driver\'s License')}
+      ${card('assets/illustrations/passport.svg',  'Passport',      'Your country Passport')}
+    </div>
+    <div style="flex:1"></div>
+    ${_verifiedTag()}
+  </div>`;
+}
+
+// Screen 2/11 — Front Tutorial
+function idFrontTutorial() {
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      ${_navBar('logo-only')}
+      <div style="text-align:center">
+        <div class="type-h2" style="color:var(--text-primary)">Show the front of your ID</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">Ensure your ID is readable</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;justify-content:center">
+      <img src="assets/illustrations/id-tutorial/step-1.svg" style="width:100%;max-width:320px;object-fit:contain" alt=""/>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="type-body-m-regular" style="text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
+      <button class="btn btn-primary btn-full">Let's scan</button>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
+// Screen 3/11 — Front Camera: Empty
+function idFrontCamEmpty() {
+  return _idCameraScreen('Frame the front of your ID',
+    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`);
+}
+
+// Screen 4/11 — Front Camera: ID Detected
+function idFrontCamFilled() {
+  return _idCameraScreen('Frame the front of your ID',
+    `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:4px;overflow:hidden">
+      <img src="assets/illustrations/id-front.svg" style="width:100%;height:100%;object-fit:cover" alt=""/>
+    </div>`);
+}
+
+// Screen 5/11 — Front Processing
+function idFrontProcessing() {
+  return _idProcessingScreen('Processing..', 'assets/illustrations/id-front.svg', 55);
+}
+
+// Screen 6/11 — Front Success
+function idFrontSuccess() {
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:8px 0">
+      <img src="assets/icons/status/Status-42.svg" width="56" height="56" alt="Success"/>
+      <div style="text-align:center">
+        <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary)">Successfully processed!</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-secondary);margin-top:6px">Now let's capture the back</div>
+      </div>
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);margin-top:4px">
+        <img src="assets/illustrations/id-front.svg" style="width:100%;display:block" alt=""/>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${_idEncryptedBadge()}
+      <button class="btn btn-primary btn-full">Scan the back</button>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
+// Screen 7/11 — Flip Instruction
+function idFlip() {
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px">
+      <div class="type-h2" style="color:var(--text-primary);text-align:center">Show the back of your ID</div>
+      <img src="assets/illustrations/id-tutorial/step-3.svg" style="width:100%;max-width:320px;object-fit:contain" alt="Flip ID"/>
+    </div>
+    ${_verifiedTag()}
+  </div>`;
+}
+
+// Screen 8/11 — Back Camera: Empty
+function idBackCamEmpty() {
+  return _idCameraScreen('Frame the back of your ID',
+    `<div style="position:absolute;inset:4px;background:rgba(255,255,255,0.05);border-radius:6px"></div>`);
+}
+
+// Screen 9/11 — Back Camera: ID Detected
+function idBackCamFilled() {
+  return _idCameraScreen('Frame the back of your ID',
+    `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:4px;overflow:hidden">
+      <img src="assets/illustrations/id-back.svg" style="width:100%;height:100%;object-fit:cover" alt=""/>
+    </div>`);
+}
+
+// Screen 10/11 — Back Processing
+function idBackProcessing() {
+  return _idProcessingScreen('Processing..', 'assets/illustrations/id-back.svg', 85);
+}
+
+// Screen 11/11 — Back Success / Complete
+function idBackSuccess() {
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0">
+    ${_navBar('logo-only')}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:8px 0">
+      <img src="assets/icons/status/Status-42.svg" width="56" height="56" alt="Success"/>
+      <div style="text-align:center">
+        <div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;color:var(--text-primary)">Successfully processed!</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text-secondary);margin-top:6px">ID capture complete</div>
+      </div>
+      <div style="width:100%;border:1.5px solid rgba(0,0,0,0.09);border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.07);margin-top:4px">
+        <img src="assets/illustrations/id-back.svg" style="width:100%;display:block" alt=""/>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${_idEncryptedBadge()}
+      <button class="btn btn-primary btn-full">Continue</button>
+      ${_verifiedTag()}
+    </div>
+  </div>`;
+}
+
 // ---- Module registry ----
 
 const modules = {
@@ -751,7 +948,22 @@ const modules = {
       { id: 'success',    label: 'Success',    render: fcSuccess },
     ]
   },
-  'id-capture':       { label: 'ID Capture',      screens: [] },
+  'id-capture': {
+    label: 'ID Capture',
+    screens: [
+      { id: 'doc-select',       label: 'Doc Select',      render: idDocSelect },
+      { id: 'front-tutorial',   label: 'Front Tutorial',  render: idFrontTutorial },
+      { id: 'front-empty',      label: 'Front: Empty',    render: idFrontCamEmpty },
+      { id: 'front-filled',     label: 'Front: Detected', render: idFrontCamFilled },
+      { id: 'front-processing', label: 'Processing',      render: idFrontProcessing },
+      { id: 'front-success',    label: 'Front Success',   render: idFrontSuccess },
+      { id: 'flip',             label: 'Flip',            render: idFlip },
+      { id: 'back-empty',       label: 'Back: Empty',     render: idBackCamEmpty },
+      { id: 'back-filled',      label: 'Back: Detected',  render: idBackCamFilled },
+      { id: 'back-processing',  label: 'Back Process',    render: idBackProcessing },
+      { id: 'back-success',     label: 'Back Success',    render: idBackSuccess },
+    ]
+  },
   'nfc':              { label: 'NFC',              screens: [] },
   'document-capture': { label: 'Document Capture', screens: [] },
 };
@@ -876,6 +1088,10 @@ let _labDragging  = false;
 let _labDragOrigin = { x: 0, y: 0 };
 let _labDragMoved  = false;   // true once pointer moves > threshold during drag
 let _labActiveModule = 'face-capture';
+let _labStreamingActive = false; // true while blank-canvas streaming is in progress
+const _moduleLastExp  = {}; // moduleId → expId or null ('original')
+const _newFlowModules = []; // [{ id: 'blank-1', label: 'Flow 1' }, ...]
+let   _newFlowCounter = 0;
 
 const _LAB_PHONE_W = 273;  // 390 × 0.70
 const _LAB_PHONE_H = 591;  // 844 × 0.70
@@ -915,9 +1131,25 @@ const _labModuleData = {
     ]
   },
   // Add new modules here — copy the face-capture pattern above
-  'id-capture':  { label: 'ID Capture',       screens: [] },
+  'id-capture': {
+    label: 'ID Capture',
+    screens: [
+      { label: 'Doc Select',      render: idDocSelect },
+      { label: 'Front Tutorial',  render: idFrontTutorial },
+      { label: 'Front: Empty',    render: idFrontCamEmpty },
+      { label: 'Front: Detected', render: idFrontCamFilled },
+      { label: 'Processing',      render: idFrontProcessing },
+      { label: 'Front Success',   render: idFrontSuccess },
+      { label: 'Flip',            render: idFlip },
+      { label: 'Back: Empty',     render: idBackCamEmpty },
+      { label: 'Back: Detected',  render: idBackCamFilled },
+      { label: 'Back Process',    render: idBackProcessing },
+      { label: 'Back Success',    render: idBackSuccess },
+    ]
+  },
   'nfc':         { label: 'NFC',               screens: [] },
   'doc-capture': { label: 'Document Capture',  screens: [] },
+  'blank':       { label: 'New Flow',          screens: [] },
 };
 
 // ---- init ----
@@ -994,6 +1226,16 @@ function labSelectModule(btn) {
   _labCurrent = 0;
   _labExpanded = false;
 
+  // Restore last active exp for this module (null = Original)
+  const lastExpId = _moduleLastExp[id] ?? null;
+  _activeExpId = lastExpId;
+  if (lastExpId) {
+    const exp = _experiments.find(e => e.id === lastExpId);
+    if (exp) { _restoreExpCSS(exp); _restoreExpTokens(exp); }
+  } else {
+    _applyExpCSS('', false);
+  }
+
   const vp = document.getElementById('lab-canvas-vp');
   if (vp) vp.classList.remove('lab-expanded');
 
@@ -1005,9 +1247,39 @@ function labSelectModule(btn) {
   document.getElementById('lab-bar-module').textContent = mod.label;
   _labSetExpHeading(mod);
 
+  labExpRenderSidebarItems();
   _labBuildStage();
   _labUpdateMeta();
   _labCenterReset(false);
+
+  // Sync the experiment panel to the restored experiment (or clear it for Original)
+  const overlay = document.getElementById('lab-experiment-overlay');
+  const panel   = document.getElementById('lab-exp-panel');
+  const restoredExp = lastExpId ? _experiments.find(e => e.id === lastExpId) : null;
+
+  if (!restoredExp) {
+    // Original view — close panel
+    vp.classList.remove('lab-exp-active', 'lab-panel-open', 'lab-exp-phase2');
+    if (overlay) overlay.classList.remove('active');
+    if (panel)   panel.classList.remove('active');
+  } else if (restoredExp.messages.length === 0) {
+    // Experiment with no messages yet — show phase-1 overlay
+    vp.classList.add('lab-exp-active');
+    vp.classList.remove('lab-panel-open', 'lab-exp-phase2');
+    if (overlay) overlay.classList.add('active');
+    if (panel)   panel.classList.remove('active');
+  } else {
+    // Experiment with messages — show chat panel with correct history
+    vp.classList.remove('lab-exp-active');
+    vp.classList.add('lab-panel-open', 'lab-exp-phase2');
+    if (overlay) overlay.classList.remove('active');
+    if (panel) {
+      panel.classList.add('active');
+      const titleEl = document.getElementById('lab-exp-panel-title');
+      if (titleEl) titleEl.textContent = restoredExp.label;
+      labExpRenderMessages(restoredExp);
+    }
+  }
 }
 
 // ---- build stage ----
@@ -1017,6 +1289,8 @@ function _labActiveScreens() {
   const mod      = _labModuleData[_labActiveModule];
   const activeExp = _experiments.find(e => e.id === _activeExpId);
   if (activeExp?.customScreens) return activeExp.customScreens;
+  // Blank module or module with no screens — return empty (blank canvas)
+  if (!mod || !mod.screens.length) return [];
   const overrides = activeExp?.screenOverrides || {};
   return mod.screens.map((s, i) => ({
     label: s.label,
@@ -1024,9 +1298,15 @@ function _labActiveScreens() {
   }));
 }
 
-// Materialise customScreens from the current state (called before add/remove)
+// Materialise customScreens from the current state (called before add/remove/setScreen)
 function _labEnsureCustomScreens(exp) {
   if (exp.customScreens) return;
+  // Blank canvas starts with an empty array — nothing to copy from module
+  if (exp.moduleId?.startsWith('blank-')) {
+    exp.customScreens = [];
+    exp.screenOverrides = {};
+    return;
+  }
   exp.customScreens = _labActiveScreens().map(s => ({ label: s.label, html: s.html }));
   exp.screenOverrides = {};
 }
@@ -1037,22 +1317,81 @@ function _labBuildStage() {
   const src     = _labStatusSrc();
   const screens = _labActiveScreens();
 
-  const activeExp   = _experiments.find(e => e.id === _activeExpId);
-  const isGenerated = (i) => !!(activeExp?.customScreens || activeExp?.screenOverrides?.[i]);
+  const activeExp  = _experiments.find(e => e.id === _activeExpId);
+  const injections = activeExp?.screenInjections || {};
 
-  stage.innerHTML = screens.map((s, i) => `
+  // Ghost cell — one glowing white phone shown while streaming
+  const ghostCell = `
+    <div class="lab-phone-cell lab-phone-cell--ghost">
+      <div class="lab-phone-index-lbl" style="opacity:0">--</div>
+      <div class="lab-phone-frame lab-phone-frame--glow">
+        <div class="lab-phone-notch">
+          <img class="lab-status-img" src="${src}" width="390" height="54" style="display:block;width:100%" alt=""/>
+        </div>
+        <div class="lab-phone-screen lab-phone-screen--generating">
+          <div class="lab-gen-inner">
+            <svg class="lab-gen-star" width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4L18.8 11.2L26 16L18.8 20.8L16 28L13.2 20.8L6 16L13.2 11.2L16 4Z" fill="#006AFF" opacity="0.18"/>
+              <path d="M16 8L18 13.2L23 16L18 18.8L16 24L14 18.8L9 16L14 13.2L16 8Z" fill="#006AFF"/>
+            </svg>
+          </div>
+        </div>
+        <div class="lab-phone-home"></div>
+      </div>
+      <div class="lab-phone-name-lbl" style="opacity:0">--</div>
+    </div>`;
+
+  // Empty canvas — no real screens yet
+  if (screens.length === 0) {
+    if (_labStreamingActive) {
+      // Single ghost centered — _labCurrent = 0 so it renders as "current"
+      _labCurrent = 0;
+      stage.innerHTML = ghostCell;
+      _labApplyCellPositions(false);
+    } else {
+      stage.innerHTML = `<div class="lab-blank-hint">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4L18.8 11.2L26 16L18.8 20.8L16 28L13.2 20.8L6 16L13.2 11.2L16 4Z" fill="#006AFF" opacity="0.15"/><path d="M16 8L18 13.2L23 16L18 18.8L16 24L14 18.8L9 16L14 13.2L16 8Z" fill="#006AFF"/></svg>
+        <p class="lab-blank-hint__text">Describe your flow in the chat<br>and screens will appear here</p>
+      </div>`;
+    }
+    return;
+  }
+
+  // A screen is "generated" (full-bleed, 844px, notch overlaid) only when its HTML
+  // was explicitly written by AI via setScreen/addScreen — NOT when it was only injected into.
+  const isGenerated = (i) => !!(activeExp?.customScreens?.[i]?.aiWritten || activeExp?.screenOverrides?.[i]);
+
+  const realCells = screens.map((s, i) => {
+    // Prepend any injected elements as absolute overlays inside the screen div.
+    const injHtml = injections[i] || '';
+    const screenHtml = injHtml
+      ? s.html.replace(/^(\s*<div[^>]*>)/, `$1${injHtml}`)
+      : s.html;
+    return `
     <div class="lab-phone-cell" data-idx="${i}" onclick="_labCellClick(${i})">
       <div class="lab-phone-index-lbl">${String(i+1).padStart(2,'0')}</div>
       <div class="lab-phone-frame${isGenerated(i) ? ' lab-phone-frame--generated' : ''}">
         <div class="lab-phone-notch">
           <img class="lab-status-img" src="${src}" width="390" height="54" style="display:block;width:100%" alt=""/>
         </div>
-        <div class="lab-phone-screen">${s.html}</div>
+        <div class="lab-phone-screen">${screenHtml}</div>
         <div class="lab-phone-home"></div>
       </div>
       <div class="lab-phone-name-lbl">${s.label.toUpperCase()}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
+  if (_labStreamingActive) {
+    // During streaming: show only the ghost phone centered.
+    // Screens accumulate in data silently and all reveal at once when done.
+    _labCurrent = 0;
+    stage.innerHTML = ghostCell;
+    _labApplyCellPositions(false);
+    return;
+  }
+
+  // Normal / post-generation build
+  stage.innerHTML = realCells;
   _labApplyCellPositions(false);
 }
 
@@ -1071,6 +1410,9 @@ function _labApplyCellPositions(animated) {
   const cells = [...stage.querySelectorAll('.lab-phone-cell')];
   const step  = _LAB_PHONE_W + _LAB_CELL_GAP;
 
+  // During streaming we force the spread-out layout so every screen + the ghost is visible
+  const spread = _labExpanded || _labStreamingActive;
+
   cells.forEach((cell, i) => {
     const dist = Math.abs(i - _labCurrent);
 
@@ -1083,15 +1425,18 @@ function _labApplyCellPositions(animated) {
         `opacity 0.3s ease ${Math.max(0, delay - 30)}ms`;
     }
 
-    cell.classList.toggle('lab-phone-cell--current', i === _labCurrent && _labExpanded);
-    cell.classList.toggle('lab-phone-cell--clickable', _labExpanded);
+    // Only mark cells as "current" / "clickable" in the real expanded mode (not during streaming)
+    cell.classList.toggle('lab-phone-cell--current', i === _labCurrent && _labExpanded && !_labStreamingActive);
+    cell.classList.toggle('lab-phone-cell--clickable', _labExpanded && !_labStreamingActive);
 
-    if (_labExpanded) {
+    if (spread) {
       const dx = (i - _labCurrent) * step;
       cell.style.transform  = `translateX(${dx}px)`;
       cell.style.opacity    = '1';
       cell.style.zIndex     = i === _labCurrent ? '2' : '1';
-      cell.style.pointerEvents = 'auto';
+      // Ghost cells are never interactive; real cells only interactive when truly expanded
+      const isGhost = cell.classList.contains('lab-phone-cell--ghost');
+      cell.style.pointerEvents = (!isGhost && _labExpanded && !_labStreamingActive) ? 'auto' : 'none';
     } else {
       cell.style.transform  = 'translateX(0)';
       cell.style.opacity    = i === _labCurrent ? '1' : '0';
@@ -1167,22 +1512,48 @@ function labCollapse() {
 
 function _labUpdateMeta() {
   const screens = _labActiveScreens();
-  if (!screens.length) return;
+
+  const metaEl = document.getElementById('lab-bar-meta');
+  const siEl   = document.getElementById('lab-screen-index');
+  const slEl   = document.getElementById('lab-screen-label');
+  const prev   = document.getElementById('lab-arrow-prev');
+  const next   = document.getElementById('lab-arrow-next');
+  const expBtn = document.getElementById('lab-expand-btn');
+
+  if (!screens.length) {
+    // No screens — clear meta so stale module info doesn't show
+    if (metaEl) metaEl.textContent = '';
+    if (siEl)   siEl.textContent = '';
+    if (slEl)   slEl.textContent = '';
+    if (prev)   prev.classList.add('lab-arrow--disabled');
+    if (next)   next.classList.add('lab-arrow--disabled');
+    if (expBtn) expBtn.style.visibility = 'hidden';
+    return;
+  }
+
+  // While streaming: hide arrows and expand button — user isn't navigating yet
+  if (_labStreamingActive) {
+    if (prev)   prev.style.visibility = 'hidden';
+    if (next)   next.style.visibility = 'hidden';
+    if (expBtn) expBtn.style.visibility = 'hidden';
+    if (metaEl) metaEl.textContent = '';
+    if (siEl)   siEl.textContent = '';
+    if (slEl)   slEl.textContent = '';
+    return;
+  }
+
+  if (prev)   prev.style.visibility = '';
+  if (next)   next.style.visibility = '';
+  if (expBtn) expBtn.style.visibility = '';
 
   const screen = screens[_labCurrent] || screens[0];
   const idx    = String(_labCurrent + 1).padStart(2, '0');
   const tot    = String(screens.length).padStart(2, '0');
 
-  const metaEl = document.getElementById('lab-bar-meta');
   if (metaEl) metaEl.textContent = `${idx} / ${tot} · ${screen.label.toUpperCase()}`;
-
-  const siEl = document.getElementById('lab-screen-index');
-  const slEl = document.getElementById('lab-screen-label');
   if (siEl) siEl.textContent = `${idx} / ${tot}`;
   if (slEl) slEl.textContent = screen.label.toUpperCase();
 
-  const prev = document.getElementById('lab-arrow-prev');
-  const next = document.getElementById('lab-arrow-next');
   if (prev) prev.classList.toggle('lab-arrow--disabled', _labCurrent === 0);
   if (next) next.classList.toggle('lab-arrow--disabled', _labCurrent === screens.length - 1);
 }
@@ -1216,21 +1587,21 @@ function _labCenterReset(animated) {
   const W = vp.offsetWidth;
   const H = vp.offsetHeight;
 
-  if (_labExpanded) {
-    const screens = _labModuleData[_labActiveModule].screens;
-    const totalW  = screens.length * (_LAB_PHONE_W + _LAB_CELL_GAP) - _LAB_CELL_GAP;
-    // fit all phones with padding; take halfway between full-fit and 1.0 so screens don't shrink too much
-    const fitZoom   = Math.min(1.5, (W * 1.2) / totalW);
-    const targetZoom = (fitZoom + 1.0) / 2;
-    _labZoom = Math.max(0.28, targetZoom);
+  if (_labStreamingActive) {
+    // Single ghost phone — natural size, centered
+    _labZoom = 1.0;
+  } else if (_labExpanded) {
+    const screens = _labActiveScreens();
+    const count   = Math.max(1, screens.length);
+    const totalW  = count * (_LAB_PHONE_W + _LAB_CELL_GAP) - _LAB_CELL_GAP;
+    // Fit all phones into viewport with padding; cap at 1.0 so we never zoom IN
+    const fitZoom    = (W * 0.75) / totalW;
+    _labZoom = Math.max(0.28, Math.min(1.0, fitZoom));
   } else {
     _labZoom = 1.0;
   }
 
-  // center the stage (273×591 in content coords) in the viewport
-  // with transform-origin 0 0: content at (cx, cy) maps to (cx*z + panX, cy*z + panY)
-  // stage natural center in content space ≈ (W/2, H/2) (because of flex centering)
-  // we need it to stay at (W/2, H/2) in screen space → panX = W/2*(1-z), panY = H/2*(1-z)
+  // Center the stage at (W/2, H/2) — same as original formula
   _labPan.x = (W / 2) * (1 - _labZoom);
   _labPan.y = (H / 2) * (1 - _labZoom);
 
@@ -1345,16 +1716,13 @@ function labExpHandleImage(input, ctx) {
     const data      = dataUrl.slice(dataUrl.indexOf(',') + 1);
     const type      = file.type || 'image/jpeg';
     const previewUrl = URL.createObjectURL(file);
-    _pendingImage   = { data, type, previewUrl };
-    const previewEl = document.getElementById(ctx === 'overlay' ? 'lab-overlay-img-preview' : 'lab-panel-img-preview');
-    if (previewEl) {
-      previewEl.innerHTML = `
-        <img src="${previewUrl}" class="lab-exp-preview-thumb" alt=""/>
-        <button class="lab-exp-preview-remove" onclick="labExpRemoveImage('${ctx}')">
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </button>`;
-      previewEl.style.display = 'flex';
-    }
+    _pendingImage = { data, type, previewUrl };
+    const pillId  = ctx === 'overlay' ? 'lab-overlay-img-pill' : 'lab-panel-img-pill';
+    const thumbId = ctx === 'overlay' ? 'lab-overlay-img-pill-thumb' : 'lab-panel-img-pill-thumb';
+    const thumbEl = document.getElementById(thumbId);
+    const pillEl  = document.getElementById(pillId);
+    if (thumbEl) thumbEl.src = previewUrl;
+    if (pillEl)  pillEl.classList.add('visible');
     input.value = '';
   };
   reader.readAsDataURL(file);
@@ -1363,29 +1731,24 @@ function labExpHandleImage(input, ctx) {
 function labExpRemoveImage(ctx) {
   if (_pendingImage?.previewUrl) URL.revokeObjectURL(_pendingImage.previewUrl);
   _pendingImage = null;
-  const previewEl = document.getElementById(ctx === 'overlay' ? 'lab-overlay-img-preview' : 'lab-panel-img-preview');
-  if (previewEl) { previewEl.innerHTML = ''; previewEl.style.display = 'none'; }
+  const pillId  = ctx === 'overlay' ? 'lab-overlay-img-pill' : 'lab-panel-img-pill';
+  const thumbId = ctx === 'overlay' ? 'lab-overlay-img-pill-thumb' : 'lab-panel-img-pill-thumb';
+  const pillEl  = document.getElementById(pillId);
+  const thumbEl = document.getElementById(thumbId);
+  if (pillEl)  pillEl.classList.remove('visible');
+  if (thumbEl) thumbEl.src = '';
 }
 
-// ── Diff view ─────────────────────────────────────────────────────────────────
+// ── Diff thumbnail ─────────────────────────────────────────────────────────────
 function _renderDiffFrame(container, html) {
-  const S = 0.215, W = 390, H = 760;
-  container.style.cssText = `width:${Math.round(W*S)}px;height:${Math.round(H*S)}px;overflow:hidden;border-radius:8px;background:#000;flex-shrink:0`;
+  const W = 390, H = 760, S = 44 / W;  // scale to 44px wide, crop to 68px tall
+  container.style.cssText = `width:44px;height:68px;overflow:hidden;border-radius:6px;background:#000;flex-shrink:0`;
   const iframe = document.createElement('iframe');
   iframe.scrolling = 'no';
   iframe.style.cssText = `border:none;width:${W}px;height:${H}px;transform:scale(${S});transform-origin:top left;pointer-events:none`;
   iframe.srcdoc = `<!DOCTYPE html><html><head><style>*{box-sizing:border-box;margin:0}body{width:${W}px;height:${H}px;overflow:hidden}</style></head><body>${html}</body></html>`;
   container.innerHTML = '';
   container.appendChild(iframe);
-}
-
-function labExpShowDiff(diffId, which, btn) {
-  const diff = _diffStore[diffId];
-  if (!diff) return;
-  btn.closest('.lab-exp-diff-btns').querySelectorAll('.lab-exp-diff-btn')
-     .forEach(b => b.classList.toggle('lab-exp-diff-btn--active', b === btn));
-  const el = document.getElementById('diff-' + diffId);
-  if (el) _renderDiffFrame(el, which === 'before' ? diff.oldHtml : diff.newHtml);
 }
 
 function labExpAiSuggest(btn) {
@@ -1397,23 +1760,229 @@ function labExpAiSuggest(btn) {
   labExpPanelSubmit();
 }
 
-async function _callClaude(history) {
-  const messages = history.map(m => {
+// ── Figma Export ───────────────────────────────────────────────────────────────
+
+let _currentExportId  = null;
+let _currentManifest  = null;
+
+function _collectTokens() {
+  const names = [
+    '--color-brand-500', '--color-brand-400', '--color-brand-600',
+    '--text-primary', '--text-secondary', '--surface-bg',
+    '--radius-button', '--radius-card',
+  ];
+  const style = getComputedStyle(document.documentElement);
+  const tokens = {};
+  names.forEach(n => { const v = style.getPropertyValue(n).trim(); if (v) tokens[n] = v; });
+  return tokens;
+}
+
+function _exportSetState(state) {
+  ['loading', 'error', 'ready', 'success'].forEach(s => {
+    const el = document.getElementById('lab-export-' + s);
+    if (el) el.style.display = s === state ? (s === 'loading' ? 'flex' : 'flex') : 'none';
+  });
+}
+
+async function labExportToPDF() {
+  const backdrop = document.getElementById('lab-export-backdrop');
+  const modal    = document.getElementById('lab-export-modal');
+  backdrop.classList.add('open');
+  modal.classList.add('open');
+  _exportSetState('loading');
+  _currentExportId = null;
+  _currentManifest = null;
+
+  try {
+    const exp = _experiments.find(e => e.id === _activeExpId);
+    const injections = exp?.screenInjections || {};
+    const screens = _labActiveScreens().map((s, i) => {
+      const injHtml = injections[i] || '';
+      const html = injHtml ? s.html.replace(/^(\s*<div[^>]*>)/, `$1${injHtml}`) : s.html;
+      return { index: i, label: s.label, html };
+    });
+    _currentExportId = 'export_' + Date.now();
+
+    document.getElementById('lab-export-loading-label').textContent =
+      `Generating ${screens.length} screenshots…`;
+
+    const resp = await fetch('/api/screenshot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        exportId:    _currentExportId,
+        screens,
+        tokens:      _collectTokens(),
+        injectedCSS: exp?.injectedCSS || '',
+      }),
+    });
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+
+    _currentManifest = data;
+
+    // Render thumbnails
+    const thumbsEl = document.getElementById('lab-export-screens');
+    thumbsEl.innerHTML = data.screens.map(s =>
+      `<div class="lab-export-screen-thumb">
+        <img src="${s.url}" alt="${s.label}" loading="lazy"/>
+        <span class="lab-export-screen-label">${s.label}</span>
+      </div>`
+    ).join('');
+
+    _exportSetState('ready');
+  } catch (err) {
+    document.getElementById('lab-export-error-msg').textContent =
+      err.message.includes('puppeteer')
+        ? 'puppeteer not installed. Run: npm install puppeteer  — then restart the server.'
+        : err.message;
+    _exportSetState('error');
+  }
+}
+
+function labExportDownloadPDF() {
+  if (!_currentManifest) return;
+  const btn = document.getElementById('lab-export-push-btn');
+  btn.disabled = true;
+  btn.textContent = 'Generating PDF…';
+
+  const pdfUrl = `/api/export/${_currentManifest.exportId}/export.pdf`;
+
+  // Trigger download — browser waits for server to generate the PDF
+  const a = document.createElement('a');
+  a.href = pdfUrl;
+  a.download = 'lab-export.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  const count = _currentManifest.count;
+  document.getElementById('lab-export-success-title').textContent = 'PDF Downloaded';
+  document.getElementById('lab-export-success-sub').textContent =
+    `${count} screen${count !== 1 ? 's' : ''} exported successfully.`;
+  document.getElementById('lab-export-success-link').href = pdfUrl;
+
+  // Small delay so the download starts before we switch state
+  setTimeout(() => _exportSetState('success'), 400);
+}
+
+function labExportClose() {
+  document.getElementById('lab-export-backdrop').classList.remove('open');
+  document.getElementById('lab-export-modal').classList.remove('open');
+}
+
+// ── Stream buffer parser — extracts complete delimiter blocks ─────────────────
+// Returns { events: [...], pos: number } where pos = bytes consumed from start of buffer.
+// IMPORTANT: when a start marker is found but its end hasn't arrived yet, pos stays AT the
+// start marker (not past it) so the next call can re-try once more data has arrived.
+function _parseStreamBuffer(buffer) {
+  const events = [];
+  let pos = 0;
+
+  while (pos < buffer.length) {
+    const from = buffer.indexOf('<<<', pos);
+    if (from === -1) break;
+
+    // <<<DONE>>>
+    if (buffer.startsWith('<<<DONE>>>', from)) {
+      events.push({ type: 'done' });
+      pos = from + 10;
+      break;
+    }
+
+    // <<<SCREEN:Label>>>..<<<SCREEN_END>>>
+    const screenMatch = /^<<<SCREEN:([^>]+)>>>/.exec(buffer.slice(from));
+    if (screenMatch) {
+      const endMarker = '<<<SCREEN_END>>>';
+      const endIdx = buffer.indexOf(endMarker, from + screenMatch[0].length);
+      if (endIdx === -1) return { events, pos: from }; // wait — stay AT start marker
+      const html = buffer.slice(from + screenMatch[0].length, endIdx).trim();
+      events.push({ type: 'screen', label: screenMatch[1].trim(), html });
+      pos = endIdx + endMarker.length;
+      continue;
+    }
+
+    // Other fixed-delimiter blocks
+    const blockDefs = [
+      { open: '<<<MSG>>>',         close: '<<<MSG_END>>>',         type: 'msg' },
+      { open: '<<<SUGGESTIONS>>>', close: '<<<SUGGESTIONS_END>>>', type: 'suggestions' },
+      { open: '<<<ACTION>>>',      close: '<<<ACTION_END>>>',      type: 'action' },
+    ];
+
+    let advanced = false;
+    for (const bd of blockDefs) {
+      if (buffer.startsWith(bd.open, from)) {
+        const endIdx = buffer.indexOf(bd.close, from + bd.open.length);
+        if (endIdx === -1) return { events, pos: from }; // wait — stay AT start marker
+        events.push({ type: bd.type, content: buffer.slice(from + bd.open.length, endIdx).trim() });
+        pos = endIdx + bd.close.length;
+        advanced = true;
+        break;
+      }
+    }
+
+    if (!advanced) pos = from + 1; // unrecognized '<<<' — skip past it
+  }
+
+  return { events, pos };
+}
+
+// ── Stream Claude call — reads SSE from /api/stream-prompt ────────────────────
+async function _callClaudeStream(history, currentScreens, onChunk) {
+  // Send raw exp.messages format — server handles Anthropic mapping (same as _callClaude)
+  const res = await fetch('/api/stream-prompt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: history, moduleId: _labActiveModule, screenCount: currentScreens.length }),
+  });
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let sseBuffer = '';
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    sseBuffer += decoder.decode(value, { stream: true });
+
+    const lines = sseBuffer.split('\n');
+    sseBuffer = lines.pop(); // keep last incomplete line
+
+    for (const line of lines) {
+      if (!line.startsWith('data: ')) continue;
+      try {
+        const event = JSON.parse(line.slice(6));
+        if (event.error) throw new Error(event.error);
+        if (event.done) return;
+        if (event.t !== undefined) onChunk(event.t);
+      } catch (e) {
+        // Re-throw API errors; swallow JSON parse errors from partial lines
+        if (e.message && !e.message.includes('JSON') && !e.message.includes('token')) throw e;
+      }
+    }
+  }
+}
+
+async function _callClaude(history, currentScreens) {
+  const screenSnapshot = '';
+
+  const messages = history.map((m, idx) => {
+    const isLast = idx === history.length - 1;
     if (m.role === 'ai') return { role: 'assistant', content: m.text };
     if (m.image) return {
       role: 'user',
       content: [
         { type: 'image', source: { type: 'base64', media_type: m.image.type, data: m.image.data } },
-        { type: 'text', text: m.text || '' },
+        { type: 'text', text: (m.text || '') + (isLast ? screenSnapshot : '') },
       ],
     };
-    return { role: 'user', content: m.text };
+    return { role: 'user', content: (m.text || '') + (isLast ? screenSnapshot : '') };
   });
 
   const res = await fetch('/api/prompt', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, moduleId: _labActiveModule, screenCount: currentScreens.length }),
   });
   const data = await res.json();
   return data;
@@ -1424,37 +1993,157 @@ function labCreateExperiment(moduleId, moduleLabel) {
   _expCounter++;
   const id    = 'exp-' + _expCounter;
   const label = 'Experiment ' + _expCounter;
-  _experiments.push({ id, label, messages: [], injectedCSS: '', screenOverrides: {}, tokenOverrides: {}, customScreens: null });
+  _experiments.push({ id, label, moduleId, messages: [], injectedCSS: '', screenOverrides: {}, tokenOverrides: {}, customScreens: null });
 
+  // Sync sidebar active state
+  document.querySelectorAll('.lab-sidebar-item[data-module]').forEach(b => {
+    b.classList.toggle('lab-sidebar-item--active', b.dataset.module === moduleId);
+  });
   labExpRenderSidebarItems();
   labExpTabSwitch(id);
+}
+
+function labCreateBlankExperiment() {
+  _newFlowCounter++;
+  const flowId = 'blank-' + _newFlowCounter;
+  const label  = 'Flow ' + _newFlowCounter;
+  _newFlowModules.push({ id: flowId, label });
+  _labRenderFlowSidebar();
+  labCreateExperiment(flowId, label);
+}
+
+// Switch to an existing blank flow page
+function labSelectFlow(btn) {
+  const flowId = btn.dataset.flow;
+
+  document.querySelectorAll('.lab-sidebar-item').forEach(b => b.classList.remove('lab-sidebar-item--active'));
+  btn.classList.add('lab-sidebar-item--active');
+
+  _labActiveModule = flowId;
+  _labCurrent = 0;
+
+  // Restore last active exp for this flow, or fall back to the first one
+  const lastExpId  = _moduleLastExp[flowId];
+  const firstExp   = _experiments.find(e => e.moduleId === flowId);
+  const restoreId  = lastExpId || firstExp?.id || null;
+  _activeExpId = restoreId;
+
+  if (restoreId) {
+    const exp = _experiments.find(e => e.id === restoreId);
+    if (exp) { _restoreExpCSS(exp); _restoreExpTokens(exp); }
+  }
+
+  labExpRenderSidebarItems();
+  _labBuildStage();
+  _labUpdateMeta();
+  _labCenterReset(false);
+
+  // Sync the experiment panel to the restored experiment (or clear it)
+  const vpF      = document.getElementById('lab-canvas-vp');
+  const overlayF = document.getElementById('lab-experiment-overlay');
+  const panelF   = document.getElementById('lab-exp-panel');
+  const restoredExpF = restoreId ? _experiments.find(e => e.id === restoreId) : null;
+
+  if (!restoredExpF) {
+    vpF.classList.remove('lab-exp-active', 'lab-panel-open', 'lab-exp-phase2');
+    if (overlayF) overlayF.classList.remove('active');
+    if (panelF)   panelF.classList.remove('active');
+  } else if (restoredExpF.messages.length === 0) {
+    vpF.classList.add('lab-exp-active');
+    vpF.classList.remove('lab-panel-open', 'lab-exp-phase2');
+    if (overlayF) overlayF.classList.add('active');
+    if (panelF)   panelF.classList.remove('active');
+  } else {
+    vpF.classList.remove('lab-exp-active');
+    vpF.classList.add('lab-panel-open', 'lab-exp-phase2');
+    if (overlayF) overlayF.classList.remove('active');
+    if (panelF) {
+      panelF.classList.add('active');
+      const titleEl = document.getElementById('lab-exp-panel-title');
+      if (titleEl) titleEl.textContent = restoredExpF.label;
+      labExpRenderMessages(restoredExpF);
+    }
+  }
+}
+
+// Create a new experiment inside the currently active module/flow
+function labCreateExpInCurrentModule() {
+  const flowMod = _newFlowModules.find(f => f.id === _labActiveModule);
+  const label   = flowMod ? flowMod.label : (_labModuleData[_labActiveModule]?.label || 'Module');
+  labCreateExperiment(_labActiveModule, label);
+}
+
+// Re-render the "My Flows" section in the sidebar
+function _labRenderFlowSidebar() {
+  const nav = document.getElementById('lab-sidebar-flows-nav');
+  if (!nav) return;
+
+  const dots = `<svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>`;
+  const plus = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+
+  if (!_newFlowModules.length) {
+    nav.innerHTML = '';
+    return;
+  }
+
+  nav.innerHTML = _newFlowModules.map(f => `
+    <div class="lab-sidebar-item-group">
+      <button class="lab-sidebar-item${_labActiveModule === f.id ? ' lab-sidebar-item--active' : ''}"
+              data-flow="${f.id}" onclick="labSelectFlow(this)">
+        ${dots}
+        <span>${f.label}</span>
+        <span class="lab-sidebar-item-add" onclick="event.stopPropagation(); _labActiveModule='${f.id}'; labCreateExpInCurrentModule()" title="New experiment">${plus}</span>
+      </button>
+    </div>
+  `).join('');
 }
 
 function labExpRenderSidebarItems() {
   const bar = document.getElementById('lab-exp-tab-bar');
   if (!bar) return;
 
-  if (!_experiments.length) {
+  // Only show experiments belonging to the current module/page
+  const moduleExps = _experiments.filter(e => e.moduleId === _labActiveModule);
+  const isBlank    = _labActiveModule.startsWith('blank-');
+
+  if (!moduleExps.length && isBlank) {
     bar.classList.remove('visible');
     bar.innerHTML = '';
     return;
   }
 
-  const originalTab = `
+  // "Original" tab only for module-based pages (not blank flows)
+  const originalTab = isBlank ? '' : `
     <button class="lab-exp-tab${_activeExpId === null ? ' lab-exp-tab--active' : ''}"
             onclick="labExpTabSwitch('original')">
       Original
     </button>`;
 
-  const expTabs = _experiments.map(exp => `
+  const dupIcon  = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x="3.5" y="0.5" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 3.5H1a.5.5 0 00-.5.5v5A.5.5 0 001 9.5h5a.5.5 0 00.5-.5V9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`;
+  const closeIcon = `<svg width="8" height="8" viewBox="0 0 8 8" fill="none"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+
+  const expTabs = moduleExps.map(exp => `
     <button class="lab-exp-tab lab-exp-tab--closeable${_activeExpId === exp.id ? ' lab-exp-tab--active' : ''}"
             onclick="labExpTabSwitch('${exp.id}')">
       ${exp.label}
-      <span class="lab-exp-tab-close" onclick="event.stopPropagation();labExpClose('${exp.id}')"><svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+      <span class="lab-exp-tab-dup"   onclick="event.stopPropagation();labExpDuplicate('${exp.id}')" title="Duplicate">${dupIcon}</span>
+      <span class="lab-exp-tab-close" onclick="event.stopPropagation();labExpClose('${exp.id}')"      title="Delete">${closeIcon}</span>
     </button>
   `).join('');
 
-  bar.innerHTML = originalTab + expTabs;
+  // "+" tab to create a new experiment in the current module/flow
+  const addTab = `
+    <button class="lab-exp-tab lab-exp-tab--add" onclick="labCreateExpInCurrentModule()" title="New experiment">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>`;
+
+  if (!originalTab && !expTabs) {
+    bar.classList.remove('visible');
+    bar.innerHTML = '';
+    return;
+  }
+
+  bar.innerHTML = originalTab + expTabs + addTab;
   bar.classList.add('visible');
 }
 
@@ -1489,6 +2178,10 @@ function labExpRenameFromSidebar(el, id) {
 
 function labExpTabSwitch(idOrOriginal) {
   _activeExpId = (idOrOriginal === 'original') ? null : idOrOriginal;
+
+  // Track last active exp per module so switching pages restores the right tab
+  _moduleLastExp[_labActiveModule] = _activeExpId;
+
   labExpRenderSidebarItems();
 
   const vp      = document.querySelector('.lab-canvas-vp');
@@ -1503,15 +2196,27 @@ function labExpTabSwitch(idOrOriginal) {
     _restoreExpCSS(null);
     _restoreExpTokens(null);  // clear any experiment token overrides
     _labBuildStage();
+    _labUpdateMeta();
     return;
   }
 
   const exp = _experiments.find(e => e.id === _activeExpId);
   if (!exp) return;
 
+  // Restore the module this experiment belongs to + sync sidebar active state
+  if (exp.moduleId) {
+    _labActiveModule = exp.moduleId;
+    document.querySelectorAll('.lab-sidebar-item[data-module]').forEach(b => {
+      b.classList.toggle('lab-sidebar-item--active', b.dataset.module === exp.moduleId);
+    });
+    // Sync flows sidebar active state
+    _labRenderFlowSidebar();
+  }
+
   _restoreExpCSS(exp);
   _restoreExpTokens(exp);  // apply this experiment's token overrides
   _labBuildStage();
+  _labUpdateMeta();
 
   if (exp.messages.length === 0) {
     // Phase 1: no messages yet — hide phones, show centered chat card
@@ -1521,6 +2226,18 @@ function labExpTabSwitch(idOrOriginal) {
     panel.classList.remove('active');
     const _tl = document.getElementById('lab-exp-tagline');
     if (_tl) _tl.textContent = _LAB_TAGLINES[Math.floor(Math.random() * _LAB_TAGLINES.length)];
+    // Blank canvas gets a different prompt heading and placeholder
+    const _hd = document.getElementById('lab-exp-heading');
+    const _inp = document.getElementById('lab-exp-overlay-input');
+    if (exp.moduleId?.startsWith('blank-')) {
+      const flowMod = _newFlowModules.find(f => f.id === exp.moduleId);
+      if (_hd) _hd.textContent = flowMod ? `What do you want to build in ${flowMod.label}?` : 'What do you want to build?';
+      if (_inp) _inp.placeholder = 'e.g. "Build an onboarding flow with consent screen and selfie"…';
+    } else {
+      const modLabel = _labModuleData[exp.moduleId]?.label || exp.moduleId;
+      if (_hd) _hd.innerHTML = `What do you want to experiment in <strong>${modLabel}</strong>?`;
+      if (_inp) _inp.placeholder = 'Describe what you want to explore…';
+    }
     setTimeout(() => document.getElementById('lab-exp-overlay-input')?.focus(), 80);
   } else {
     // Phase 2: has messages — phones back, right panel visible
@@ -1544,19 +2261,59 @@ function labExpClose(id) {
   backdrop.classList.add('active');
 }
 
+function labExpDuplicate(id) {
+  const src = _experiments.find(e => e.id === id);
+  if (!src) return;
+
+  // Materialize the exact screens the user is looking at right now.
+  // Temporarily point _activeExpId at the source so _labActiveScreens()
+  // returns the correct merged result (module screens + overrides, or customScreens).
+  const prevId = _activeExpId;
+  _activeExpId = id;
+  const snapshot = _labActiveScreens().map((s, i) => ({
+    label:     s.label,
+    html:      s.html,
+    aiWritten: !!(src.customScreens?.[i]?.aiWritten || src.screenOverrides?.[i]),
+  }));
+  _activeExpId = prevId;
+
+  _expCounter++;
+  const newId  = 'exp-' + _expCounter;
+  const newExp = {
+    id:               newId,
+    label:            src.label + ' copy',
+    moduleId:         src.moduleId,
+    messages:         JSON.parse(JSON.stringify(src.messages.filter(m => !m.thinking))),
+    injectedCSS:      src.injectedCSS,
+    screenOverrides:  {},          // baked into customScreens below
+    tokenOverrides:   JSON.parse(JSON.stringify(src.tokenOverrides   || {})),
+    customScreens:    snapshot.length ? snapshot : null,
+    screenInjections: JSON.parse(JSON.stringify(src.screenInjections || {})),
+  };
+  _experiments.push(newExp);
+  labExpTabSwitch(newId);
+}
+
 function labExpDeleteCancel() {
   document.getElementById('lab-delete-backdrop').classList.remove('active');
 }
 
 function _labExpDoDelete(id) {
+  const deleted = _experiments.find(e => e.id === id);
   _experiments = _experiments.filter(e => e.id !== id);
   if (_activeExpId === id) {
-    const last = _experiments[_experiments.length - 1];
-    labExpTabSwitch(last ? last.id : 'original');
+    // Fall back to another exp in the same module, or Original (if module-based)
+    const moduleExps = _experiments.filter(e => e.moduleId === _labActiveModule);
+    const last = moduleExps[moduleExps.length - 1];
+    const fallback = last ? last.id : (_labActiveModule.startsWith('blank-') ? null : 'original');
+    if (fallback !== null) labExpTabSwitch(fallback);
+    else labExpTabSwitch('original');
   } else {
     labExpRenderSidebarItems();
   }
-  if (_experiments.length === 0) labCloseExperiment();
+  if (_experiments.filter(e => e.moduleId === _labActiveModule).length === 0 && _labActiveModule.startsWith('blank-')) {
+    labCloseExperiment();
+  }
 }
 
 function labCloseExperiment() {
@@ -1634,15 +2391,15 @@ function labExpRenderMessages(exp) {
     const diffHtml = (m.diffs?.length ? m.diffs : []).map(diffId => {
       const diff = _diffStore[diffId];
       if (!diff) return '';
-      return `<div class="lab-exp-diff">
-        <div class="lab-exp-diff-header">
-          <span class="lab-exp-diff-label">${diff.label}</span>
-          <div class="lab-exp-diff-btns">
-            <button class="lab-exp-diff-btn" onclick="labExpShowDiff('${diffId}','before',this)">Before</button>
-            <button class="lab-exp-diff-btn lab-exp-diff-btn--active" onclick="labExpShowDiff('${diffId}','after',this)">After</button>
-          </div>
+      return `<div class="lab-exp-diff-card">
+        <div class="lab-exp-diff-thumb" id="diff-${diffId}"></div>
+        <div class="lab-exp-diff-info">
+          <span class="lab-exp-diff-name">${diff.label}</span>
+          <span class="lab-exp-diff-tag">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5.5l2 2 4-4" stroke="#22a861" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Updated
+          </span>
         </div>
-        <div class="lab-exp-diff-preview" id="diff-${diffId}"></div>
       </div>`;
     }).join('');
     const suggestHtml = m.suggestions?.length
@@ -1666,7 +2423,7 @@ function labExpRenderMessages(exp) {
     });
   });
 
-  container.scrollTop = container.scrollHeight;
+  requestAnimationFrame(() => { container.scrollTop = container.scrollHeight; });
 }
 
 // ── Token-request detection ──────────────────────────────────────────────────
@@ -1693,11 +2450,11 @@ function _showClarifyCard(exp, userText) {
   const currentLabel = exp.label;
   exp.messages.push({
     role: 'ai',
-    text: `Got it — apply this to the current version (${currentLabel}), or explore it in a brand new experiment?`,
+    text: `Got it — apply this to the original design, or explore it as a brand new design?`,
     clarify: {
-      applyLabel:   `Apply to ${currentLabel}`,
-      exploreLabel: 'New experiment',
-      originalText: `Got it — apply this to the current version (${currentLabel}), or explore it in a brand new experiment?`,
+      applyLabel:   'Apply to Original design',
+      exploreLabel: 'New design',
+      originalText: `Got it — apply this to the original design, or explore it as a brand new design?`,
     },
   });
   labExpRenderMessages(exp);
@@ -1731,7 +2488,8 @@ async function labExpSubmit() {
   panel.classList.add('active');
   document.getElementById('lab-exp-panel-title').textContent = exp.label;
 
-  if (_isTokenRequest(msg)) {
+  // Blank canvas flows have no "original" — skip clarify, go straight to generation
+  if (_isTokenRequest(msg) && !exp.moduleId?.startsWith('blank-')) {
     _showClarifyCard(exp, msg);
   } else {
     labExpRenderMessages(exp);
@@ -1758,7 +2516,8 @@ async function labExpPanelSubmit() {
   exp.messages.push(userMsg);
   input.value = '';
 
-  if (_isTokenRequest(msg)) {
+  // Blank canvas flows have no "original" — skip clarify, go straight to generation
+  if (_isTokenRequest(msg) && !exp.moduleId?.startsWith('blank-')) {
     labExpRenderMessages(exp);
     _showClarifyCard(exp, msg);
   } else {
@@ -1771,20 +2530,130 @@ async function _runExpResponse(exp) {
   const overlayBtn  = document.getElementById('lab-exp-submit-btn');
   const panelInput  = document.getElementById('lab-exp-panel-input');
   const panelBtn    = document.getElementById('lab-exp-panel-send');
-  // Disable inputs
+  const svgArrow    = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // Disable inputs + pulse phones
   if (overlayBtn) overlayBtn.disabled = true;
   if (panelInput) panelInput.disabled = true;
   if (panelBtn)   panelBtn.disabled = true;
-
-  // Pulse all phone frames while generating
   document.querySelectorAll('.lab-phone-cell').forEach(c => c.classList.add('lab-phone-cell--generating'));
 
-  // Show animated typing bubble in the chat panel
+  const restore = () => {
+    document.querySelectorAll('.lab-phone-cell').forEach(c => c.classList.remove('lab-phone-cell--generating'));
+    if (overlayBtn) { overlayBtn.disabled = false; overlayBtn.innerHTML = svgArrow; }
+    if (panelInput) panelInput.disabled = false;
+    if (panelBtn)   { panelBtn.disabled = false; panelBtn.innerHTML = svgArrow; }
+    document.getElementById('lab-exp-panel-input')?.focus();
+  };
+
+  // ── STREAMING PATH — blank canvas experiments ─────────────────────────────
+  if (exp.moduleId?.startsWith('blank-')) {
+    // Follow-up on an existing flow — clear screens so Claude rebuilds with the change applied
+    // (avoids appending new screens on top of existing ones)
+    if (exp.customScreens && exp.customScreens.length > 0) {
+      exp.customScreens = [];
+      exp.screenOverrides = {};
+    }
+    _labExpanded = false;     // lock canvas — no pan/zoom/interaction during generation
+    _labStreamingActive = true;
+    _labBuildStage();        // show only ghost phone centered
+    _labUpdateMeta();        // hide arrows + meta bar during generation
+    _labCenterReset(true);   // animate to natural size, centered in visible area
+    exp.messages.push({ role: 'ai', text: '__thinking__', thinking: true });
+    labExpRenderMessages(exp);
+
+    let textBuffer   = '';
+    let parsedUpTo   = 0;
+    let aiMsg        = null; // the chat message we'll update
+    let msgSet       = false;
+
+    const processBuffer = () => {
+      const slice = textBuffer.slice(parsedUpTo);
+      const { events, pos } = _parseStreamBuffer(slice);
+      if (pos > 0) console.log('[stream] parsed', events.length, 'events, pos', pos, '| events:', events.map(e => e.type));
+      parsedUpTo += pos;
+
+      for (const event of events) {
+        if (event.type === 'msg' && !msgSet) {
+          // Replace thinking bubble with real message
+          exp.messages = exp.messages.filter(m => !m.thinking);
+          aiMsg = { role: 'ai', text: event.content };
+          exp.messages.push(aiMsg);
+          msgSet = true;
+          labExpRenderMessages(exp);
+        }
+
+        if (event.type === 'screen') {
+          // Screens appear one by one as they stream in
+          executeLabAction({ type: 'addScreen', label: event.label, html: event.html }, exp.id);
+        }
+
+        if (event.type === 'suggestions') {
+          if (!aiMsg) {
+            exp.messages = exp.messages.filter(m => !m.thinking);
+            aiMsg = { role: 'ai', text: 'Here\'s your flow.' };
+            exp.messages.push(aiMsg);
+          }
+          aiMsg.suggestions = event.content.split('|').map(s => s.trim()).filter(Boolean).slice(0, 3);
+          labExpRenderMessages(exp);
+        }
+
+        if (event.type === 'action') {
+          try { executeLabAction(JSON.parse(event.content), exp.id); } catch {}
+        }
+      }
+    };
+
+    try {
+      await _callClaudeStream(
+        exp.messages.filter(m => !m.thinking),
+        _labActiveScreens(),
+        (chunk) => {
+          textBuffer += chunk;
+          processBuffer();
+        }
+      );
+      // Final parse pass — catch any trailing complete blocks
+      processBuffer();
+
+      console.log('[stream] done. total buffer length:', textBuffer.length, '| first 200 chars:', JSON.stringify(textBuffer.slice(0, 200)));
+
+      // If MSG never arrived (malformed output), show a fallback
+      if (!msgSet) {
+        exp.messages = exp.messages.filter(m => !m.thinking);
+        exp.messages.push({ role: 'ai', text: 'Flow generated.' });
+        labExpRenderMessages(exp);
+      }
+    } catch (err) {
+      exp.messages = exp.messages.filter(m => !m.thinking);
+      exp.messages.push({ role: 'ai', text: `Error: ${err.message || 'Something went wrong — please try again.'}` });
+      labExpRenderMessages(exp);
+    } finally {
+      _labStreamingActive = false;
+      _labCurrent = 0;
+      _labExpanded = true; // stay in expanded mode — user collapses when ready
+      document.getElementById('lab-canvas-vp')?.classList.add('lab-expanded');
+      _labBuildStage();    // rebuild without ghost, stays spread out
+      _labCenterReset(true); // animate zoom to fit all finished screens
+      _labUpdateMeta();
+
+      // Show COLLAPSE button state
+      const expBtn = document.getElementById('lab-expand-btn');
+      const expLbl = document.getElementById('lab-expand-label');
+      if (expBtn) expBtn.classList.add('lab-expand-btn--active');
+      if (expLbl) expLbl.textContent = 'COLLAPSE';
+
+      restore();
+    }
+    return;
+  }
+
+  // ── JSON PATH — module-based experiments (face capture, ID capture, etc.) ──
   exp.messages.push({ role: 'ai', text: '__thinking__', thinking: true });
   labExpRenderMessages(exp);
 
   try {
-    const data = await _callClaude(exp.messages.filter(m => !m.thinking));
+    const data = await _callClaude(exp.messages.filter(m => !m.thinking), _labActiveScreens());
     exp.messages = exp.messages.filter(m => !m.thinking);
     const aiMsg = { role: 'ai', text: data.message || 'Done.' };
     if (Array.isArray(data.suggestions) && data.suggestions.length) {
@@ -1792,20 +2661,14 @@ async function _runExpResponse(exp) {
     }
     exp.messages.push(aiMsg);
     labExpRenderMessages(exp);
-    if (Array.isArray(data.actions)) data.actions.forEach(executeLabAction);
-    // Re-render to show diffs captured during action execution
+    if (Array.isArray(data.actions)) data.actions.forEach(a => executeLabAction(a, exp.id));
     labExpRenderMessages(exp);
   } catch (err) {
     exp.messages = exp.messages.filter(m => !m.thinking);
     exp.messages.push({ role: 'ai', text: 'Something went wrong — please try again.' });
     labExpRenderMessages(exp);
   } finally {
-    document.querySelectorAll('.lab-phone-cell').forEach(c => c.classList.remove('lab-phone-cell--generating'));
-    const svgArrow = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    if (overlayBtn) { overlayBtn.disabled = false; overlayBtn.innerHTML = svgArrow; }
-    if (panelInput) panelInput.disabled = false;
-    if (panelBtn)   { panelBtn.disabled = false; panelBtn.innerHTML = svgArrow; }
-    document.getElementById('lab-exp-panel-input')?.focus();
+    restore();
   }
 }
 
@@ -1878,7 +2741,11 @@ function _restoreExpTokens(exp) {
   }
 }
 
-function executeLabAction(action) {
+function executeLabAction(action, targetExpId) {
+  // targetExpId lets callers pin actions to a specific experiment even if _activeExpId
+  // changes mid-flight (e.g. user switches tabs while an API call is in progress).
+  // Falls back to _activeExpId when not provided (interactive / real-time calls).
+  const resolvedExpId = targetExpId !== undefined ? targetExpId : _activeExpId;
   switch (action.type) {
 
     case 'selectModule': {
@@ -1925,8 +2792,8 @@ function executeLabAction(action) {
     case 'setToken': {
       if (action.token && action.value) {
         // If inside an experiment, store per-experiment so original is unaffected
-        if (_activeExpId) {
-          const activeExp = _experiments.find(e => e.id === _activeExpId);
+        if (resolvedExpId) {
+          const activeExp = _experiments.find(e => e.id === resolvedExpId);
           if (activeExp) {
             if (!activeExp.tokenOverrides) activeExp.tokenOverrides = {};
             activeExp.tokenOverrides[action.token] = action.value;
@@ -1992,7 +2859,7 @@ function executeLabAction(action) {
           .filter(Boolean)
           .join('\n');
         // Save to active experiment
-        const activeExp = _experiments.find(e => e.id === _activeExpId);
+        const activeExp = _experiments.find(e => e.id === resolvedExpId);
         if (activeExp) activeExp.injectedCSS = (activeExp.injectedCSS || '') + '\n' + scoped;
         // Apply to DOM
         _applyExpCSS(scoped, true);
@@ -2008,7 +2875,7 @@ function executeLabAction(action) {
     }
 
     case 'resetCSS': {
-      const activeExp = _experiments.find(e => e.id === _activeExpId);
+      const activeExp = _experiments.find(e => e.id === resolvedExpId);
       if (activeExp) activeExp.injectedCSS = '';
       _applyExpCSS('', false);
       break;
@@ -2016,24 +2883,28 @@ function executeLabAction(action) {
 
     case 'addScreen': {
       if (action.html !== undefined) {
-        const activeExp = _experiments.find(e => e.id === _activeExpId);
+        const activeExp = _experiments.find(e => e.id === resolvedExpId);
         if (activeExp) {
           _labEnsureCustomScreens(activeExp);
           const screens = activeExp.customScreens;
           const idx = (action.index !== undefined)
             ? Math.max(0, Math.min(action.index, screens.length))
             : screens.length;
-          screens.splice(idx, 0, { label: action.label || 'New Screen', html: action.html });
+          screens.splice(idx, 0, { label: action.label || 'New Screen', html: action.html, aiWritten: true });
           _labCurrent = idx;
-          _labBuildStage();
-          _labUpdateMeta();
-          requestAnimationFrame(() => {
-            const cell = document.querySelector(`.lab-phone-cell[data-idx="${idx}"]`);
-            if (cell) {
-              cell.classList.add('lab-phone-cell--modified');
-              setTimeout(() => cell.classList.remove('lab-phone-cell--modified'), 2000);
-            }
-          });
+          // During streaming, screens accumulate silently — the ghost phone stays centered.
+          // All screens are revealed at once when generation finishes.
+          if (!_labStreamingActive) {
+            _labBuildStage();
+            _labUpdateMeta();
+            requestAnimationFrame(() => {
+              const cell = document.querySelector(`.lab-phone-cell[data-idx="${idx}"]`);
+              if (cell) {
+                cell.classList.add('lab-phone-cell--modified');
+                setTimeout(() => cell.classList.remove('lab-phone-cell--modified'), 2000);
+              }
+            });
+          }
         }
       }
       break;
@@ -2041,7 +2912,7 @@ function executeLabAction(action) {
 
     case 'removeScreen': {
       if (action.index !== undefined) {
-        const activeExp = _experiments.find(e => e.id === _activeExpId);
+        const activeExp = _experiments.find(e => e.id === resolvedExpId);
         if (activeExp) {
           _labEnsureCustomScreens(activeExp);
           const screens = activeExp.customScreens;
@@ -2056,19 +2927,72 @@ function executeLabAction(action) {
       break;
     }
 
+    case 'injectHTML': {
+      // AI provides only the new element HTML; client stores it in screenInjections
+      // (NOT customScreens) so screens stay in normal flow — notch stays above, home below.
+      // Injected elements use position:absolute relative to .lab-phone-screen (below notch).
+      if (action.html) {
+        const exp = _experiments.find(e => e.id === resolvedExpId);
+        if (exp) {
+          if (!exp.screenInjections) exp.screenInjections = {};
+          const screenCount = _labActiveScreens().length;
+          const targets = Array.isArray(action.screens)
+            ? action.screens
+            : Array.from({ length: screenCount }, (_, i) => i);
+
+          targets.forEach(idx => {
+            // Accumulate injections per screen (append each new injection)
+            exp.screenInjections[idx] = (exp.screenInjections[idx] || '') + action.html;
+          });
+
+          _labBuildStage();
+          _labUpdateMeta();
+        }
+      }
+      break;
+    }
+
+    case 'patchScreen': {
+      // Surgical find-and-replace inside a single screen's HTML — no full rewrite needed.
+      // Operates on the base screen HTML (customScreens or rendered), not on injections.
+      if (action.index !== undefined && action.find !== undefined && action.replace !== undefined) {
+        const activeExp = _experiments.find(e => e.id === resolvedExpId);
+        if (activeExp) {
+          // Get the base HTML for this screen (without injections)
+          const baseScreens = activeExp.customScreens || _labActiveScreens();
+          const screen = baseScreens[action.index];
+          if (screen) {
+            const newHtml = screen.html.split(action.find).join(action.replace);
+            if (newHtml !== screen.html) {
+              if (!activeExp.customScreens) _labEnsureCustomScreens(activeExp);
+              activeExp.customScreens[action.index].html = newHtml;
+              _labCurrent = action.index;
+              if (_labExpanded) labCollapse();
+              _labBuildStage();
+              _labUpdateMeta();
+            }
+          }
+        }
+      }
+      break;
+    }
+
     case 'setScreen': {
       if (action.html !== undefined && action.index !== undefined) {
-        const activeExp = _experiments.find(e => e.id === _activeExpId);
+        const activeExp = _experiments.find(e => e.id === resolvedExpId);
         if (activeExp) {
           if (activeExp.customScreens) {
-            // Update in-place on customScreens
+            // Update in-place on customScreens, mark as AI-written (full-bleed layout)
             if (activeExp.customScreens[action.index]) {
               activeExp.customScreens[action.index].html = action.html;
+              activeExp.customScreens[action.index].aiWritten = true;
             }
           } else {
             if (!activeExp.screenOverrides) activeExp.screenOverrides = {};
             activeExp.screenOverrides[action.index] = action.html;
           }
+          // Clear any prior injections for this screen (AI rewrote it from scratch)
+          if (activeExp.screenInjections) delete activeExp.screenInjections[action.index];
           _labCurrent = Math.max(0, action.index);
           if (_labExpanded) labCollapse();
 
@@ -2082,7 +3006,7 @@ function executeLabAction(action) {
           if (existingScreen) {
             // Capture old HTML for diff view
             const oldHtml = existingScreen.innerHTML;
-            const activeExpForDiff = _experiments.find(e => e.id === _activeExpId);
+            const activeExpForDiff = _experiments.find(e => e.id === resolvedExpId);
             if (activeExpForDiff) {
               const aiMsgs = activeExpForDiff.messages.filter(m => m.role === 'ai' && !m.thinking && !m.clarify);
               const lastAi = aiMsgs[aiMsgs.length - 1];
@@ -2146,8 +3070,12 @@ function executeLabAction(action) {
     }
 
     case 'resetScreens': {
-      const activeExp = _experiments.find(e => e.id === _activeExpId);
-      if (activeExp) { activeExp.screenOverrides = {}; activeExp.customScreens = null; }
+      const activeExp = _experiments.find(e => e.id === resolvedExpId);
+      if (activeExp) {
+        activeExp.screenOverrides = {};
+        activeExp.customScreens = null;
+        activeExp.screenInjections = {};
+      }
       _labBuildStage();
       _labUpdateMeta();
       break;
@@ -2155,13 +3083,13 @@ function executeLabAction(action) {
 
     case 'clarify': {
       // Replace the last AI message with a clarification card
-      const exp = _experiments.find(e => e.id === _activeExpId);
+      const exp = _experiments.find(e => e.id === resolvedExpId);
       if (!exp) break;
       const lastMsg = exp.messages[exp.messages.length - 1];
       if (lastMsg?.role === 'ai') {
         lastMsg.clarify = {
-          applyLabel:   action.applyLabel   || `Apply to ${exp.label}`,
-          exploreLabel: action.exploreLabel || 'New experiment',
+          applyLabel:   action.applyLabel   || 'Apply to Original design',
+          exploreLabel: action.exploreLabel || 'New design',
           originalText: lastMsg.text,
         };
       }

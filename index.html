@@ -3129,10 +3129,17 @@
             <span class="lab-bar-dot">·</span>
             <span class="lab-bar-meta" id="lab-bar-meta"></span>
           </div>
-          <button class="lab-figma-btn" onclick="">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" fill="currentColor" opacity=".9"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" opacity=".7"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="currentColor"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" fill="currentColor" opacity=".7"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" opacity=".5"/></svg>
-            Open full flow in Figma
-          </button>
+          <div class="lab-export-group">
+            <button class="lab-figma-btn" onclick="labExportToPDF()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Export to PDF
+            </button>
+            <button class="lab-figma-btn lab-figma-btn--soon" disabled title="Coming soon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" fill="currentColor" opacity=".9"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" opacity=".7"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" fill="currentColor"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z" fill="currentColor" opacity=".7"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" opacity=".5"/></svg>
+              Export to Figma
+              <span class="lab-soon-badge">Soon</span>
+            </button>
+          </div>
         </div>
 
         <!-- Dot-grid canvas viewport -->
@@ -3143,6 +3150,18 @@
             <div class="lab-sidebar-header">
               <div class="lab-sidebar-flow-title">Flow</div>
               <div class="lab-sidebar-flow-sub">Select the modules from your flow to preview the screens.</div>
+            </div>
+            <div class="lab-sidebar-divider"></div>
+            <!-- My Flows section — New Flow action lives in the header -->
+            <div class="lab-sidebar-section">
+              <div class="lab-sidebar-section-hd">
+                <span class="lab-sidebar-section-label">My Flows</span>
+                <button class="lab-sidebar-section-action" onclick="labCreateBlankExperiment()" title="New Flow">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1V9M1 5H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  New
+                </button>
+              </div>
+              <nav class="lab-sidebar-nav" id="lab-sidebar-flows-nav"></nav>
             </div>
             <div class="lab-sidebar-divider"></div>
             <div class="lab-sidebar-section">
@@ -3190,7 +3209,6 @@
             </div>
             <!-- Input bar -->
             <div class="lab-exp-input-wrap">
-              <div id="lab-overlay-img-preview" class="lab-exp-img-preview" style="display:none"></div>
               <div class="lab-exp-bar" id="lab-exp-bar">
                 <svg class="lab-exp-bar-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/></svg>
                 <input type="text" id="lab-exp-overlay-input" class="lab-exp-bar-input"
@@ -3201,6 +3219,12 @@
                 <button class="lab-exp-bar-attach" onclick="document.getElementById('lab-overlay-img-input').click()" title="Attach image">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><path d="M1 10l3.5-3.5L7 9l2.5-2.5L14 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
+                <div class="lab-exp-img-pill" id="lab-overlay-img-pill">
+                  <img class="lab-exp-img-pill-thumb" id="lab-overlay-img-pill-thumb" src="" alt=""/>
+                  <button class="lab-exp-img-pill-remove" onclick="labExpRemoveImage('overlay')">
+                    <svg width="6" height="6" viewBox="0 0 8 8" fill="none"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                </div>
                 <button class="lab-exp-bar-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
                   <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
@@ -3228,12 +3252,17 @@
             </div>
             <div class="lab-exp-messages" id="lab-exp-messages"></div>
             <div class="lab-exp-panel-footer">
-              <div id="lab-panel-img-preview" class="lab-exp-img-preview" style="display:none"></div>
               <div class="lab-exp-panel-input-row">
                 <input type="file" id="lab-panel-img-input" accept="image/*" style="display:none" onchange="labExpHandleImage(this,'panel')">
                 <button class="lab-panel-attach" onclick="document.getElementById('lab-panel-img-input').click()" title="Attach image">
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><path d="M1 10l3.5-3.5L7 9l2.5-2.5L14 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
+                <div class="lab-exp-img-pill" id="lab-panel-img-pill">
+                  <img class="lab-exp-img-pill-thumb" id="lab-panel-img-pill-thumb" src="" alt=""/>
+                  <button class="lab-exp-img-pill-remove" onclick="labExpRemoveImage('panel')">
+                    <svg width="6" height="6" viewBox="0 0 8 8" fill="none"><line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                </div>
                 <input type="text" id="lab-exp-panel-input" class="lab-exp-panel-input"
                        placeholder="Follow up..."
                        onkeydown="if(event.key==='Enter')labExpPanelSubmit()"
@@ -3318,6 +3347,63 @@
   <script src="config.local.js" onerror="void 0"></script>
   <script src="playground.js"></script>
 
+  <!-- ── PDF Export Modal ── -->
+  <div class="lab-export-backdrop" id="lab-export-backdrop" onclick="labExportClose()"></div>
+  <div class="lab-export-modal" id="lab-export-modal">
+
+    <div class="lab-export-header">
+      <div class="lab-export-header-left">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#1A1D24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="#1A1D24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="lab-export-title">Export to PDF</span>
+      </div>
+      <button class="lab-export-close" onclick="labExportClose()">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="1" y1="1" x2="11" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="11" y1="1" x2="1" y2="11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Loading state -->
+    <div class="lab-export-loading" id="lab-export-loading">
+      <div class="lab-export-spinner"></div>
+      <span class="lab-export-loading-label" id="lab-export-loading-label">Generating screenshots…</span>
+    </div>
+
+    <!-- Error state -->
+    <div class="lab-export-error" id="lab-export-error">
+      <div class="lab-export-error-icon">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 6v5M10 14h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <span class="lab-export-error-msg" id="lab-export-error-msg"></span>
+    </div>
+
+    <!-- Ready state: thumbnails + push -->
+    <div class="lab-export-ready" id="lab-export-ready">
+      <div class="lab-export-screens" id="lab-export-screens"></div>
+      <div class="lab-export-footer">
+        <button class="lab-export-push-btn" id="lab-export-push-btn" onclick="labExportDownloadPDF()">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M1 11v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download PDF
+        </button>
+        <p class="lab-export-hint">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#B0B4BE" stroke-width="1.2"/><path d="M6 5.5v3M6 4h.01" stroke="#B0B4BE" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Each screen rendered at 390×760px. PDF may take a few seconds to generate.
+        </p>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="lab-export-success" id="lab-export-success">
+      <div class="lab-export-success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5 9-9" stroke="#22a861" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="lab-export-success-title" id="lab-export-success-title">PDF Downloaded</div>
+      <div class="lab-export-success-sub" id="lab-export-success-sub"></div>
+      <a class="lab-export-success-link" id="lab-export-success-link" href="#" download="lab-export.pdf">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 5l3 3 3-3M1 9v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download again
+      </a>
+    </div>
+
+  </div>
 
 </body>
 </html>
