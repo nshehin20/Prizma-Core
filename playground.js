@@ -913,8 +913,9 @@ function _idSuccessScreen(subtitle, imgSrc, buttonLabel) {
     </div>
     ${_idCapFrame('#189f60', imgSrc)}
     ${_idEncryptedBadge(false)}
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px">
       <button class="btn btn-primary btn-full" style="height:56px;border-radius:15px;font-size:18px">${buttonLabel}</button>
+      ${_verifiedTag()}
     </div>
   </div>`;
 }
