@@ -760,16 +760,10 @@ function _idEncryptedBadge(dark) {
 // borderColor: used for detected/success states only (blue/green solid border)
 // imgSrc: null = empty dark state (uses gradient frame SVG), string = filled state
 // useSvgFrame: true for camera screens (gradient frame SVG), false for light screens (solid border)
-function _idCapFrame(borderColor, imgSrc, useSvgFrame) {
-  if (useSvgFrame) {
-    // Camera screens: dark bg + gradient frame border SVG overlay (342×215)
-    return `<div style="position:relative;width:100%;aspect-ratio:342/215;border-radius:16px;overflow:hidden;flex-shrink:0;background:#1a1a1a">
-      ${imgSrc ? `<img src="${imgSrc}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" alt=""/>` : ''}
-      <img src="assets/illustrations/id-capture/frame-border.svg" style="position:absolute;inset:0;width:100%;height:100%" alt=""/>
-    </div>`;
-  }
-  // Light screens (processing/success): solid colored border
-  return `<div style="width:100%;aspect-ratio:342/215;border-radius:16px;border:4px solid ${borderColor};overflow:hidden;flex-shrink:0;${imgSrc ? '' : 'background:rgba(255,255,255,0.05)'}">
+// borderColor: border color string. imgSrc: null = empty (dark bg), string = filled
+function _idCapFrame(borderColor, imgSrc) {
+  const border = borderColor || '#ffffff';
+  return `<div style="width:100%;aspect-ratio:342/215;border-radius:16px;border:4px solid ${border};overflow:hidden;flex-shrink:0;${imgSrc ? '' : 'background:#1a1a1a'}">
     ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;display:block" alt=""/>` : ''}
   </div>`;
 }
@@ -787,7 +781,7 @@ function _idCameraScreen(title, subtitle, state, side) {
         <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
       </div>
       <div style="flex-shrink:0">
-        ${_idCapFrame(null, imgSrc, true)}
+        ${_idCapFrame(null, imgSrc)}
         ${_idEncryptedBadge(true)}
       </div>
       <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
