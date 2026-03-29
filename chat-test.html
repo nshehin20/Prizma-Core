@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chat UI Test</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'DM Sans', sans-serif;
+  background: #ECEEF2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 24px;
+  gap: 32px;
+}
+
+/* ── Panel shell ── */
+.panel {
+  width: 280px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 620px;
+}
+.panel-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #F0F2F5;
+  flex-shrink: 0;
+}
+.panel-header svg { color: #3D7EFF; }
+.panel-header span {
+  font-size: 13px; font-weight: 600; color: #1A1D24;
+  letter-spacing: -0.01em;
+}
+
+/* ── Messages ── */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.08) transparent;
+}
+
+/* ── Message rows ── */
+.msg { display: flex; gap: 8px; align-items: flex-start; }
+.msg--user { flex-direction: row-reverse; }
+.msg-ai-body {
+  display: flex; flex-direction: column; gap: 6px;
+  max-width: 220px;
+}
+.bubble {
+  font-size: 13px; line-height: 1.5;
+  padding: 8px 12px; border-radius: 12px;
+  word-break: break-word;
+}
+.msg--ai .bubble {
+  background: #F5F7FA; color: #1A1D24;
+  border-bottom-left-radius: 3px;
+  max-width: 200px;
+}
+.msg-ai-body .bubble { max-width: 100%; }
+.msg--user .bubble {
+  background: linear-gradient(135deg,#3D7EFF,#5B4EF8);
+  color: #fff;
+  border-bottom-right-radius: 3px;
+  max-width: 200px;
+}
+
+/* ── Image in user bubble ── */
+.msg-img-thumb {
+  max-width: 160px; width: 100%;
+  border-radius: 8px; display: block;
+  margin-bottom: 6px;
+}
+
+/* ── Generating pill ── */
+.generating-pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 11px 20px 11px 15px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 100px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  animation: pill-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes pill-in {
+  from { opacity:0; transform: translateY(6px) scale(0.92); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+.pill-label { font-size: 13px; font-weight: 500; color: #1A1D2A; }
+.pill-dots { display: flex; align-items: center; gap: 4px; }
+.pill-dots span {
+  width: 4px; height: 4px; border-radius: 50%; background: #006AFF;
+  animation: dot-pulse 1.4s ease-in-out infinite;
+}
+.pill-dots span:nth-child(2) { animation-delay: 0.22s; }
+.pill-dots span:nth-child(3) { animation-delay: 0.44s; }
+@keyframes dot-pulse {
+  0%,80%,100% { opacity:0.25; transform:scale(0.8); }
+  40% { opacity:1; transform:scale(1); }
+}
+
+/* ── Clarify card ── */
+.clarify-btns { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.clarify-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px;
+  background: #F0F4FF; border: 1.5px solid rgba(0,106,255,0.2);
+  border-radius: 10px; font-size: 12px; font-weight: 500; color: #006AFF;
+  cursor: pointer; text-align: left;
+  transition: background 0.12s, border-color 0.12s;
+}
+.clarify-btn:hover { background: #006AFF; color: #fff; border-color: #006AFF; }
+.clarify-btn--explore {
+  background: rgba(93,78,248,0.06); border-color: rgba(93,78,248,0.2); color: #5B4EF8;
+}
+.clarify-btn--explore:hover { background: #5B4EF8; color: #fff; border-color: #5B4EF8; }
+
+/* ── AI suggestion chips ── */
+.ai-suggestions { display: flex; flex-wrap: wrap; gap: 6px; }
+.ai-chip {
+  padding: 6px 12px;
+  background: rgba(0,106,255,0.07);
+  border: 1px solid rgba(0,106,255,0.18);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 500; color: #006AFF;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+}
+.ai-chip:hover { background: #006AFF; color: #fff; border-color: #006AFF; }
+.ai-chip.used { opacity: 0.4; pointer-events: none; }
+
+/* ── Diff card ── */
+.diff-card {
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px; overflow: hidden;
+}
+.diff-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px 6px;
+}
+.diff-label {
+  font-size: 10px; font-weight: 600; color: #8A8F99;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.diff-toggle { display: flex; gap: 2px; background: rgba(0,0,0,0.08); border-radius: 6px; padding: 2px; }
+.diff-btn {
+  padding: 3px 10px; background: none; border: none;
+  font-size: 11px; font-weight: 500; color: #8A8F99;
+  border-radius: 4px; cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+.diff-btn.active { background: #fff; color: #0D0D0D; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+.diff-preview { padding: 0 12px 12px; }
+.diff-frames { display: flex; gap: 8px; }
+.diff-frame {
+  flex: 1;
+  height: 130px;
+  background: #1a1a2e;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.diff-frame-label {
+  position: absolute; bottom: 6px; left: 0; right: 0;
+  text-align: center; font-size: 9px; font-weight: 600;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.04em; text-transform: uppercase;
+}
+/* fake screen content for demo */
+.fake-screen-a { background: linear-gradient(160deg,#1a1a2e,#0f3460); }
+.fake-screen-b { background: linear-gradient(160deg,#006AFF,#003d99); }
+.fake-screen-a .fake-oval {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  margin: 24px auto 8px;
+}
+.fake-screen-b .fake-oval {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  margin: 24px auto 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.fake-title { font-size: 9px; font-weight: 600; color: #fff; text-align: center; opacity: 0.9; }
+.fake-sub { font-size: 7px; color: rgba(255,255,255,0.5); text-align: center; margin-top: 3px; }
+
+/* single preview mode */
+.diff-single {
+  width: 84px; height: 130px;
+  border-radius: 8px; overflow: hidden; position: relative;
+}
+
+/* ── Footer ── */
+.panel-footer {
+  border-top: 1px solid #F0F2F5;
+  padding: 10px 12px;
+  flex-shrink: 0;
+}
+.img-preview-strip {
+  display: none;
+  align-items: center; gap: 8px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  position: relative; width: fit-content;
+}
+.img-preview-strip.visible { display: flex; }
+.img-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
+.img-remove {
+  position: absolute; top: -6px; right: -6px;
+  width: 18px; height: 18px;
+  background: #0D0D0D; border: 2px solid #fff;
+  border-radius: 50%; color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+}
+.input-row {
+  display: flex; align-items: center; gap: 6px;
+}
+.attach-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  background: none; border: none; cursor: pointer;
+  color: #AAADB5; border-radius: 8px;
+  transition: color 0.12s, background 0.12s; flex-shrink: 0;
+}
+.attach-btn:hover { color: #006AFF; background: rgba(0,106,255,0.08); }
+.chat-input {
+  flex: 1; border: none; outline: none;
+  font-size: 13px; color: #1A1D24;
+  background: transparent;
+}
+.chat-input::placeholder { color: #B0B4BE; }
+.send-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #006AFF; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+.send-btn:hover { background: #0058d6; }
+
+/* ── Controls sidebar ── */
+.controls {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 200px; align-self: flex-start; margin-top: 0;
+}
+.controls h3 {
+  font-size: 12px; font-weight: 700; color: #1A1D24;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.scenario-btn {
+  width: 100%; padding: 10px 14px; text-align: left;
+  background: #fff; border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px; font-size: 12px; font-weight: 500; color: #1A1D24;
+  cursor: pointer; transition: border-color 0.1s, box-shadow 0.1s;
+}
+.scenario-btn:hover { border-color: #006AFF; box-shadow: 0 0 0 3px rgba(0,106,255,0.1); }
+.scenario-btn.active { border-color: #006AFF; background: #F0F6FF; color: #006AFF; }
+.reset-btn {
+  width: 100%; padding: 8px; background: #F5F7FA;
+  border: none; border-radius: 10px; font-size: 12px;
+  color: #8A8F99; cursor: pointer;
+}
+.reset-btn:hover { background: #ECEEF2; }
+.divider { height: 1px; background: rgba(0,0,0,0.06); }
+.note { font-size: 11px; color: #8A8F99; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- Chat Panel -->
+<div class="panel">
+  <div class="panel-header">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0.5L7.2 4.3L11 6L7.2 7.7L6 11.5L4.8 7.7L1 6L4.8 4.3L6 0.5Z" fill="#3D7EFF"/></svg>
+    <span id="exp-title">Experiment 1</span>
+  </div>
+  <div class="messages" id="messages"></div>
+  <div class="panel-footer">
+    <div class="img-preview-strip" id="img-preview-strip">
+      <img class="img-thumb" id="img-thumb" src="" alt=""/>
+      <div class="img-remove" onclick="removeImg()">✕</div>
+    </div>
+    <div class="input-row">
+      <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleImg(this)">
+      <button class="attach-btn" onclick="document.getElementById('file-input').click()">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="7" r="1.2" fill="currentColor"/><path d="M1 10l3.5-3.5L7 9l2.5-2.5L14 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <input class="chat-input" id="chat-input" placeholder="Follow up..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <button class="send-btn" onclick="sendMsg()">
+        <svg width="12" height="10" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Scenario Controls -->
+<div class="controls">
+  <h3>Scenarios</h3>
+  <button class="scenario-btn" onclick="runScenario('basic')">Basic AI response</button>
+  <button class="scenario-btn" onclick="runScenario('generating')">Generating state</button>
+  <button class="scenario-btn" onclick="runScenario('suggestions')">Suggestions</button>
+  <button class="scenario-btn" onclick="runScenario('diff-toggle')">Diff toggle</button>
+  <button class="scenario-btn" onclick="runScenario('diff-sidebyside')">Diff side-by-side</button>
+  <button class="scenario-btn" onclick="runScenario('clarify')">Clarify card</button>
+  <button class="scenario-btn" onclick="runScenario('image-msg')">Image in chat</button>
+  <button class="scenario-btn" onclick="runScenario('full-flow')">Full flow</button>
+  <div class="divider"></div>
+  <button class="reset-btn" onclick="reset()">Reset chat</button>
+  <div class="divider"></div>
+  <p class="note">Click a scenario to preview it in the chat panel. Type in the input to test real interactions.</p>
+</div>
+
+<script>
+let msgs = [];
+let pendingImg = null;
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function render() {
+  const container = document.getElementById('messages');
+  container.innerHTML = msgs.map(renderMsg).join('');
+  // Attach diff toggle logic
+  container.querySelectorAll('.diff-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.diff-card');
+      card.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      toggleDiff(card, btn.dataset.side);
+    });
+  });
+  container.scrollTop = container.scrollHeight;
+}
+
+function renderMsg(m) {
+  if (m.type === 'generating') {
+    return `<div class="msg msg--ai">
+      <div class="generating-pill">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/></svg>
+        <span class="pill-label">Generating</span>
+        <span class="pill-dots"><span></span><span></span><span></span></span>
+      </div>
+    </div>`;
+  }
+  if (m.type === 'clarify') {
+    return `<div class="msg msg--ai">
+      <div class="msg-ai-body">
+        <div class="bubble">${m.text}</div>
+        <div class="clarify-btns">
+          <button class="clarify-btn" onclick="handleClarify('apply',this)">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M6 1l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            ${m.applyLabel}
+          </button>
+          <button class="clarify-btn clarify-btn--explore" onclick="handleClarify('explore',this)">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M6 1L7.2 4.3L11 6L7.2 7.7L6 11L4.8 7.7L1 6L4.8 4.3L6 1Z" fill="currentColor"/></svg>
+            ${m.exploreLabel}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }
+  if (m.role === 'user') {
+    const imgHtml = m.imgSrc ? `<img class="msg-img-thumb" src="${m.imgSrc}" alt=""/>` : '';
+    return `<div class="msg msg--user">
+      <div class="bubble">${imgHtml}${m.text || ''}</div>
+    </div>`;
+  }
+  // AI message
+  const diffHtml = m.diff ? renderDiff(m.diff) : '';
+  const suggestHtml = m.suggestions?.length
+    ? `<div class="ai-suggestions">${m.suggestions.map(s =>
+        `<button class="ai-chip" onclick="chipClick(this,'${s}')">${s}</button>`).join('')}</div>`
+    : '';
+  return `<div class="msg msg--ai">
+    <div class="msg-ai-body">
+      <div class="bubble">${m.text}</div>
+      ${diffHtml}${suggestHtml}
+    </div>
+  </div>`;
+}
+
+function renderDiff(diff) {
+  if (diff.style === 'sidebyside') {
+    return `<div class="diff-card">
+      <div class="diff-header">
+        <span class="diff-label">${diff.label}</span>
+      </div>
+      <div class="diff-preview">
+        <div class="diff-frames">
+          <div class="diff-frame fake-screen-a">
+            <div class="fake-oval"></div>
+            <div class="fake-title">Original</div>
+            <div class="diff-frame-label">Before</div>
+          </div>
+          <div class="diff-frame fake-screen-b">
+            <div class="fake-oval">✓</div>
+            <div class="fake-title">Redesigned</div>
+            <div class="diff-frame-label">After</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+  // toggle style (default)
+  return `<div class="diff-card">
+    <div class="diff-header">
+      <span class="diff-label">${diff.label}</span>
+      <div class="diff-toggle">
+        <button class="diff-btn" data-side="before">Before</button>
+        <button class="diff-btn active" data-side="after">After</button>
+      </div>
+    </div>
+    <div class="diff-preview">
+      <div class="diff-single fake-screen-b" id="diff-preview-frame">
+        <div class="fake-oval">✓</div>
+        <div class="fake-title">Redesigned</div>
+        <div class="diff-frame-label">After</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleDiff(card, side) {
+  const frame = card.querySelector('#diff-preview-frame');
+  if (!frame) return;
+  frame.className = `diff-single ${side === 'before' ? 'fake-screen-a' : 'fake-screen-b'}`;
+  frame.innerHTML = side === 'before'
+    ? `<div class="fake-oval"></div><div class="fake-title">Original</div><div class="diff-frame-label">Before</div>`
+    : `<div class="fake-oval">✓</div><div class="fake-title">Redesigned</div><div class="diff-frame-label">After</div>`;
+}
+
+// ── Interactions ──────────────────────────────────────────────────────────────
+function chipClick(btn, text) {
+  btn.classList.add('used');
+  document.getElementById('chat-input').value = text;
+  setTimeout(() => {
+    pushMsg({ role: 'user', text });
+    document.getElementById('chat-input').value = '';
+    simulateReply();
+  }, 150);
+}
+
+function handleClarify(choice) {
+  pushMsg({ role: 'user', text: choice === 'apply' ? 'Apply to current version' : 'Explore as new experiment' });
+  simulateReply();
+}
+
+function simulateReply() {
+  pushMsg({ type: 'generating' });
+  setTimeout(() => {
+    msgs = msgs.filter(m => m.type !== 'generating');
+    pushMsg({
+      role: 'ai',
+      text: 'Done — screens updated with the new direction.',
+      suggestions: ['Go darker', 'Add micro-animations', 'Simplify the CTA'],
+      diff: { label: 'Tutorial', style: 'toggle' },
+    });
+  }, 1800);
+}
+
+function sendMsg() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text && !pendingImg) return;
+  const m = { role: 'user', text: text || '' };
+  if (pendingImg) { m.imgSrc = pendingImg; removeImg(); }
+  pushMsg(m);
+  input.value = '';
+  simulateReply();
+}
+
+function pushMsg(m) {
+  msgs.push(m);
+  render();
+}
+
+// ── Image ─────────────────────────────────────────────────────────────────────
+function handleImg(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+  pendingImg = URL.createObjectURL(file);
+  document.getElementById('img-thumb').src = pendingImg;
+  document.getElementById('img-preview-strip').classList.add('visible');
+  input.value = '';
+}
+function removeImg() {
+  pendingImg = null;
+  document.getElementById('img-preview-strip').classList.remove('visible');
+  document.getElementById('img-thumb').src = '';
+}
+
+// ── Scenarios ─────────────────────────────────────────────────────────────────
+function reset() {
+  msgs = [];
+  render();
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+}
+
+function runScenario(id) {
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  msgs = [];
+
+  if (id === 'basic') {
+    msgs = [
+      { role: 'user', text: 'Redesign the tutorial screen' },
+      { role: 'ai', text: 'Done — I redesigned the tutorial with a dark hero layout and step-by-step cards.' },
+    ];
+  }
+  else if (id === 'generating') {
+    msgs = [
+      { role: 'user', text: 'Make it feel more premium' },
+      { type: 'generating' },
+    ];
+  }
+  else if (id === 'suggestions') {
+    msgs = [
+      { role: 'user', text: 'Make the camera full screen' },
+      {
+        role: 'ai',
+        text: 'Camera is now full-bleed with a face guide overlay.',
+        suggestions: ['Add face alignment guide', 'Try dark background', 'Add a progress bar'],
+      },
+    ];
+  }
+  else if (id === 'diff-toggle') {
+    msgs = [
+      { role: 'user', text: 'Redesign the tutorial' },
+      {
+        role: 'ai',
+        text: 'Tutorial redesigned with a dark immersive layout.',
+        diff: { label: 'Tutorial', style: 'toggle' },
+        suggestions: ['Try a lighter version', 'Add step numbers', 'Make CTA bigger'],
+      },
+    ];
+  }
+  else if (id === 'diff-sidebyside') {
+    msgs = [
+      { role: 'user', text: 'Redesign the tutorial' },
+      {
+        role: 'ai',
+        text: 'Tutorial redesigned with a dark immersive layout.',
+        diff: { label: 'Tutorial', style: 'sidebyside' },
+        suggestions: ['Try a lighter version', 'Add step numbers'],
+      },
+    ];
+  }
+  else if (id === 'clarify') {
+    msgs = [
+      { role: 'user', text: 'Go full dark mode' },
+      {
+        type: 'clarify',
+        text: 'Dark mode is a color change — apply it to the current version, or explore it as a new experiment?',
+        applyLabel: 'Apply dark tokens',
+        exploreLabel: 'Build new dark screens',
+      },
+    ];
+  }
+  else if (id === 'image-msg') {
+    msgs = [
+      {
+        role: 'user',
+        imgSrc: 'https://placehold.co/160x120/1a1a2e/4DA3FF?text=Reference',
+        text: 'Make it look like this',
+      },
+      {
+        role: 'ai',
+        text: 'Got it — picked up the dark navy palette and blue accent from your reference.',
+        suggestions: ['Try purple instead', 'Keep the dark, change layout', 'Add glow effects'],
+      },
+    ];
+  }
+  else if (id === 'full-flow') {
+    msgs = [
+      { role: 'user', text: 'Redesign the tutorial screen to feel more premium' },
+      {
+        role: 'ai',
+        text: 'Tutorial redesigned — dark gradient hero, bold headline, step cards with icons.',
+        diff: { label: 'Tutorial', style: 'toggle' },
+        suggestions: ['Add face illustration', 'Try a progress bar', 'Make it lighter'],
+      },
+      { role: 'user', text: 'Add face illustration' },
+      { type: 'generating' },
+    ];
+    setTimeout(() => {
+      msgs = msgs.filter(m => m.type !== 'generating');
+      msgs.push({
+        role: 'ai',
+        text: 'Added a circular face illustration at the top with a glowing ring.',
+        diff: { label: 'Tutorial', style: 'toggle' },
+        suggestions: ['Animate the ring', 'Try oval shape', 'Go full screen camera'],
+      });
+      render();
+    }, 1800);
+  }
+
+  render();
+}
+
+// Start with a default scenario
+runScenario('full-flow');
+</script>
+</body>
+</html>
