@@ -871,7 +871,7 @@ function idFrontCamEmpty() {
 
 // Screen 4/13 — Front Camera: Detected
 function idFrontCamFilled() {
-  return _idCameraScreen('Front detected', 'Hold still while we capture', 'detected', 'front');
+  return _idCameraScreen('Frame the front of your ID', 'The capture will happen automatically', 'detected', 'front');
 }
 
 // Screen 5/13 — Front Processing
