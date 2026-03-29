@@ -776,6 +776,14 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
     ? (side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png')
     : null;
   const borderColor = detected ? '#006AFF' : null;
+  const frameHtml = showTimer
+    ? `<div style="position:relative;flex-shrink:0">
+        ${_idCapFrame(borderColor, imgSrc)}
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+          <img src="assets/icons/camera/timer.svg" width="90" height="90" alt=""/>
+        </div>
+      </div>`
+    : `<div style="flex-shrink:0">${_idCapFrame(borderColor, imgSrc)}</div>`;
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
     <div style="height:44px;flex-shrink:0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
@@ -784,12 +792,11 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
         <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
       </div>
       <div style="flex-shrink:0">
-        ${_idCapFrame(borderColor, imgSrc)}
+        ${frameHtml}
         ${_idEncryptedBadge(true)}
-        ${showTimer ? `<div style="display:flex;justify-content:center;padding-top:8px"><img src="assets/icons/camera/timer.svg" width="90" height="90" alt=""/></div>` : ''}
       </div>
       <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
-        ${showTimer ? '' : `<img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>`}
+        <img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>
       </div>
     </div>
   </div>`;
@@ -878,7 +885,7 @@ function idFrontCamFilled() {
 
 // Screen 5/14 — Front Camera: Capturing (countdown)
 function idFrontCamCapturing() {
-  return _idCameraScreen('Hold still', 'Capturing your ID…', 'detected', 'front', true);
+  return _idCameraScreen('Taking photo...', 'Don\'t move your ID for a few seconds', 'detected', 'front', true);
 }
 
 // Screen 6/14 — Front Processing
