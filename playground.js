@@ -899,21 +899,28 @@ function idFrontUploading() {
 }
 
 // Screen 7/13 — Front Success
-function idFrontSuccess() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 0;min-height:0;background:#fff">
-    ${_navBar('logo-only')}
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding-bottom:12px">
-      <img src="assets/icons/status/Status-42.svg" width="40" height="40" alt="Success"/>
-      <div class="type-h2" style="color:var(--text-primary)">Successfully processed!</div>
-      <div class="type-body-m-regular" style="color:var(--text-secondary)">Now let's capture the back</div>
+function _idSuccessScreen(subtitle, imgSrc, buttonLabel) {
+  const checkmark = `<div style="width:40px;height:40px;border-radius:50%;background:#189f60;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.5 10.5L8.5 14.5L15.5 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>`;
+  return `<div style="flex:1;display:flex;flex-direction:column;background:#fff;padding:0 24px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;gap:16px;text-align:center">
+      ${checkmark}
+      <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+        <div class="type-h2" style="color:#262831">Successfully processed!</div>
+        <div class="type-h5" style="color:#60667c">${subtitle}</div>
+      </div>
     </div>
-    ${_idCapFrame('#189f60', 'assets/illustrations/id-front.svg')}
+    ${_idCapFrame('#189f60', imgSrc)}
     ${_idEncryptedBadge(false)}
-    <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:8px">
-      <button class="btn btn-primary btn-full">Scan the back</button>
-      ${_verifiedTag()}
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+      <button class="btn btn-primary btn-full" style="height:56px;border-radius:15px;font-size:18px">${buttonLabel}</button>
     </div>
   </div>`;
+}
+
+function idFrontSuccess() {
+  return _idSuccessScreen("Now let's capture the back", 'assets/illustrations/id-front.png', 'Scan the back');
 }
 
 // Screen 8/13 — Flip
@@ -952,22 +959,9 @@ function idBackUploading() {
   return _idProcessingScreen('Uploading..', 75, 'back');
 }
 
-// Screen 13/13 — Back Success / Complete
+// Screen 14/14 — Back Success / Complete
 function idBackSuccess() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px 0;min-height:0;background:#fff">
-    ${_navBar('logo-only')}
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding-bottom:12px">
-      <img src="assets/icons/status/Status-42.svg" width="40" height="40" alt="Success"/>
-      <div class="type-h2" style="color:var(--text-primary)">Successfully processed!</div>
-      <div class="type-body-m-regular" style="color:var(--text-secondary)">Let's continue</div>
-    </div>
-    ${_idCapFrame('#189f60', 'assets/illustrations/id-back.svg')}
-    ${_idEncryptedBadge(false)}
-    <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:8px">
-      <button class="btn btn-primary btn-full">Continue</button>
-      ${_verifiedTag()}
-    </div>
-  </div>`;
+  return _idSuccessScreen("Let's continue", 'assets/illustrations/id-back.png', 'Continue');
 }
 
 // ---- Module registry ----
