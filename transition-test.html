@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Transition Test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background: #F0F2F5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 48px;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  /* ── Phone mockup ── */
+  .phone-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .phone {
+    width: 280px;
+    height: 560px;
+    background: #fff;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 8px #1a1a1a,
+      0 24px 64px rgba(0,0,0,0.35);
+    position: relative;
+  }
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Screen layers (mirrors playground.css) ── */
+  .lab-screen-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .lab-screen-layer--old {
+    z-index: 1;
+    transition: opacity 0.18s ease-in, filter 0.18s ease-in;
+  }
+  .lab-screen-layer--old-exit {
+    opacity: 0;
+    filter: brightness(6) saturate(0);
+  }
+  .lab-screen-layer--new {
+    z-index: 2;
+    opacity: 0;
+  }
+  .lab-screen-layer--new-active {
+    animation: lab-new-appear var(--appear-dur, 0.5s) ease-out forwards;
+  }
+  @keyframes lab-new-appear {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .lab-flash {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: #fff;
+    opacity: 0;
+  }
+  .lab-flash--active {
+    animation: lab-flash-burst var(--flash-dur, 0.65s) ease-out forwards;
+  }
+  @keyframes lab-flash-burst {
+    0%                    { opacity: 0; }
+    var(--flash-peak, 18%) { opacity: 1; }
+    100%                  { opacity: 0; }
+  }
+
+  /* ── Sample screen content ── */
+  .screen-a {
+    flex: 1;
+    background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: #fff;
+  }
+  .screen-a .oval {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .screen-a h2 { font-size: 18px; font-weight: 600; }
+  .screen-a p  { font-size: 13px; opacity: 0.55; }
+
+  .screen-b {
+    flex: 1;
+    background: linear-gradient(160deg, #006AFF 0%, #003d99 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: #fff;
+  }
+  .screen-b .oval {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .screen-b h2 { font-size: 18px; font-weight: 600; }
+  .screen-b p  { font-size: 13px; opacity: 0.7; }
+
+  /* ── Controls ── */
+  .controls {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    width: 300px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-self: flex-start;
+    margin-top: 0;
+  }
+  .controls h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0D0D0D;
+    letter-spacing: -0.01em;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .control-row label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+  }
+  .control-row label span {
+    color: #006AFF;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type=range] {
+    width: 100%;
+    accent-color: #006AFF;
+    cursor: pointer;
+  }
+  .divider {
+    height: 1px;
+    background: #F0F2F5;
+  }
+  .btn-trigger {
+    width: 100%;
+    padding: 14px;
+    background: #006AFF;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s, transform 0.1s;
+  }
+  .btn-trigger:hover { background: #0058d6; }
+  .btn-trigger:active { transform: scale(0.98); }
+  .btn-trigger:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+  .btn-copy {
+    width: 100%;
+    padding: 11px;
+    background: none;
+    color: #006AFF;
+    border: 1.5px solid #006AFF;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .btn-copy:hover { background: #f0f6ff; }
+
+  .hint {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .copy-feedback {
+    font-size: 12px;
+    color: #22c55e;
+    text-align: center;
+    height: 16px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-wrap">
+  <div class="phone">
+    <div class="phone-screen" id="phoneScreen">
+      <!-- Initial screen A -->
+      <div class="screen-a" id="currentContent">
+        <div class="oval">😐</div>
+        <h2>Screen A</h2>
+        <p>Position your face in the oval</p>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Click "Play transition" to preview</p>
+</div>
+
+<div class="controls">
+  <h3>Transition Parameters</h3>
+
+  <div class="control-group">
+    <div class="control-row">
+      <label>Flash duration <span id="val-flash-dur">650ms</span></label>
+      <input type="range" id="flash-dur" min="200" max="1200" step="25" value="650">
+    </div>
+    <div class="control-row">
+      <label>Flash peak at <span id="val-flash-peak">18%</span></label>
+      <input type="range" id="flash-peak" min="5" max="60" step="1" value="18">
+    </div>
+    <div class="control-row">
+      <label>New screen delay <span id="val-appear-delay">80ms</span></label>
+      <input type="range" id="appear-delay" min="0" max="400" step="10" value="80">
+    </div>
+    <div class="control-row">
+      <label>New screen fade-in <span id="val-appear-dur">500ms</span></label>
+      <input type="range" id="appear-dur" min="100" max="1000" step="25" value="500">
+    </div>
+    <div class="control-row">
+      <label>Old screen exit <span id="val-old-dur">180ms</span></label>
+      <input type="range" id="old-dur" min="50" max="500" step="10" value="180">
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="btn-trigger" id="btnPlay" onclick="playTransition()">Play transition</button>
+  <button class="btn-copy" onclick="copyCSS()">Copy CSS values</button>
+  <div class="copy-feedback" id="copyFeedback"></div>
+</div>
+
+<script>
+  // Screen HTML pairs to cycle through
+  const screens = [
+    `<div class="screen-a">
+      <div class="oval">😐</div>
+      <h2>Screen A</h2>
+      <p>Position your face in the oval</p>
+    </div>`,
+    `<div class="screen-b">
+      <div class="oval">✅</div>
+      <h2>Screen B</h2>
+      <p>Face detected — hold still</p>
+    </div>`,
+  ];
+  let current = 0;
+
+  function getVal(id) { return parseFloat(document.getElementById(id).value); }
+
+  // Live label updates
+  document.getElementById('flash-dur').addEventListener('input', function() {
+    document.getElementById('val-flash-dur').textContent = this.value + 'ms';
+  });
+  document.getElementById('flash-peak').addEventListener('input', function() {
+    document.getElementById('val-flash-peak').textContent = this.value + '%';
+  });
+  document.getElementById('appear-delay').addEventListener('input', function() {
+    document.getElementById('val-appear-delay').textContent = this.value + 'ms';
+  });
+  document.getElementById('appear-dur').addEventListener('input', function() {
+    document.getElementById('val-appear-dur').textContent = this.value + 'ms';
+  });
+  document.getElementById('old-dur').addEventListener('input', function() {
+    document.getElementById('val-old-dur').textContent = this.value + 'ms';
+  });
+
+  function playTransition() {
+    const btn = document.getElementById('btnPlay');
+    btn.disabled = true;
+
+    const flashDur    = getVal('flash-dur');
+    const flashPeak   = getVal('flash-peak');
+    const appearDelay = getVal('appear-delay');
+    const appearDur   = getVal('appear-dur');
+    const oldDur      = getVal('old-dur');
+
+    const nextIdx = (current + 1) % screens.length;
+    const phoneScreen = document.getElementById('phoneScreen');
+
+    // Inject CSS custom properties for @keyframes
+    // (CSS variables in @keyframes aren't supported — we recreate the style tag)
+    let styleTag = document.getElementById('dynamic-styles');
+    if (!styleTag) {
+      styleTag = document.createElement('style');
+      styleTag.id = 'dynamic-styles';
+      document.head.appendChild(styleTag);
+    }
+    styleTag.textContent = `
+      .lab-screen-layer--old {
+        transition: opacity ${oldDur}ms ease-in, filter ${oldDur}ms ease-in;
+      }
+      .lab-screen-layer--new-active {
+        animation: lab-new-appear ${appearDur}ms ease-out forwards;
+      }
+      .lab-flash--active {
+        animation: lab-flash-burst ${flashDur}ms ease-out forwards;
+      }
+      @keyframes lab-flash-burst {
+        0%          { opacity: 0; }
+        ${flashPeak}% { opacity: 1; }
+        100%        { opacity: 0; }
+      }
+    `;
+
+    // Build layers
+    const oldLayer = document.createElement('div');
+    oldLayer.className = 'lab-screen-layer lab-screen-layer--old';
+    oldLayer.innerHTML = phoneScreen.innerHTML;
+    phoneScreen.innerHTML = '';
+    phoneScreen.appendChild(oldLayer);
+
+    const newLayer = document.createElement('div');
+    newLayer.className = 'lab-screen-layer lab-screen-layer--new';
+    newLayer.innerHTML = screens[nextIdx];
+    phoneScreen.appendChild(newLayer);
+
+    const flash = document.createElement('div');
+    flash.className = 'lab-flash';
+    phoneScreen.appendChild(flash);
+
+    // Trigger
+    phoneScreen.offsetHeight;
+    oldLayer.classList.add('lab-screen-layer--old-exit');
+    flash.classList.add('lab-flash--active');
+    setTimeout(() => newLayer.classList.add('lab-screen-layer--new-active'), appearDelay);
+
+    // Cleanup
+    const totalDur = Math.max(flashDur, appearDelay + appearDur) + 50;
+    setTimeout(() => {
+      phoneScreen.innerHTML = screens[nextIdx];
+      current = nextIdx;
+      btn.disabled = false;
+    }, totalDur);
+  }
+
+  function copyCSS() {
+    const flashDur    = getVal('flash-dur');
+    const flashPeak   = getVal('flash-peak');
+    const appearDelay = getVal('appear-delay');
+    const appearDur   = getVal('appear-dur');
+    const oldDur      = getVal('old-dur');
+
+    const css = `/* Old layer exit */
+.lab-screen-layer--old { transition: opacity ${oldDur}ms ease-in, filter ${oldDur}ms ease-in; }
+.lab-screen-layer--old-exit { opacity: 0; filter: brightness(6) saturate(0); }
+
+/* New layer appear */
+.lab-screen-layer--new-active { animation: lab-new-appear ${appearDur}ms ease-out forwards; }
+@keyframes lab-new-appear { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+/* White flash */
+.lab-flash--active { animation: lab-flash-burst ${flashDur}ms ease-out forwards; }
+@keyframes lab-flash-burst {
+  0%          { opacity: 0; }
+  ${flashPeak}% { opacity: 1; }
+  100%        { opacity: 0; }
+}
+
+/* JS: new screen delay = ${appearDelay}ms */`;
+
+    navigator.clipboard.writeText(css).then(() => {
+      const fb = document.getElementById('copyFeedback');
+      fb.textContent = 'CSS values copied!';
+      setTimeout(() => fb.textContent = '', 2000);
+    });
+  }
+</script>
+</body>
+</html>
