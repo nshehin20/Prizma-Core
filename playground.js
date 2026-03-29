@@ -747,11 +747,9 @@ function fcSuccess() {
 // dark=false → secondary text color (light screens)
 function _idEncryptedBadge(dark) {
   const color = dark ? '#ffffff' : 'var(--text-secondary)';
+  const lockFilter = dark ? '' : 'filter:brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(500%) hue-rotate(190deg)';
   return `<div style="display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 0;flex-shrink:0">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" fill="none" stroke="${color}" stroke-width="1.3"/>
-      <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="${color}" stroke-width="1.3" stroke-linecap="round"/>
-    </svg>
+    <img src="assets/icons/camera/lock.svg" width="16" height="16" style="${lockFilter}" alt=""/>
     <span class="type-body-m-regular" style="color:${color}">All data is encrypted</span>
   </div>`;
 }
@@ -759,39 +757,41 @@ function _idEncryptedBadge(dark) {
 // CaptureId frame — bordered card showing the ID card area
 // borderColor: exact CSS color string for the 4px border
 // imgSrc: null for empty/dark state (transparent bg), string path for filled/success
-function _idCapFrame(borderColor, imgSrc) {
-  return `<div style="width:100%;aspect-ratio:350/220;border-radius:16px;border:4px solid ${borderColor};overflow:hidden;flex-shrink:0;${imgSrc ? '' : 'background:rgba(255,255,255,0.05)'}">
+// borderColor: used for detected/success states only (blue/green solid border)
+// imgSrc: null = empty dark state (uses gradient frame SVG), string = filled state
+// useSvgFrame: true for camera screens (gradient frame SVG), false for light screens (solid border)
+function _idCapFrame(borderColor, imgSrc, useSvgFrame) {
+  if (useSvgFrame) {
+    // Camera screens: dark bg + gradient frame border SVG overlay (342×215)
+    return `<div style="position:relative;width:100%;aspect-ratio:342/215;border-radius:16px;overflow:hidden;flex-shrink:0;background:#1a1a1a">
+      ${imgSrc ? `<img src="${imgSrc}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" alt=""/>` : ''}
+      <img src="assets/illustrations/id-capture/frame-border.svg" style="position:absolute;inset:0;width:100%;height:100%" alt=""/>
+    </div>`;
+  }
+  // Light screens (processing/success): solid colored border
+  return `<div style="width:100%;aspect-ratio:342/215;border-radius:16px;border:4px solid ${borderColor};overflow:hidden;flex-shrink:0;${imgSrc ? '' : 'background:rgba(255,255,255,0.05)'}">
     ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;display:block" alt=""/>` : ''}
   </div>`;
 }
 
 // Shared: dark camera screen (front or back, empty or detected)
 function _idCameraScreen(title, subtitle, state, side) {
-  const borderColor = state === 'detected' ? '#006AFF' : 'rgba(255,255,255,0.8)';
   const imgSrc = state === 'detected'
     ? (side === 'back' ? 'assets/illustrations/id-back.svg' : 'assets/illustrations/id-front.svg')
     : null;
-  const questionBtn = `<div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="white" stroke-width="1.2" stroke-opacity="0.85"/><path d="M6.5 7a2.5 2.5 0 0 1 5 0c0 1.5-2.5 1.5-2.5 3M9 13h.01" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.9"/></svg>
-  </div>`;
   return `<div style="flex:1;display:flex;flex-direction:column;background:#111">
-    <!-- empty nav row matching Figma h-44px -->
     <div style="height:44px;flex-shrink:0"></div>
-    <!-- content: justify-between, padding 24px -->
     <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:0 24px 24px">
-      <!-- top: flex:1, title pushed to bottom with pb-40px -->
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:40px">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;text-align:center">
         <div class="type-h2" style="color:#fff">${title}</div>
         <div class="type-h5" style="color:#a3a8b8;margin-top:8px">${subtitle}</div>
       </div>
-      <!-- frame + badge -->
       <div style="flex-shrink:0">
-        ${_idCapFrame(borderColor, imgSrc)}
+        ${_idCapFrame(null, imgSrc, true)}
         ${_idEncryptedBadge(true)}
       </div>
-      <!-- bottom: flex:1, ? button bottom-right -->
       <div style="flex:1;display:flex;align-items:flex-end;justify-content:flex-end">
-        ${questionBtn}
+        <img src="assets/icons/camera/question-mark.svg" width="32" height="32" alt="" style="cursor:pointer"/>
       </div>
     </div>
   </div>`;
