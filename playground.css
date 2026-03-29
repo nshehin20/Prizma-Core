@@ -3465,7 +3465,7 @@ select {
 /* Old layer overexposes then vanishes into the flash */
 .lab-screen-layer--old {
   z-index: 1;
-  transition: opacity 0.18s ease-in, filter 0.18s ease-in;
+  transition: opacity 500ms ease-in, filter 500ms ease-in;
 }
 .lab-screen-layer--old-exit {
   opacity: 0;
@@ -3478,7 +3478,7 @@ select {
   opacity: 0;
 }
 .lab-screen-layer--new-active {
-  animation: lab-new-appear 0.5s ease-out forwards;
+  animation: lab-new-appear 1000ms ease-out forwards;
 }
 @keyframes lab-new-appear {
   0%   { opacity: 0; }
@@ -3495,11 +3495,11 @@ select {
   opacity: 0;
 }
 .lab-flash--active {
-  animation: lab-flash-burst 0.65s ease-out forwards;
+  animation: lab-flash-burst 1200ms ease-out forwards;
 }
 @keyframes lab-flash-burst {
   0%   { opacity: 0; }
-  18%  { opacity: 1; }
+  48%  { opacity: 1; }
   100% { opacity: 0; }
 }
 

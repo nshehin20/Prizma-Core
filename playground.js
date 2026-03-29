@@ -1966,14 +1966,14 @@ function executeLabAction(action) {
             flash.classList.add('lab-flash--active');
 
             // New screen appears just after the flash peak
-            setTimeout(() => newLayer.classList.add('lab-screen-layer--new-active'), 80);
+            setTimeout(() => newLayer.classList.add('lab-screen-layer--new-active'), 400);
 
-            // Cleanup
+            // Cleanup after longest animation finishes (flash 1200ms vs delay+appear 400+1000ms)
             setTimeout(() => {
               existingScreen.innerHTML = action.html;
               existingCell.classList.add('lab-phone-cell--modified');
               setTimeout(() => existingCell.classList.remove('lab-phone-cell--modified'), 2000);
-            }, 700);
+            }, 1450);
 
             _labUpdateMeta();
           } else {
