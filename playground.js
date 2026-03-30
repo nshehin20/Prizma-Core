@@ -613,12 +613,22 @@ const _SELFIE_SVG = `<svg width="296" height="296" viewBox="0 0 296 296" fill="n
 </defs>
 </svg>`;
 
-// CSS ring that replaces selfie-ring.svg — reacts to --color-brand-500 token changes
+// Inlined ring SVG — reacts to --color-brand-500 token changes.
+// Gradient stop uses var(--color-brand-500) so token control updates it live.
+// animate=true adds animateTransform to spin the gradient (capturing state).
 function _selfieRing(animate) {
-  const spin = animate
-    ? 'animation:prizma-spin 2s linear infinite;transform-origin:center;will-change:transform;'
+  const anim = animate
+    ? `<animateTransform attributeName="gradientTransform" type="rotate" from="0 167.829 167.829" to="360 167.829 167.829" dur="2s" repeatCount="indefinite"/>`
     : '';
-  return `<div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 270deg,var(--color-brand-500) 0%,transparent 55%);-webkit-mask:radial-gradient(circle,transparent 78%,black 79%);mask:radial-gradient(circle,transparent 78%,black 79%);${spin}"></div>`;
+  return `<svg style="position:absolute;inset:0;width:342px;height:342px" viewBox="0 0 337 337" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#rc)"><circle cx="167.829" cy="167.829" r="163.114" stroke="url(#rg)" stroke-width="10.2302"/></g>
+<defs>
+<linearGradient id="rg" x1="27.469" y1="34.563" x2="246.876" y2="291.467" gradientUnits="userSpaceOnUse">
+${anim}<stop stop-color="var(--color-brand-500)"/><stop offset="1" stop-color="white"/>
+</linearGradient>
+<clipPath id="rc"><rect width="336.459" height="336.459" fill="white"/></clipPath>
+</defs>
+</svg>`;
 }
 
 // DS: .tag-verified component — matches component tab exactly
