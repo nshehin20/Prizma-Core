@@ -3152,9 +3152,6 @@
               <!-- Left: gradient panel -->
               <div class="lab-home-left">
                 <img src="incode-logo.svg" class="lab-home-logo" alt="Incode" />
-                <div class="lab-home-left-foot">
-                  <p class="lab-home-product">Incode</p>
-                </div>
               </div>
 
               <!-- Right: selection -->
@@ -3172,11 +3169,6 @@
                     <div class="lab-home-card-name">ID Capture</div>
                     <svg class="lab-home-card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
-                </div>
-                <!-- Soon flows -->
-                <div class="lab-home-soon-row">
-                  <span class="lab-home-soon-item">NFC <span class="lab-soon-badge">Soon</span></span>
-                  <span class="lab-home-soon-item">Document Capture <span class="lab-soon-badge">Soon</span></span>
                 </div>
                 <div class="lab-home-or"><span>or</span></div>
                 <button class="lab-home-new-flow" onclick="labHomeNewFlow()">
@@ -3223,17 +3215,48 @@
                     <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
                     <span>ID Capture</span>
                   </button>
-                  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="nfc">
-                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
-                    <span>NFC</span>
-                    <span class="lab-soon-badge">Soon</span>
-                  </button>
-                  <button class="lab-sidebar-item lab-sidebar-item--soon" data-module="doc-capture">
-                    <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
-                    <span>Document Capture</span>
-                    <span class="lab-soon-badge">Soon</span>
-                  </button>
               </nav>
+              <details class="lab-sidebar-coming-soon">
+                <summary class="lab-sidebar-coming-soon-toggle">
+                  <svg class="lab-coming-soon-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2.5 3.5L5 6L7.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Coming soon
+                </summary>
+                <nav class="lab-sidebar-nav lab-sidebar-nav--soon">
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Face Match</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>DMV Face Match</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Video Selfie</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Document Capture</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Digital ID</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>NFC</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>OCR</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Input Modules</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>Geolocation</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>CURP</span>
+                  </button>
+                  <button class="lab-sidebar-item lab-sidebar-item--soon" disabled>
+                    <span>eKYC / eKYB</span>
+                  </button>
+                </nav>
+              </details>
             </div>
           </div>
 
