@@ -2630,6 +2630,15 @@ select {
   color: #0D0D0D;
   font-weight: 400;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  pointer-events: none;
+}
+
+/* Inactive items (not active, not soon) — dim slightly so active item stands out */
+.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active):not(.lab-sidebar-item--soon) {
+  opacity: 0.55;
+}
+.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active):not(.lab-sidebar-item--soon):hover {
+  opacity: 1;
 }
 
 .lab-sidebar-item--active .lab-drag-handle {

@@ -1698,8 +1698,10 @@ function _labCenterReset(animated) {
   } else if (_labExpanded) {
     const screens = _labActiveScreens();
     const count   = Math.max(1, screens.length);
-    const totalW  = count * (_LAB_PHONE_W + _LAB_CELL_GAP) - _LAB_CELL_GAP;
-    // Fit all phones into viewport with padding; cap at 1.0 so we never zoom IN
+    // Cap visible count at 7 so modules with many screens (e.g. ID Capture) don't shrink phones
+    const visibleCount = Math.min(count, 7);
+    const totalW  = visibleCount * (_LAB_PHONE_W + _LAB_CELL_GAP) - _LAB_CELL_GAP;
+    // Fit visible phones into viewport with padding; cap at 1.0 so we never zoom IN
     const fitZoom    = (W * 0.75) / totalW;
     _labZoom = Math.max(0.28, Math.min(1.0, fitZoom));
   } else {
