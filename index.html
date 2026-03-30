@@ -3125,7 +3125,7 @@
         <!-- Lab bar -->
         <div class="lab-bar">
           <div class="lab-bar-info">
-            <span class="lab-bar-module" id="lab-bar-module">Face Capture</span>
+            <span class="lab-bar-module" id="lab-bar-module"></span>
             <span class="lab-bar-dot">·</span>
             <span class="lab-bar-meta" id="lab-bar-meta"></span>
           </div>
@@ -3144,6 +3144,39 @@
 
         <!-- Dot-grid canvas viewport -->
         <div class="lab-canvas-vp" id="lab-canvas-vp">
+
+          <!-- Home screen: shown on first open before any module is selected -->
+          <div class="lab-home" id="lab-home">
+            <div class="lab-home-inner">
+              <div class="lab-home-hd">
+                <h1 class="lab-home-title">Which flow do you want to experiment on?</h1>
+                <p class="lab-home-sub">Pick a module to start, or create a new blank flow.</p>
+              </div>
+              <div class="lab-home-grid">
+                <button class="lab-home-card" onclick="labHomeSelectModule('face-capture')">
+                  <div class="lab-home-card-name">Face Capture</div>
+                  <svg class="lab-home-card-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="#C8CBD2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="lab-home-card" onclick="labHomeSelectModule('id-capture')">
+                  <div class="lab-home-card-name">ID Capture</div>
+                  <svg class="lab-home-card-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="#C8CBD2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="lab-home-card lab-home-card--soon" disabled>
+                  <div class="lab-home-card-name">NFC</div>
+                  <span class="lab-soon-badge">Soon</span>
+                </button>
+                <button class="lab-home-card lab-home-card--soon" disabled>
+                  <div class="lab-home-card-name">Document Capture</div>
+                  <span class="lab-soon-badge">Soon</span>
+                </button>
+              </div>
+              <div class="lab-home-or"><span>or</span></div>
+              <button class="lab-home-new-flow" onclick="labHomeNewFlow()">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                Start a blank flow
+              </button>
+            </div>
+          </div>
 
           <!-- Floating module sidebar -->
           <div class="lab-sidebar" id="lab-sidebar">
@@ -3170,7 +3203,7 @@
               </div>
               <nav class="lab-sidebar-nav">
                   <div class="lab-sidebar-item-group">
-                    <button class="lab-sidebar-item lab-sidebar-item--active" data-module="face-capture" onclick="labSelectModule(this)">
+                    <button class="lab-sidebar-item" data-module="face-capture" onclick="labSelectModule(this)">
                       <svg class="lab-drag-handle" width="10" height="14" viewBox="0 0 10 14" fill="none"><circle cx="3" cy="2.5" r="1.1" fill="currentColor"/><circle cx="7" cy="2.5" r="1.1" fill="currentColor"/><circle cx="3" cy="7" r="1.1" fill="currentColor"/><circle cx="7" cy="7" r="1.1" fill="currentColor"/><circle cx="3" cy="11.5" r="1.1" fill="currentColor"/><circle cx="7" cy="11.5" r="1.1" fill="currentColor"/></svg>
                       <span>Face Capture</span>
                     </button>
@@ -3197,6 +3230,11 @@
           <!-- Sidebar toggle button (outside, to the right of the sidebar) -->
           <button class="lab-sidebar-toggle" id="lab-sidebar-toggle" onclick="labToggleSidebar()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+          </button>
+
+          <!-- Controls toggle button (same x as sidebar toggle, at bottom) -->
+          <button class="lab-ctrl-toggle" id="lab-ctrl-toggle" onclick="labToggleControls()" title="Toggle controls">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="4" cy="6" r="2"/><path d="M8 6h12"/><circle cx="20" cy="12" r="2"/><path d="M4 12h12"/><circle cx="4" cy="18" r="2"/><path d="M8 18h12"/></svg>
           </button>
 
           <!-- Experiment overlay: covers canvas, hides phones, shows chat card -->
@@ -3302,12 +3340,6 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
 
-          <!-- Expand / Collapse button (top of canvas) -->
-          <button class="lab-expand-btn" id="lab-expand-btn" onclick="labToggleExpand()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="lab-expand-label">EXPAND</span>
-          </button>
-
           <!-- Screen title (below phone) -->
           <div class="lab-screen-info" id="lab-screen-info">
             <span class="lab-screen-index" id="lab-screen-index"></span>
@@ -3315,26 +3347,37 @@
             <span class="lab-screen-label" id="lab-screen-label"></span>
           </div>
 
-          <!-- Light / Dark toggle (bottom-right of canvas) -->
-          <div class="lab-theme-toggle" id="topbar-theme-toggle">
-            <button class="topbar-theme-opt topbar-theme-opt--active" data-val="light" onclick="setTopbarTheme('light', this)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/></svg>
-              Light
-            </button>
-            <button class="topbar-theme-opt" data-val="dark" onclick="setTopbarTheme('dark', this)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-              Dark
-            </button>
-          </div>
-
           <!-- Floating experiment tab bar — centered bottom of canvas -->
           <div class="lab-exp-tab-bar" id="lab-exp-tab-bar"></div>
 
-          <!-- Zoom controls -->
-          <div class="lab-zoom-bar">
-            <button class="lab-zoom-btn" onclick="labZoom(-0.1)">−</button>
+          <!-- Unified controls bar — bottom-left, follows sidebar -->
+          <div class="lab-controls-bar" id="lab-controls-bar">
+            <!-- Theme -->
+            <button class="topbar-theme-opt topbar-theme-opt--active" data-val="light" onclick="setTopbarTheme('light')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="19.78" y1="4.22" x2="17.66" y2="6.34"/><line x1="6.34" y1="17.66" x2="4.22" y2="19.78"/></svg>
+              Light
+            </button>
+            <button class="topbar-theme-opt" data-val="dark" onclick="setTopbarTheme('dark')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              Dark
+            </button>
+            <div class="lab-ctrl-sep"></div>
+            <!-- Expand / Collapse -->
+            <button class="topbar-theme-opt" id="lab-expand-btn" onclick="labToggleExpand()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="lab-expand-label">Expand</span>
+            </button>
+            <div class="lab-ctrl-sep"></div>
+            <!-- Zoom -->
+            <button class="topbar-theme-opt lab-zoom-btn" onclick="labZoom(-0.1)">−</button>
             <span class="lab-zoom-val" id="lab-zoom-val">100%</span>
-            <button class="lab-zoom-btn" onclick="labZoom(0.1)">+</button>
+            <button class="topbar-theme-opt lab-zoom-btn" onclick="labZoom(0.1)">+</button>
+            <div class="lab-ctrl-sep"></div>
+            <!-- Fit to center -->
+            <button class="topbar-theme-opt" onclick="labFitCenter()" title="Fit to center">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><circle cx="12" cy="12" r="3"/></svg>
+              Fit
+            </button>
           </div>
 
         </div><!-- /lab-canvas-vp -->
