@@ -3270,7 +3270,8 @@
                   </button>
                 </div>
                 <button class="lab-exp-bar-send" id="lab-exp-submit-btn" onclick="labExpSubmit()">
-                  <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg class="lab-send-star" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/></svg>
+                  <span class="lab-send-label">Send</span>
                 </button>
               </div>
               <div class="lab-exp-chips" id="lab-exp-chips">
@@ -3311,8 +3312,9 @@
                        placeholder="Follow up..."
                        onkeydown="if(event.key==='Enter')labExpPanelSubmit()"
                        autocomplete="off" />
-                <button class="lab-exp-panel-send" id="lab-exp-panel-send" onclick="labExpPanelSubmit()">
-                  <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <button class="lab-exp-panel-send lab-exp-bar-send" id="lab-exp-panel-send" onclick="labExpPanelSubmit()">
+                  <svg class="lab-send-star" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/></svg>
+                  <span class="lab-send-label">Send</span>
                 </button>
               </div>
             </div>

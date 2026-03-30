@@ -2805,7 +2805,7 @@ async function _runExpResponse(exp) {
   const overlayBtn  = document.getElementById('lab-exp-submit-btn');
   const panelInput  = document.getElementById('lab-exp-panel-input');
   const panelBtn    = document.getElementById('lab-exp-panel-send');
-  const svgArrow    = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6H13M8 1L13 6L8 11" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const starBtnHTML = '<svg class="lab-send-star" width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/></svg><span class="lab-send-label">Send</span>';
 
   // Disable inputs + pulse phones
   if (overlayBtn) overlayBtn.disabled = true;
@@ -2815,9 +2815,9 @@ async function _runExpResponse(exp) {
 
   const restore = () => {
     document.querySelectorAll('.lab-phone-cell').forEach(c => c.classList.remove('lab-phone-cell--generating'));
-    if (overlayBtn) { overlayBtn.disabled = false; overlayBtn.innerHTML = svgArrow; }
+    if (overlayBtn) { overlayBtn.disabled = false; overlayBtn.innerHTML = starBtnHTML; }
     if (panelInput) panelInput.disabled = false;
-    if (panelBtn)   { panelBtn.disabled = false; panelBtn.innerHTML = svgArrow; }
+    if (panelBtn)   { panelBtn.disabled = false; panelBtn.innerHTML = starBtnHTML; }
     document.getElementById('lab-exp-panel-input')?.focus();
   };
 
