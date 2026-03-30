@@ -61,19 +61,19 @@ function resetTokens() {
     root.style.setProperty(prop, val);
   });
 
-  // Reset color pickers
-  document.getElementById('brand-500').value = '#006aff';
-  document.getElementById('brand-500-hex').value = '#006aff';
-  document.getElementById('brand-400').value = '#3388ff';
-  document.getElementById('brand-400-hex').value = '#3388ff';
-  document.getElementById('brand-600').value = '#0055cc';
-  document.getElementById('brand-600-hex').value = '#0055cc';
-  document.getElementById('text-primary').value = '#262831';
-  document.getElementById('text-primary-hex').value = '#262831';
-  document.getElementById('text-secondary').value = '#60667c';
-  document.getElementById('text-secondary-hex').value = '#60667c';
-  document.getElementById('surface-bg').value = '#ffffff';
-  document.getElementById('surface-bg-hex').value = '#ffffff';
+  // Reset color pickers (value + hex input + visible dot background)
+  const resetPicker = (id, hex) => {
+    const input = document.getElementById(id);
+    if (input) { input.value = hex; input.closest('.token-pill-dot').style.background = hex; }
+    const hexEl = document.getElementById(id + '-hex');
+    if (hexEl) hexEl.value = hex;
+  };
+  resetPicker('brand-500',    '#006aff');
+  resetPicker('brand-400',    '#3388ff');
+  resetPicker('brand-600',    '#0055cc');
+  resetPicker('text-primary',   '#262831');
+  resetPicker('text-secondary', '#60667c');
+  resetPicker('surface-bg',     '#ffffff');
 
   // Reset font family select
   document.getElementById('font-family-select').value = "'DM Sans', sans-serif";
