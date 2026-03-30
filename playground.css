@@ -2966,8 +2966,8 @@ select {
 /* Orb + heading above the card */
 .lab-exp-empty-state {
   display: flex; flex-direction: column;
-  align-items: center; gap: 10px;
-  padding: 0 40px; /* room for orb blur glow to breathe */
+  align-items: center; gap: 8px;
+  width: 100%;
 }
 /* Nebula orb — soft blurry watercolor blob, blue + purple */
 .lab-exp-orb {
@@ -3031,15 +3031,19 @@ select {
   50%     { opacity: 1;   transform: scale(1.25); }
 }
 .lab-exp-heading {
-  font-family: var(--font-family-dm); font-size: 22px; font-weight: 600;
-  color: #0D0D0D; text-align: center; line-height: 1.3; margin: 0;
-  letter-spacing: -0.3px;
+  font-family: var(--font-family-dm); font-size: 20px; font-weight: 700;
+  color: #0D0D0D; text-align: center; line-height: 1.2; margin: 0;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
 }
 .lab-exp-heading em { color: inherit; font-style: normal; font-weight: inherit; }
 .lab-exp-tagline {
-  font-family: var(--font-family-dm); font-size: 12px; font-weight: 500;
-  color: #A0A8B8; text-align: center; margin: 0;
-  letter-spacing: 0.04em; text-transform: uppercase;
+  font-family: var(--font-family-dm); font-size: 10px; font-weight: 500;
+  color: #C0C8D4; text-align: center; margin: 0;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  white-space: nowrap;
 }
 .lab-exp-subheading {
   font-family: var(--font-family-dm); font-size: 13px; color: #A0A8B8;
@@ -3049,14 +3053,14 @@ select {
 /* ── Input bar ── */
 .lab-exp-card {
   display: flex; flex-direction: column; align-items: center;
-  gap: 24px;
+  gap: 28px;
   background: #fff;
-  border-radius: 28px;
-  padding: 32px 32px 24px;
+  border-radius: 32px;
+  padding: 40px 40px 32px;
   box-shadow:
     0 4px 24px rgba(0,0,0,0.07),
     0 1px 4px rgba(0,0,0,0.04);
-  width: 640px; max-width: calc(100% - 48px);
+  width: 680px; max-width: calc(100% - 48px);
 }
 .lab-exp-input-wrap {
   display: flex; flex-direction: column; align-items: center;
@@ -3135,7 +3139,7 @@ select {
 
 /* Suggestion chips */
 .lab-exp-chips {
-  display: flex; gap: 6px; flex-wrap: wrap;
+  display: flex; gap: 8px; flex-wrap: wrap;
   justify-content: center; align-items: center;
 }
 .lab-exp-chip {
