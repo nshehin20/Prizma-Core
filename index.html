@@ -3147,38 +3147,15 @@
 
           <!-- Home screen: shown on first open before any module is selected -->
           <div class="lab-home" id="lab-home">
+            <div class="lab-home-modal">
 
-            <!-- Left: atmospheric brand panel -->
-            <div class="lab-home-left">
-              <div class="lab-home-left-inner">
-                <img src="incode-logo.svg" class="lab-home-logo" alt="Incode" />
-                <div class="lab-home-hero">
-                  <h1 class="lab-home-headline">Design flows<br>that feel like<br>your brand.</h1>
-                  <p class="lab-home-tagline">Experiment with identity verification screens, customize design tokens, and iterate in real time.</p>
-                </div>
-                <div class="lab-home-features">
-                  <div class="lab-home-feat lab-home-feat--on">
-                    <span class="lab-home-feat-num">1</span>
-                    <span>Preview screens</span>
-                  </div>
-                  <div class="lab-home-feat">
-                    <span class="lab-home-feat-num">2</span>
-                    <span>Experiment with AI</span>
-                  </div>
-                  <div class="lab-home-feat">
-                    <span class="lab-home-feat-num">3</span>
-                    <span>Customize tokens</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <!-- Left: pure gradient, no content -->
+              <div class="lab-home-left"></div>
 
-            <!-- Right: module selection panel -->
-            <div class="lab-home-right">
-              <div class="lab-home-inner">
+              <!-- Right: selection -->
+              <div class="lab-home-right">
                 <div class="lab-home-hd">
-                  <h2 class="lab-home-title">Which flow do you want<br>to experiment on?</h2>
-                  <p class="lab-home-sub">Pick a module to start, or create a new blank flow.</p>
+                  <h2 class="lab-home-title">Which flow do you want to experiment on?</h2>
                 </div>
                 <div class="lab-home-grid">
                   <button class="lab-home-card" onclick="labHomeSelectModule('face-capture')">
@@ -3204,8 +3181,8 @@
                   Start a blank flow
                 </button>
               </div>
-            </div>
 
+            </div>
           </div>
 
           <!-- Floating module sidebar -->
