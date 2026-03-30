@@ -1007,10 +1007,15 @@ function idBackCamEmpty() {
 
 // Screen 10/13 — Back Camera: Detected
 function idBackCamFilled() {
-  return _idCameraScreen('Back detected', 'Hold still while we capture', 'detected', 'back');
+  return _idCameraScreen('Frame the back of your ID', 'The capture will happen automatically', 'detected', 'back');
 }
 
-// Screen 11/13 — Back Processing
+// Screen 11/13 — Back Camera: Capturing (timer overlay)
+function idBackCamCapturing() {
+  return _idCameraScreen('Taking photo...', "Don't move your ID for a few seconds", 'detected', 'back', true);
+}
+
+// Screen 12/13 — Back Processing
 function idBackProcessing() {
   return _idProcessingScreen('Processing..', 25, 'back');
 }
@@ -1054,6 +1059,7 @@ const modules = {
       { id: 'flip',              label: 'Flip',             render: idFlip },
       { id: 'back-empty',        label: 'Back: Empty',      render: idBackCamEmpty },
       { id: 'back-filled',       label: 'Back: Detected',   render: idBackCamFilled },
+      { id: 'back-capturing',    label: 'Back: Capturing',  render: idBackCamCapturing },
       { id: 'back-processing',   label: 'Back Processing',  render: idBackProcessing },
       { id: 'back-uploading',    label: 'Back Uploading',   render: idBackUploading },
       { id: 'back-success',      label: 'Back Success',     render: idBackSuccess },
