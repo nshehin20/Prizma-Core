@@ -136,7 +136,7 @@
   .phone-screen {
     width: 188px;
     height: 388px;
-    background: #0D0D10;
+    background: #ffffff;
     border-radius: 28px;
     overflow: hidden;
     display: flex;
@@ -148,10 +148,10 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(0,0,0,0.25);
     font-size: 12px;
   }
-  .phone-inner svg { opacity: 0.3; }
+  .phone-inner svg { opacity: 0.25; }
 
   /* The frame that gets the glow */
   .phone-frame {
@@ -309,7 +309,7 @@
         <div class="phone-screen">
           <div class="phone-inner">
             <svg width="28" height="28" viewBox="0 0 16 16" fill="none">
-              <path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/>
+              <path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/>
             </svg>
             Generating…
           </div>
@@ -368,6 +368,17 @@
 
   <div class="divider"></div>
 
+  <!-- Border stroke -->
+  <div class="control-group">
+    <div class="section-title">Border</div>
+    <div class="control-row">
+      <label>Stroke width <span id="lbl-stroke">1.5px</span></label>
+      <input type="range" id="stroke" min="0.5" max="6" step="0.5" value="1.5">
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
   <!-- Animation speed -->
   <div class="control-group">
     <div class="section-title">Animation</div>
@@ -387,10 +398,11 @@
   const c1 = document.getElementById('color1');
   const c2 = document.getElementById('color2');
   const c3 = document.getElementById('color3');
-  const sInner = document.getElementById('inner');
-  const sMid   = document.getElementById('mid');
-  const sOuter = document.getElementById('outer');
-  const sSpeed = document.getElementById('speed');
+  const sInner  = document.getElementById('inner');
+  const sMid    = document.getElementById('mid');
+  const sOuter  = document.getElementById('outer');
+  const sStroke = document.getElementById('stroke');
+  const sSpeed  = document.getElementById('speed');
 
   function hexToRgb(hex) {
     const r = parseInt(hex.slice(1,3),16);
@@ -403,16 +415,18 @@
     const rgb1  = hexToRgb(c1.value);
     const rgb2  = hexToRgb(c2.value);
     const rgb3  = hexToRgb(c3.value);
-    const inner = parseFloat(sInner.value);
-    const mid   = parseFloat(sMid.value);
-    const outer = parseFloat(sOuter.value);
-    const speed = parseFloat(sSpeed.value);
+    const inner  = parseFloat(sInner.value);
+    const mid    = parseFloat(sMid.value);
+    const outer  = parseFloat(sOuter.value);
+    const stroke = parseFloat(sStroke.value);
+    const speed  = parseFloat(sSpeed.value);
 
     // Update labels
-    document.getElementById('lbl-inner').textContent = inner.toFixed(2);
-    document.getElementById('lbl-mid').textContent   = mid.toFixed(2);
-    document.getElementById('lbl-outer').textContent = outer.toFixed(2);
-    document.getElementById('lbl-speed').textContent = speed.toFixed(1) + 's';
+    document.getElementById('lbl-inner').textContent  = inner.toFixed(2);
+    document.getElementById('lbl-mid').textContent    = mid.toFixed(2);
+    document.getElementById('lbl-outer').textContent  = outer.toFixed(2);
+    document.getElementById('lbl-stroke').textContent = stroke.toFixed(1) + 'px';
+    document.getElementById('lbl-speed').textContent  = speed.toFixed(1) + 's';
 
     // ── Bar border gradient ──
     const borderGrad = `conic-gradient(from 210deg, ${c1.value}, ${c2.value}, ${c3.value}, ${c2.value}, ${c1.value}, ${c1.value})`;
@@ -442,10 +456,13 @@
     root.style.setProperty('--btn-color2', c2.value);
     root.style.setProperty('--btn-color3', c3.value);
 
-    // Restart animations so changes are visible immediately
+    // Apply stroke width directly to the bar element
     const bar = document.querySelector('.lab-exp-bar');
+    bar.style.borderWidth = stroke + 'px';
+
+    // Restart animations so changes are visible immediately
     const frame = document.getElementById('phone-frame');
-    [bar, frame].forEach(el => {
+    [bar, frame].forEach(el => {  // bar declared above
       el.style.animation = 'none';
       el.offsetHeight; // reflow
       el.style.animation = '';
@@ -456,14 +473,16 @@
     const rgb1  = hexToRgb(c1.value);
     const rgb2  = hexToRgb(c2.value);
     const rgb3  = hexToRgb(c3.value);
-    const inner = parseFloat(sInner.value);
-    const mid   = parseFloat(sMid.value);
-    const outer = parseFloat(sOuter.value);
-    const speed = parseFloat(sSpeed.value);
+    const inner  = parseFloat(sInner.value);
+    const mid    = parseFloat(sMid.value);
+    const outer  = parseFloat(sOuter.value);
+    const stroke = parseFloat(sStroke.value);
+    const speed  = parseFloat(sSpeed.value);
 
     const css = `/* ── Gradient Glow CSS — copy into playground.css ── */
 
 /* Colors: ${c1.value} (blue) · ${c2.value} (purple) · ${c3.value} (pink) */
+/* Border stroke: ${stroke}px */
 
 /* Border gradient */
 conic-gradient(from 210deg, ${c1.value}, ${c2.value}, ${c3.value}, ${c2.value}, ${c1.value}, ${c1.value})
@@ -529,7 +548,7 @@ conic-gradient(from 210deg, ${c1.value}, ${c2.value}, ${c3.value}, ${c2.value}, 
   }
 
   // ── Wire up all inputs ──
-  [c1, c2, c3, sInner, sMid, sOuter, sSpeed].forEach(el => el.addEventListener('input', update));
+  [c1, c2, c3, sInner, sMid, sOuter, sStroke, sSpeed].forEach(el => el.addEventListener('input', update));
 
   // Init
   update();
