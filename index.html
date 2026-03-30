@@ -3149,11 +3149,11 @@
           <div class="lab-home" id="lab-home">
             <div class="lab-home-modal">
 
-              <!-- Left: gradient panel with logo + title -->
+              <!-- Left: gradient panel -->
               <div class="lab-home-left">
                 <img src="incode-logo.svg" class="lab-home-logo" alt="Incode" />
                 <div class="lab-home-left-foot">
-                  <p class="lab-home-product">Incode Core Lab</p>
+                  <p class="lab-home-product">Incode</p>
                 </div>
               </div>
 
@@ -3162,23 +3162,21 @@
                 <div class="lab-home-hd">
                   <h2 class="lab-home-title">Which flow do you want to experiment on?</h2>
                 </div>
-                <div class="lab-home-grid">
+                <!-- Active flows -->
+                <div class="lab-home-list">
                   <button class="lab-home-card" onclick="labHomeSelectModule('face-capture')">
                     <div class="lab-home-card-name">Face Capture</div>
-                    <svg class="lab-home-card-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="lab-home-card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                   <button class="lab-home-card" onclick="labHomeSelectModule('id-capture')">
                     <div class="lab-home-card-name">ID Capture</div>
-                    <svg class="lab-home-card-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg class="lab-home-card-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
-                  <button class="lab-home-card lab-home-card--soon" disabled>
-                    <div class="lab-home-card-name">NFC</div>
-                    <span class="lab-soon-badge">Soon</span>
-                  </button>
-                  <button class="lab-home-card lab-home-card--soon" disabled>
-                    <div class="lab-home-card-name">Document Capture</div>
-                    <span class="lab-soon-badge">Soon</span>
-                  </button>
+                </div>
+                <!-- Soon flows -->
+                <div class="lab-home-soon-row">
+                  <span class="lab-home-soon-item">NFC <span class="lab-soon-badge">Soon</span></span>
+                  <span class="lab-home-soon-item">Document Capture <span class="lab-soon-badge">Soon</span></span>
                 </div>
                 <div class="lab-home-or"><span>or</span></div>
                 <button class="lab-home-new-flow" onclick="labHomeNewFlow()">
