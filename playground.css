@@ -2540,7 +2540,7 @@ select {
   left: 24px;
   bottom: 24px;
   width: 230px;
-  z-index: 15;
+  z-index: 25;
   border-radius: 12px;
   border: 1px solid #E4E7EC;
   display: flex;
@@ -2554,7 +2554,7 @@ select {
   position: absolute;
   top: 24px;
   left: calc(24px + 230px + 8px);
-  z-index: 15;
+  z-index: 25;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2695,11 +2695,11 @@ select {
   pointer-events: none;
 }
 
-/* Inactive items (not active, not soon) — dim slightly so active item stands out */
-.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active):not(.lab-sidebar-item--soon) {
+/* Inactive items — all look the same regardless of --soon */
+.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active) {
   opacity: 0.55;
 }
-.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active):not(.lab-sidebar-item--soon):hover {
+.lab-sidebar-nav .lab-sidebar-item:not(.lab-sidebar-item--active):hover {
   opacity: 1;
 }
 
@@ -2708,15 +2708,12 @@ select {
 }
 
 .lab-sidebar-item--soon {
-  color: var(--color-gray-400);
-  font-weight: 500;
   cursor: default;
-  opacity: 1;
 }
 
 .lab-sidebar-item--soon:hover {
   background: none;
-  color: var(--color-gray-400);
+  color: #4B5060;
 }
 
 /* ── Section action button (e.g. "+ New" in header) ── */
