@@ -128,16 +128,24 @@ function populateTokenValues() {
 
 const themeTokens = {
   light: {
-    '--surface-bg':    '#ffffff',
-    '--text-primary':  '#262831',
-    '--text-secondary':'#60667c',
-    '--logo-color':    null,
+    '--surface-bg':             '#ffffff',
+    '--surface-card':           '#fcfcfd',
+    '--border-card':            '#ebecef',
+    '--shadow-card':            '0 2px 7px rgba(0,0,0,0.05),0 2px 35px rgba(33,39,59,0.05)',
+    '--text-primary':           '#262831',
+    '--text-secondary':         '#60667c',
+    '--icon-filter-primary':    'brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(300%) hue-rotate(190deg)',
+    '--logo-color':             null,
   },
   dark: {
-    '--surface-bg':    '#14151a',
-    '--text-primary':  '#fcfcfd',
-    '--text-secondary':'#a3a8b8',
-    '--logo-color':    '#ffffff',
+    '--surface-bg':             '#0a0a0f',
+    '--surface-card':           '#1c1d26',
+    '--border-card':            'rgba(255,255,255,0.16)',
+    '--shadow-card':            'none',
+    '--text-primary':           '#fcfcfd',
+    '--text-secondary':         '#a3a8b8',
+    '--icon-filter-primary':    'brightness(0) invert(1)',
+    '--logo-color':             '#ffffff',
   },
 };
 
@@ -350,7 +358,7 @@ const phoneSlots = {
   },
 };
 
-const _NAV_BTN_STYLE = 'width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--text-primary);flex-shrink:0;transform:scale(0.75);transform-origin:center';
+const _NAV_BTN_STYLE = 'width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--text-primary,#262831);flex-shrink:0;transform:scale(0.75);transform-origin:center';
 
 function renderNavVariant(id) {
   const logo = getNavLogo();
@@ -397,16 +405,16 @@ const titleData = {
 function renderTitleVariant(id) {
   const d = titleData[id]; if (!d) return '';
   return `<div style="display:flex;flex-direction:column;gap:12px;text-align:center;padding:16px 0">
-    <div class="type-h2" style="color:var(--text-primary)">${d.h}</div>
-    <div class="type-body-m-regular" style="color:var(--text-secondary)">${d.sub}</div>
+    <div class="type-h2" style="color:var(--text-primary,#262831)">${d.h}</div>
+    <div class="type-body-m-regular" style="color:var(--text-secondary,#60667c)">${d.sub}</div>
   </div>`;
 }
 
 function renderTitlePreview(id) {
   const d = titleData[id]; if (!d) return '';
   return `<div style="padding:8px 12px;text-align:center;transform:scale(0.5);transform-origin:top center;white-space:nowrap;overflow:hidden">
-    <div class="type-h2" style="color:var(--text-primary)">${d.h}</div>
-    <div class="type-body-m-regular" style="color:var(--text-secondary);margin-top:6px">${d.sub}</div>
+    <div class="type-h2" style="color:var(--text-primary,#262831)">${d.h}</div>
+    <div class="type-body-m-regular" style="color:var(--text-secondary,#60667c);margin-top:6px">${d.sub}</div>
   </div>`;
 }
 
@@ -631,6 +639,122 @@ ${anim}<stop stop-color="var(--color-brand-500)"/><stop offset="1" stop-color="w
 </svg>`;
 }
 
+// ID tutorial front illustration — inlined so brand color tokens apply to circle + shirt.
+// --surface-brand-50 = light blue circle (adapts to dark mode automatically).
+// --color-brand-500  = shirt color (same as face capture / selfie SVG pattern).
+const _ID_FRONT_TUTORIAL_SVG = `<svg width="342" height="382" viewBox="0 0 342 382" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_30441_21295)">
+<g clip-path="url(#clip1_30441_21295)">
+<ellipse cx="169.544" cy="191.438" rx="130.223" ry="130.223" fill="var(--surface-brand-50,#E5F0FF)"/>
+<g filter="url(#filter0_d_30441_21295)">
+<path d="M172.018 111.752C172.185 106.439 157.745 106.953 152.035 106.459C130.676 104.609 129.506 103.592 117.372 101.742C35.988 103.534 73.1728 114.062 1.39831 139.858C-6.58591 142.73 -13.2662 148.376 -17.4863 155.73C-33.0951 182.959 -49.6545 209.526 -71.9114 233.26C-100.772 259.679 -93.0634 305.362 -88.8883 319.738C-77.0051 348.643 -22.4019 305.731 -8.01356 304.646C0.13767 304.35 14.19 304.866 21.7888 301.956C57.8109 283.136 64.0544 287.523 95.0663 287.523C101.021 287.523 122.687 281.099 122.687 281.099C136.921 281.112 151.637 279.68 151.637 275.537C151.637 247.499 88.5081 259.613 70.8889 257.738C51.6574 257.892 45.4304 237.114 37.9472 219.585C31.6137 204.76 33.2453 187.744 42.071 174.255C49.4578 162.97 57.0052 151.716 67.3468 138.882C92.263 115.681 170.611 156.876 172.018 111.739V111.752Z" fill="white" fill-opacity="0.5"/>
+<path d="M117.308 102.744C129.298 104.576 130.599 105.606 151.949 107.455C153.402 107.581 155.419 107.643 157.542 107.746C159.69 107.85 161.988 107.997 164.093 108.289C166.217 108.584 168.053 109.016 169.323 109.648C170.586 110.277 171.037 110.958 171.019 111.708C170.847 117.202 169.509 121.289 167.326 124.329C165.144 127.367 162.057 129.446 158.235 130.818C150.531 133.584 140.031 133.419 128.575 132.539C117.213 131.667 104.934 130.094 94.0059 130.2C83.0914 130.307 73.1858 132.079 66.665 138.15L66.6133 138.199L66.5684 138.255C57.4919 149.519 50.5619 159.568 44.0195 169.47L41.2344 173.708C32.2292 187.471 30.5602 204.839 37.0273 219.978C40.7313 228.654 44.2163 238.379 49.1797 245.847C54.1753 253.363 60.7979 258.796 70.8369 258.737C75.3465 259.208 82.6754 258.796 90.9902 258.366C99.391 257.932 108.89 257.472 117.83 257.825C126.792 258.179 135.072 259.349 141.081 262.101C144.074 263.471 146.456 265.213 148.089 267.397C149.712 269.569 150.637 272.234 150.637 275.537C150.637 275.727 150.561 275.964 150.265 276.264C149.955 276.577 149.448 276.911 148.707 277.243C147.225 277.906 145.042 278.457 142.342 278.89C136.96 279.752 129.783 280.106 122.688 280.1H122.542L122.402 280.141H122.401C122.401 280.141 122.4 280.141 122.398 280.142C122.396 280.142 122.392 280.144 122.388 280.146C122.377 280.149 122.361 280.153 122.341 280.159C122.3 280.171 122.239 280.189 122.16 280.212C122.001 280.259 121.766 280.327 121.465 280.415C120.863 280.59 119.995 280.84 118.936 281.141C116.816 281.742 113.929 282.543 110.857 283.344C107.784 284.145 104.535 284.943 101.688 285.54C98.8129 286.144 96.4376 286.522 95.0664 286.522C87.3263 286.522 81.1573 286.25 75.6201 286.132C70.0973 286.014 65.2249 286.052 60.1807 286.689C50.0795 287.966 39.402 291.629 21.3818 301.04C17.7467 302.419 12.4988 303.012 7.04492 303.282C1.5268 303.556 -3.86348 303.495 -8.0498 303.646L-8.08887 303.648C-10.0621 303.797 -12.6186 304.645 -15.5215 305.87C-18.4499 307.106 -21.8366 308.772 -25.502 310.635C-32.8559 314.372 -41.3564 318.91 -49.7842 322.519C-58.2297 326.134 -66.4594 328.751 -73.2578 328.727C-76.6401 328.715 -79.6147 328.048 -82.0781 326.574C-84.5183 325.114 -86.5309 322.817 -87.9434 319.406C-90.0056 312.282 -92.9357 297.421 -91.79 281.085C-90.6415 264.71 -85.4085 246.972 -71.2363 233.998L-71.208 233.972L-71.1816 233.944C-48.8423 210.122 -32.2375 183.471 -16.6201 156.228L-16.6191 156.229C-12.5157 149.077 -6.02151 143.59 1.73633 140.8C19.7279 134.334 30.9204 128.814 38.8623 124.134C42.8318 121.795 45.9799 119.671 48.7451 117.757C51.5198 115.836 53.8737 114.152 56.3066 112.649C65.8949 106.73 76.6849 103.643 117.308 102.744Z" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
+</g>
+<g filter="url(#filter1_d_30441_21295)">
+<path d="M55.2461 127.351C55.2461 124.969 57.1768 123.038 59.5585 123.038L282.441 123.038C284.823 123.038 286.754 124.969 286.754 127.351V252.018C286.754 254.4 284.823 256.331 282.441 256.331H59.5585C57.1768 256.331 55.2461 254.4 55.2461 252.018L55.2461 127.351Z" fill="white"/>
+<path d="M55.2461 127.351C55.2461 124.969 57.1768 123.038 59.5585 123.038L282.441 123.038C284.823 123.038 286.754 124.969 286.754 127.351V252.018C286.754 254.4 284.823 256.331 282.441 256.331H59.5585C57.1768 256.331 55.2461 254.4 55.2461 252.018L55.2461 127.351Z" fill="black" fill-opacity="0.01"/>
+</g>
+<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M68.2121 152.131C68.2125 151.579 68.6601 151.132 69.2121 151.132H273.19C273.743 151.132 274.19 151.579 274.19 152.132V154.491C274.19 155.043 273.743 155.491 273.19 155.491H69.2106C68.6581 155.491 68.2102 155.043 68.2106 154.49L68.2121 152.131Z" fill="#C9C9C9"/>
+<rect opacity="0.5" x="138.363" y="173.932" width="53.4923" height="8.76923" rx="1" fill="#C9C9C9"/>
+<rect opacity="0.5" x="138.363" y="190.593" width="53.4923" height="8.76923" rx="1" fill="#C9C9C9"/>
+<rect opacity="0.5" x="138.363" y="207.255" width="74.5385" height="8.76923" rx="1" fill="#C9C9C9"/>
+<rect opacity="0.5" x="138.363" y="223.916" width="23.6769" height="7.89231" rx="1" fill="#C9C9C9"/>
+<rect opacity="0.5" x="68.21" y="131.808" width="98.2154" height="9.64615" rx="1" fill="#C9C9C9"/>
+<rect opacity="0.5" x="254.118" y="131.808" width="20.1692" height="9.64615" rx="1" fill="#C9C9C9"/>
+<g opacity="0.5">
+<path d="M258.636 229.775V229.82C258.624 230.78 257.816 231.502 256.212 231.986C258.144 233.39 260.077 234.513 262.01 234.513C263.942 234.513 265.875 233.39 267.808 231.986C266.215 231.502 265.406 230.779 265.383 229.817C265.383 229.452 265.384 225.896 265.386 225.531C265.501 225.547 265.491 225.537 265.386 225.508C265.389 224.305 265.394 225.879 265.401 224.236C265.409 222.593 258.525 221.123 258.626 225.635C258.627 226.095 258.63 229.254 258.636 229.775Z" fill="url(#paint0_linear_30441_21295)"/>
+<path d="M258.677 228.042C261.506 227.748 264.04 228.791 264.04 228.791C264.04 228.791 263.642 231.695 258.677 230.889V228.042Z" fill="black" fill-opacity="0.1"/>
+<path d="M255.778 221.935C256.131 221.301 256.61 221.713 256.806 221.999L257.156 224.756C257.155 224.997 257.016 225.154 256.641 225.214C256.173 225.289 255.82 224.019 255.696 223.545C255.573 223.07 255.338 222.728 255.778 221.935Z" fill="url(#paint1_linear_30441_21295)"/>
+<path d="M267.823 222.139C267.525 221.477 267.013 221.848 266.794 222.116L266.212 224.833C266.193 225.073 266.318 225.242 266.686 225.333C267.146 225.447 267.605 224.212 267.768 223.75C267.932 223.288 268.195 222.966 267.823 222.139Z" fill="url(#paint2_linear_30441_21295)"/>
+<path d="M274.567 235.317C275.705 237.354 276.36 242.052 276.36 242.052H247.661C247.661 242.052 248.317 237.354 249.455 235.317C250.593 233.281 257.529 231.392 257.529 231.392C258.144 232.502 259.947 233.514 261.793 233.56C263.797 233.609 265.85 232.596 266.489 231.391C266.489 231.391 273.428 233.28 274.567 235.317Z" fill="white"/>
+<path d="M274.567 235.317C275.705 237.354 276.36 242.052 276.36 242.052H247.661C247.661 242.052 248.317 237.354 249.455 235.317C250.593 233.281 257.529 231.392 257.529 231.392C257.529 232.627 259.922 234.407 261.793 234.438C264.402 234.438 266.489 232.627 266.489 231.391C266.489 231.391 273.428 233.28 274.567 235.317Z" fill="#C6C6C6"/>
+<path d="M266.992 222.337C266.992 226.535 264.055 229.937 261.763 229.937C259.255 229.937 256.533 226.535 256.533 222.337C256.533 218.597 256.617 214.544 261.763 214.601C267.264 214.601 266.992 218.511 266.992 222.337Z" fill="url(#paint3_linear_30441_21295)"/>
+</g>
+<rect x="68.4004" y="164.254" width="60.5077" height="73.6615" rx="5" fill="#F2F2F2"/>
+<path d="M90.3219 213.419V213.531C90.291 215.905 88.293 217.689 84.3281 218.885C89.1057 222.356 93.8835 225.132 98.6611 225.132C103.439 225.132 108.216 222.356 112.994 218.885C109.056 217.688 107.058 215.901 107 213.523C107 212.621 107.003 203.831 107.008 202.928C107.292 202.969 107.268 202.943 107.008 202.871C107.015 199.898 107.028 203.789 107.046 199.727C107.064 195.665 90.046 192.031 90.2958 203.185C90.2992 204.322 90.306 212.131 90.3219 213.419Z" fill="url(#paint4_linear_30441_21295)"/>
+<path d="M128.908 226.953C128.908 228.889 128.908 231.038 128.908 232.915C128.908 235.677 126.669 237.915 123.908 237.915H73.4004C70.639 237.915 68.4004 235.677 68.4004 232.916C68.4004 231.135 68.4004 229.085 68.4004 227.125C71.2141 222.091 87.5837 217.421 87.5837 217.421C89.1025 220.165 93.5609 222.668 98.1246 222.78C103.077 222.901 108.153 220.398 109.732 217.42C109.732 217.42 126.093 221.918 128.908 226.953Z" fill="var(--color-brand-500,#006AFF)"/>
+<path d="M90.0986 207.969C97.0933 207.243 103.679 210.271 103.679 210.271C103.679 210.271 102.373 217.129 90.0986 215.136V207.969Z" fill="#CDCDCD"/>
+<path d="M84.3625 193.62C85.2951 192.064 86.4585 193.134 86.9236 193.863L87.5732 200.78C87.5505 201.382 87.1898 201.765 86.2492 201.884C85.0734 202.033 84.2967 198.83 84.0258 197.635C83.7549 196.44 83.1968 195.564 84.3625 193.62Z" fill="url(#paint5_linear_30441_21295)"/>
+<path d="M112.518 194.016C111.6 192.451 110.427 193.51 109.955 194.235L109.24 201.146C109.257 201.748 109.614 202.134 110.553 202.262C111.728 202.421 112.535 199.227 112.817 198.034C113.099 196.841 113.665 195.971 112.518 194.016Z" fill="url(#paint6_linear_30441_21295)"/>
+<path d="M111.592 195.231C111.592 205.235 104.35 213.344 98.6979 213.344C92.5158 213.344 85.8037 205.235 85.8037 195.231C85.8037 186.319 86.5149 176.795 98.6979 176.795C110.881 176.795 111.592 186.113 111.592 195.231Z" fill="#FAFAFA"/>
+<g clip-path="url(#paint7_diamond_30441_21295_clip_path)" data-figma-skip-parse="true"><g transform="matrix(0.121857 -0.0601771 0.295483 0.589143 49.5976 249.767)"><rect x="0" y="0" width="2045.46" height="181.659" fill="url(#paint7_diamond_30441_21295)" opacity="1" shape-rendering="crispEdges"/><rect x="0" y="0" width="2045.46" height="181.659" transform="scale(1 -1)" fill="url(#paint7_diamond_30441_21295)" opacity="1" shape-rendering="crispEdges"/><rect x="0" y="0" width="2045.46" height="181.659" transform="scale(-1 1)" fill="url(#paint7_diamond_30441_21295)" opacity="1" shape-rendering="crispEdges"/><rect x="0" y="0" width="2045.46" height="181.659" transform="scale(-1)" fill="url(#paint7_diamond_30441_21295)" opacity="1" shape-rendering="crispEdges"/></g></g><path d="M288.086 126.122H290.716V253.058H288.086V126.122ZM284.031 122.067H58.879C56.6396 122.067 54.8242 123.883 54.8241 126.122L54.8241 253.058C54.8242 255.298 56.6396 257.113 58.879 257.113H284.031C286.27 257.113 288.086 255.298 288.086 253.058H290.716L290.708 253.403C290.534 256.821 287.793 259.562 284.375 259.736L284.031 259.744H58.879C55.3021 259.744 52.3811 256.935 52.2019 253.403L52.1934 253.058L52.1934 126.122L52.2019 125.778C52.3811 122.245 55.3021 119.436 58.879 119.436H284.031L284.375 119.445C287.793 119.618 290.534 122.359 290.708 125.778L290.716 126.122H288.086C288.086 123.883 286.27 122.067 284.031 122.067Z" data-figma-gradient-fill="{&#34;type&#34;:&#34;GRADIENT_DIAMOND&#34;,&#34;stops&#34;:[{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:1.0,&#34;b&#34;:1.0,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:1.0,&#34;b&#34;:1.0,&#34;a&#34;:0.0},&#34;position&#34;:1.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:1.0,&#34;b&#34;:1.0,&#34;a&#34;:0.54000002145767212},&#34;position&#34;:1.0}],&#34;stopsVar&#34;:[],&#34;transform&#34;:{&#34;m00&#34;:243.71476745605469,&#34;m01&#34;:590.96636962890625,&#34;m02&#34;:-367.74304199218750,&#34;m10&#34;:-120.35410308837891,&#34;m11&#34;:1178.2864990234375,&#34;m12&#34;:-279.19915771484375},&#34;opacity&#34;:1.0,&#34;blendMode&#34;:&#34;NORMAL&#34;,&#34;visible&#34;:true}"/>
+<path d="M288.086 126.122H290.716V253.058H288.086V126.122ZM284.031 122.067H58.879C56.6396 122.067 54.8242 123.883 54.8241 126.122L54.8241 253.058C54.8242 255.298 56.6396 257.113 58.879 257.113H284.031C286.27 257.113 288.086 255.298 288.086 253.058H290.716L290.708 253.403C290.534 256.821 287.793 259.562 284.375 259.736L284.031 259.744H58.879C55.3021 259.744 52.3811 256.935 52.2019 253.403L52.1934 253.058L52.1934 126.122L52.2019 125.778C52.3811 122.245 55.3021 119.436 58.879 119.436H284.031L284.375 119.445C287.793 119.618 290.534 122.359 290.708 125.778L290.716 126.122H288.086C288.086 123.883 286.27 122.067 284.031 122.067Z" fill="white" fill-opacity="0.5"/>
+<path d="M-0.223732 197.966C7.02476 198.212 13.6701 194.002 19.1437 189.239C25.9794 183.289 31.8335 176.216 36.3948 168.388C39.7653 162.609 42.4308 156.426 46.1083 150.832C52.2969 141.41 56.459 131.427 61.792 121.495C72.0655 121.216 84.3091 122.489 97.0513 118.711C104.673 122.057 112.943 123.927 121.265 124.189C126.545 124.354 132.062 123.811 136.576 121.067C141.089 118.322 144.708 112.948 143.527 107.795C142.303 104.847 127.1 101.084 118.606 98.9695C111.345 93.5445 102.855 93.5057 93.7963 93.3153C84.7373 93.1248 70.5823 93.076 61.792 93.3152C53.0016 93.5543 47.631 91.0823 42.7496 94.7043C19.3635 112.073 13.7064 137.718 -11.3278 152.613C-13.6442 160.76 -15.4089 169.585 -13.5967 177.857C-11.7844 186.129 -7.03699 192.933 -0.217304 197.965L-0.223732 197.966Z" fill="url(#paint8_linear_30441_21295)" fill-opacity="0.7"/>
+<path d="M43.3454 95.507C45.5139 93.898 47.7991 93.6087 50.761 93.7401C53.6549 93.8685 57.3972 94.4348 61.8188 94.3145C70.5879 94.0759 84.726 94.1252 93.775 94.3154C102.908 94.5074 111.049 94.5714 118.008 99.7706L118.169 99.8912L118.364 99.9396C122.618 100.998 128.512 102.461 133.493 104.024C135.987 104.806 138.22 105.604 139.892 106.377C140.729 106.764 141.396 107.132 141.875 107.472C142.311 107.781 142.502 108.008 142.574 108.129C143.544 112.662 140.343 117.605 136.057 120.212C131.794 122.804 126.514 123.352 121.296 123.189C113.102 122.931 104.958 121.09 97.4531 117.795L97.118 117.648L96.7671 117.752C84.1926 121.481 72.2007 120.212 61.7644 120.496L61.1855 120.511L60.9112 121.022C55.6824 130.759 51.6908 140.288 45.8446 149.402L45.2726 150.282C43.4044 153.124 41.7986 156.106 40.2493 159.078C38.8877 161.689 37.5751 164.281 36.1494 166.806L35.531 167.884C31.0249 175.618 25.2408 182.607 18.4874 188.485C13.1381 193.14 6.85579 197.073 0.124533 196.97C-6.38388 192.087 -10.887 185.552 -12.6198 177.643C-14.3485 169.752 -12.7259 161.274 -10.4707 153.261C2.03578 145.717 9.7396 135.523 17.1425 125.168C24.6326 114.691 31.8026 104.08 43.3454 95.507Z" stroke="url(#paint9_linear_30441_21295)" stroke-opacity="0.7" stroke-width="2"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_30441_21295" x="-125.661" y="74.3474" width="330.293" height="293.21" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="5.21805"/>
+<feGaussianBlur stdDeviation="16.3064"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_30441_21295"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_30441_21295" result="shape"/>
+</filter>
+<filter id="filter1_d_30441_21295" x="30.8501" y="101.895" width="280.3" height="182.084" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3.2528"/>
+<feGaussianBlur stdDeviation="12.198"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_30441_21295"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_30441_21295" result="shape"/>
+</filter>
+<clipPath id="paint7_diamond_30441_21295_clip_path"><path d="M288.086 126.122H290.716V253.058H288.086V126.122ZM284.031 122.067H58.879C56.6396 122.067 54.8242 123.883 54.8241 126.122L54.8241 253.058C54.8242 255.298 56.6396 257.113 58.879 257.113H284.031C286.27 257.113 288.086 255.298 288.086 253.058H290.716L290.708 253.403C290.534 256.821 287.793 259.562 284.375 259.736L284.031 259.744H58.879C55.3021 259.744 52.3811 256.935 52.2019 253.403L52.1934 253.058L52.1934 126.122L52.2019 125.778C52.3811 122.245 55.3021 119.436 58.879 119.436H284.031L284.375 119.445C287.793 119.618 290.534 122.359 290.708 125.778L290.716 126.122H288.086C288.086 123.883 286.27 122.067 284.031 122.067Z"/></clipPath><linearGradient id="paint0_linear_30441_21295" x1="261.496" y1="225.909" x2="261.496" y2="231.493" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D6D4D4"/>
+<stop offset="1" stop-color="#E4E4E4"/>
+</linearGradient>
+<linearGradient id="paint1_linear_30441_21295" x1="256.129" y1="222.629" x2="256.399" y2="224.317" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D7D7D7"/>
+<stop offset="1" stop-color="#CDCDCD"/>
+</linearGradient>
+<linearGradient id="paint2_linear_30441_21295" x1="267.415" y1="222.8" x2="267.003" y2="224.459" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9"/>
+<stop offset="1" stop-color="#CDCDCD"/>
+</linearGradient>
+<linearGradient id="paint3_linear_30441_21295" x1="256.259" y1="224.219" x2="262.35" y2="224.219" gradientUnits="userSpaceOnUse">
+<stop stop-color="#CECECE"/>
+<stop offset="1" stop-color="#E7E7E7"/>
+</linearGradient>
+<linearGradient id="paint4_linear_30441_21295" x1="97.3898" y1="203.863" x2="97.3898" y2="217.667" gradientUnits="userSpaceOnUse">
+<stop stop-color="#B1B1B1"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint5_linear_30441_21295" x1="86.8778" y1="197.117" x2="84.634" y2="197.532" gradientUnits="userSpaceOnUse">
+<stop offset="0.171875" stop-color="#BDBDBD"/>
+<stop offset="0.640625" stop-color="#E1E1E1"/>
+<stop offset="1" stop-color="#DDDDDD"/>
+</linearGradient>
+<linearGradient id="paint6_linear_30441_21295" x1="109.97" y1="197.489" x2="112.21" y2="197.925" gradientUnits="userSpaceOnUse">
+<stop offset="0.0416667" stop-color="#B5B5B5"/>
+<stop offset="0.362488" stop-color="#E2E2E2"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint7_diamond_30441_21295" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+<stop offset="1" stop-color="white" stop-opacity="0.54"/>
+</linearGradient>
+<linearGradient id="paint8_linear_30441_21295" x1="53.9314" y1="115.147" x2="8.76985" y2="171.708" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint9_linear_30441_21295" x1="50.5477" y1="125.458" x2="16.3148" y2="172.663" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_30441_21295">
+<rect width="342" height="382" fill="white"/>
+</clipPath>
+<clipPath id="clip1_30441_21295">
+<rect width="342" height="382" fill="white"/>
+</clipPath>
+</defs>
+</svg>`;
+
 // DS: .tag-verified component — matches component tab exactly
 const _TAG_LOGO_SVG = `<svg class="tag-verified__logo" width="44" height="12" viewBox="0 0 88 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>`;
 
@@ -686,15 +810,15 @@ function fcTutorial() {
     <div style="display:flex;flex-direction:column;gap:24px">
       ${_navBar('logo-only')}
       <div style="display:flex;flex-direction:column;gap:12px;text-align:center;padding:16px 0">
-        <div class="type-h2" style="color:var(--text-primary)">Take a selfie</div>
-        <div class="type-body-m-regular" style="color:var(--text-secondary)">Keep a neutral expression, find balanced light and remove any glasses and hats</div>
+        <div class="type-h2" style="color:var(--text-primary,#262831)">Take a selfie</div>
+        <div class="type-body-m-regular" style="color:var(--text-secondary,#60667c)">Keep a neutral expression, find balanced light and remove any glasses and hats</div>
       </div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center">
       <div style="width:296px;height:296px;flex-shrink:0">${_SELFIE_SVG}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="type-body-m-regular" style="padding:12px 0;text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
+      <div class="type-body-m-regular" style="padding:12px 0;text-align:center;color:var(--text-secondary,#60667c)">The photo will be taken automatically</div>
       <button class="btn btn-primary btn-full">Take photo</button>
       ${_verifiedTag()}
     </div>
@@ -706,7 +830,7 @@ function fcTutorial() {
 // To experiment: replace with a full-screen camera layout, change the
 // ring color, or add animated guidance arrows around the oval.
 function fcCamSearching() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg)">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg,#ffffff)">
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
@@ -715,7 +839,7 @@ function fcCamSearching() {
           <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
       </div>
-      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
+      <div class="type-feedback-l" style="color:var(--text-primary,#262831);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
     </div>
     ${_verifiedTag()}
   </div>`;
@@ -726,7 +850,7 @@ function fcCamSearching() {
 // To experiment: add a green confirmation ring, change the feedback text,
 // or show a face mesh overlay.
 function fcCamDetected() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg)">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg,#ffffff)">
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
@@ -735,7 +859,7 @@ function fcCamDetected() {
           <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
       </div>
-      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
+      <div class="type-feedback-l" style="color:var(--text-primary,#262831);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Align your face within the silhouette and look at the camera</div>
     </div>
     ${_verifiedTag()}
   </div>`;
@@ -746,7 +870,7 @@ function fcCamDetected() {
 // To experiment: change spin speed, swap the ring for a progress bar,
 // or add a countdown timer overlay.
 function fcCamCapturing() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg)">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;background:var(--surface-bg,#ffffff)">
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
@@ -755,7 +879,7 @@ function fcCamCapturing() {
           <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
       </div>
-      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Get ready...</div>
+      <div class="type-feedback-l" style="color:var(--text-primary,#262831);text-align:center;width:100%;height:80px;display:flex;align-items:center;justify-content:center">Get ready...</div>
     </div>
     ${_verifiedTag()}
   </div>`;
@@ -771,7 +895,7 @@ function _fcStatusScreen(iconHtml, label) {
       <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
         ${iconHtml}
       </div>
-      <div class="type-feedback-l" style="color:var(--text-primary);text-align:center">${label}</div>
+      <div class="type-feedback-l" style="color:var(--text-primary,#262831);text-align:center">${label}</div>
     </div>
     ${_verifiedTag()}
   </div>`;
@@ -814,8 +938,8 @@ function fcSuccess() {
 // dark=true → white text (camera dark screens)
 // dark=false → secondary text color (light screens)
 function _idEncryptedBadge(dark) {
-  const color = dark ? '#ffffff' : '#262831';
-  const lockFilter = dark ? '' : 'filter:brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(300%) hue-rotate(190deg)';
+  const color = dark ? '#ffffff' : 'var(--text-primary,#262831)';
+  const lockFilter = dark ? '' : 'filter:var(--icon-filter-primary,brightness(0) saturate(100%) invert(15%) sepia(10%) saturate(300%) hue-rotate(190deg))';
   return `<div style="display:flex;align-items:center;justify-content:center;gap:4px;padding:8px 0;flex-shrink:0">
     <img src="assets/icons/camera/lock.svg" width="16" height="16" style="${lockFilter}" alt=""/>
     <span class="type-body-m-regular" style="color:${color}">All data is encrypted</span>
@@ -873,12 +997,12 @@ function _idCameraScreen(title, subtitle, state, side, showTimer) {
 // Shared: processing / uploading screen (white background, no navBar)
 function _idProcessingScreen(label, progressPct, side) {
   const imgSrc = side === 'back' ? 'assets/illustrations/id-back.png' : 'assets/illustrations/id-front.png';
-  return `<div style="flex:1;display:flex;flex-direction:column;background:#fff;padding:0 24px">
+  return `<div style="flex:1;display:flex;flex-direction:column;background:var(--surface-bg,#ffffff);padding:0 24px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;gap:24px">
-      <div style="width:164px;height:8px;border-radius:99px;background:#EAECF0;overflow:hidden;flex-shrink:0">
+      <div style="width:164px;height:8px;border-radius:99px;background:var(--border-card,#ebecef);overflow:hidden;flex-shrink:0">
         <div style="height:100%;width:${progressPct}%;background:#189f60;border-radius:99px"></div>
       </div>
-      <div class="type-h2" style="color:#262831;text-align:center">${label}</div>
+      <div class="type-h2" style="color:var(--text-primary,#262831);text-align:center">${label}</div>
     </div>
     ${_idCapFrame('#189f60', imgSrc)}
     ${_idEncryptedBadge(false)}
@@ -897,20 +1021,20 @@ function idDocSelect() {
     <img src="${src}" style="max-width:90px;max-height:70px;object-fit:contain" alt=""/>
   </div>`;
   const card = (src, title, sub) => `
-    <div style="background:#FCFCFD;border:1px solid #EBECEF;border-radius:24px;padding:16px 24px 16px 12px;display:flex;align-items:center;box-shadow:0 2px 7px rgba(0,0,0,0.05),0 2px 35px rgba(33,39,59,0.05);width:100%">
+    <div style="background:var(--surface-card,#fcfcfd);border:1px solid var(--border-card,#ebecef);border-radius:24px;padding:16px 24px 16px 12px;display:flex;align-items:center;box-shadow:var(--shadow-card,0 2px 7px rgba(0,0,0,0.05),0 2px 35px rgba(33,39,59,0.05));width:100%">
       ${illus(src)}
       <div style="flex:1;display:flex;flex-direction:column;gap:8px;align-items:flex-end;min-width:0">
         <div style="width:100%;display:flex;flex-direction:column;gap:4px;text-align:right">
-          <div class="type-h5" style="color:var(--text-primary)">${title}</div>
-          <div class="type-body-m-regular" style="color:var(--text-secondary)">${sub}</div>
+          <div class="type-h5" style="color:var(--text-primary,#262831)">${title}</div>
+          <div class="type-body-m-regular" style="color:var(--text-secondary,#60667c)">${sub}</div>
         </div>
         ${ctaArrow}
       </div>
     </div>`;
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0;background:#fff">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;min-height:0;background:var(--surface-bg,#ffffff)">
     <div style="display:flex;flex-direction:column;gap:24px;flex-shrink:0">
       ${_navBar('logo-only')}
-      <div class="type-h2" style="color:var(--text-primary);text-align:center">Choose the document<br>for scanning</div>
+      <div class="type-h2" style="color:var(--text-primary,#262831);text-align:center">Choose the document<br>for scanning</div>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;gap:24px;justify-content:flex-end;padding-bottom:24px">
       ${card('assets/illustrations/id.svg', 'Identity Card', 'National Identity Card,<br>or Driver\'s License')}
@@ -922,19 +1046,19 @@ function idDocSelect() {
 
 // Screen 2/13 — Front Tutorial
 function idFrontTutorial() {
-  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0;background:#fff">
+  return `<div style="display:flex;flex-direction:column;flex:1;padding:8px 24px;gap:16px;min-height:0;background:var(--surface-bg)">
     <div style="display:flex;flex-direction:column;gap:24px;flex-shrink:0">
       ${_navBar('logo-only')}
       <div style="text-align:center;padding:16px 0">
-        <div class="type-h2" style="color:var(--text-primary)">Show the front of your ID</div>
-        <div class="type-h5" style="color:var(--text-secondary);margin-top:12px">Ensure your ID is readable</div>
+        <div class="type-h2" style="color:var(--text-primary,#262831)">Show the front of your ID</div>
+        <div class="type-h5" style="color:var(--text-secondary,#60667c);margin-top:12px">Ensure your ID is readable</div>
       </div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden">
-      <img src="assets/illustrations/id-tutorial/step-1.svg" style="width:100%;height:auto;display:block" alt=""/>
+      <div style="width:100%;height:auto">${_ID_FRONT_TUTORIAL_SVG}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0">
-      <div class="type-h4" style="color:var(--text-secondary);text-align:center;padding:12px 0">The photo will be taken automatically</div>
+      <div class="type-h4" style="color:var(--text-secondary,#60667c);text-align:center;padding:12px 0">The photo will be taken automatically</div>
       <button class="btn btn-primary btn-full">Let's scan</button>
       ${_verifiedTag()}
     </div>
@@ -971,12 +1095,12 @@ function _idSuccessScreen(subtitle, imgSrc, buttonLabel) {
   const checkmark = `<div style="width:40px;height:40px;border-radius:50%;background:#189f60;display:flex;align-items:center;justify-content:center;flex-shrink:0">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.5 10.5L8.5 14.5L15.5 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>`;
-  return `<div style="flex:1;display:flex;flex-direction:column;background:#fff;padding:0 24px">
+  return `<div style="flex:1;display:flex;flex-direction:column;background:var(--surface-bg,#ffffff);padding:0 24px">
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;gap:16px;text-align:center">
       ${checkmark}
       <div style="display:flex;flex-direction:column;gap:12px;width:100%">
-        <div class="type-h2" style="color:#262831">Successfully processed!</div>
-        <div class="type-h5" style="color:#60667c">${subtitle}</div>
+        <div class="type-h2" style="color:var(--text-primary,#262831)">Successfully processed!</div>
+        <div class="type-h5" style="color:var(--text-secondary,#60667c)">${subtitle}</div>
       </div>
     </div>
     ${_idCapFrame('#189f60', imgSrc)}
@@ -994,8 +1118,8 @@ function idFrontSuccess() {
 
 // Screen 9/14 — Flip
 function idFlip() {
-  return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;background:#fff;padding:24px;text-align:center">
-    <div class="type-h2" style="color:#262831">Show the back of your ID</div>
+  return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;background:var(--surface-bg,#ffffff);padding:24px;text-align:center">
+    <div class="type-h2" style="color:var(--text-primary,#262831)">Show the back of your ID</div>
     <img src="assets/illustrations/id-flip.svg" width="260" height="138" alt="Flip ID"/>
   </div>`;
 }
@@ -1188,7 +1312,8 @@ let _labPan       = { x: 0, y: 0 };
 let _labDragging  = false;
 let _labDragOrigin = { x: 0, y: 0 };
 let _labDragMoved  = false;   // true once pointer moves > threshold during drag
-let _labActiveModule = 'face-capture';
+let _labActiveModule = null;
+let _labHomeActive   = true;
 let _labStreamingActive = false; // true while blank-canvas streaming is in progress
 const _moduleLastExp  = {}; // moduleId → expId or null ('original')
 const _newFlowModules = []; // [{ id: 'blank-1', label: 'Flow 1' }, ...]
@@ -1263,6 +1388,7 @@ function initLab() {
   if (_labInit) return;
   _labInit = true;
 
+  document.body.classList.add('lab-home-mode');
   _labSetupInteraction();
 
   document.addEventListener('keydown', e => {
@@ -1286,13 +1412,33 @@ function initLab() {
     }
   });
 
-  // Set initial heading with active module name
-  const initMod = _labModuleData[_labActiveModule];
-  _labSetExpHeading(initMod);
+  if (!_labHomeActive && _labActiveModule) {
+    const initMod = _labModuleData[_labActiveModule];
+    _labSetExpHeading(initMod);
+    _labBuildStage();
+    _labUpdateMeta();
+    _labCenterReset(false);
+  }
+}
 
-  _labBuildStage();
-  _labUpdateMeta();
-  _labCenterReset(false);
+// ---- home screen ----
+
+function labHideHome() {
+  if (!_labHomeActive) return;
+  _labHomeActive = false;
+  document.getElementById('lab-home')?.classList.add('lab-home--hidden');
+  document.body.classList.remove('lab-home-mode');
+}
+
+function labHomeSelectModule(id) {
+  labHideHome();
+  const btn = document.querySelector(`.lab-sidebar-item[data-module="${id}"]`);
+  if (btn) labSelectModule(btn);
+}
+
+function labHomeNewFlow() {
+  labHideHome();
+  labCreateBlankExperiment();
 }
 
 // ---- experiment overlay heading ----
@@ -1320,6 +1466,7 @@ function _labSetExpHeading(mod) {
 // ---- module selection ----
 
 function labSelectModule(btn) {
+  labHideHome();
   const id  = btn.dataset.module;
   const mod = _labModuleData[id];
   if (!mod || !mod.screens.length) return;
@@ -1347,7 +1494,7 @@ function labSelectModule(btn) {
   const btn2 = document.getElementById('lab-expand-btn');
   const lbl  = document.getElementById('lab-expand-label');
   if (btn2) btn2.classList.remove('lab-expand-btn--active');
-  if (lbl)  lbl.textContent = 'EXPAND';
+  if (lbl)  lbl.textContent = 'Expand';
 
   document.getElementById('lab-bar-module').textContent = mod.label;
   _labSetExpHeading(mod);
@@ -1591,7 +1738,7 @@ function labExpand() {
   const lbl = document.getElementById('lab-expand-label');
   if (vp)  vp.classList.add('lab-expanded');
   if (btn) btn.classList.add('lab-expand-btn--active');
-  if (lbl) lbl.textContent = 'COLLAPSE';
+  if (lbl) lbl.textContent = 'Collapse';
 
   _labApplyCellPositions(true);
   _labCenterReset(true);
@@ -1606,7 +1753,7 @@ function labCollapse() {
   const lbl = document.getElementById('lab-expand-label');
   if (vp)  vp.classList.remove('lab-expanded');
   if (btn) btn.classList.remove('lab-expand-btn--active');
-  if (lbl) lbl.textContent = 'EXPAND';
+  if (lbl) lbl.textContent = 'Expand';
 
   _labApplyCellPositions(true);
   _labCenterReset(true);
@@ -1727,6 +1874,18 @@ function labZoom(delta) {
   _labApplyTransform();
 }
 
+function labFitCenter() {
+  _labCenterReset(true);
+}
+
+function labToggleControls() {
+  const vp  = document.getElementById('lab-canvas-vp');
+  const btn = document.getElementById('lab-ctrl-toggle');
+  if (!vp) return;
+  const isOpen = vp.classList.toggle('lab-ctrl-open');
+  if (btn) btn.classList.toggle('active', isOpen);
+}
+
 function _labSetupInteraction() {
   const vp = document.getElementById('lab-canvas-vp');
   if (!vp) return;
@@ -1734,7 +1893,7 @@ function _labSetupInteraction() {
   vp.addEventListener('mousedown', e => {
     if (e.button !== 0) return;
     if (!_labExpanded) return;
-    if (e.target.closest('.lab-arrow, .lab-zoom-bar, .lab-expand-btn, .lab-sidebar-item, .lab-sidebar-toggle, .lab-sidebar, .lab-theme-toggle')) return;
+    if (e.target.closest('.lab-arrow, .lab-zoom-bar, .lab-expand-btn, .lab-sidebar-item, .lab-sidebar-toggle, .lab-sidebar, .lab-theme-toggle, .lab-exp-panel, .lab-exp-messages, .lab-experiment-overlay')) return;
     _labDragging = true;
     _labDragMoved = false;
     _labDragOrigin = { x: e.clientX - _labPan.x, y: e.clientY - _labPan.y };
@@ -1757,6 +1916,7 @@ function _labSetupInteraction() {
   document.addEventListener('mouseup', () => { _labDragging = false; });
 
   vp.addEventListener('wheel', e => {
+    if (e.target.closest('.lab-exp-panel, .lab-exp-messages, .lab-sidebar')) return;
     e.preventDefault();
     if (!_labExpanded) return;
     const rect = vp.getBoundingClientRect();
@@ -2091,7 +2251,13 @@ async function _callClaude(history, currentScreens) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages, moduleId: _labActiveModule, screenCount: currentScreens.length }),
   });
-  const data = await res.json();
+  const raw = await res.text();
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`Server returned non-JSON (HTTP ${res.status}): ${raw.slice(0, 120)}`);
+  }
   return data;
 }
 
@@ -2111,6 +2277,7 @@ function labCreateExperiment(moduleId, moduleLabel) {
 }
 
 function labCreateBlankExperiment() {
+  labHideHome();
   _newFlowCounter++;
   const flowId = 'blank-' + _newFlowCounter;
   const label  = 'Flow ' + _newFlowCounter;
@@ -2121,6 +2288,7 @@ function labCreateBlankExperiment() {
 
 // Switch to an existing blank flow page
 function labSelectFlow(btn) {
+  labHideHome();
   const flowId = btn.dataset.flow;
 
   document.querySelectorAll('.lab-sidebar-item').forEach(b => b.classList.remove('lab-sidebar-item--active'));
@@ -2772,7 +2940,7 @@ async function _runExpResponse(exp) {
     labExpRenderMessages(exp);
   } catch (err) {
     exp.messages = exp.messages.filter(m => !m.thinking);
-    exp.messages.push({ role: 'ai', text: 'Something went wrong — please try again.' });
+    exp.messages.push({ role: 'ai', text: `Error: ${err?.message || err || 'unknown'}` });
     labExpRenderMessages(exp);
   } finally {
     restore();
@@ -2891,7 +3059,8 @@ function executeLabAction(action, targetExpId) {
 
     case 'setTheme': {
       if (action.theme === 'light' || action.theme === 'dark') {
-        setTopbarTheme(action.theme);
+        // Only apply to DOM if this experiment is currently being viewed
+        if (resolvedExpId === _activeExpId) setTopbarTheme(action.theme);
       }
       break;
     }
@@ -2906,7 +3075,8 @@ function executeLabAction(action, targetExpId) {
             activeExp.tokenOverrides[action.token] = action.value;
           }
         }
-        updateToken(action.token, action.value);
+        // Only apply to DOM if this experiment is currently being viewed
+        if (resolvedExpId === _activeExpId) updateToken(action.token, action.value);
         // Sync hex input if one exists for this token
         const tokenHexMap = {
           '--color-brand-500': 'brand-500-hex',
@@ -2968,15 +3138,17 @@ function executeLabAction(action, targetExpId) {
         // Save to active experiment
         const activeExp = _experiments.find(e => e.id === resolvedExpId);
         if (activeExp) activeExp.injectedCSS = (activeExp.injectedCSS || '') + '\n' + scoped;
-        // Apply to DOM
-        _applyExpCSS(scoped, true);
-        // Glow all visible cells since CSS affects all screens
-        requestAnimationFrame(() => {
-          document.querySelectorAll('.lab-phone-cell').forEach(cell => {
-            cell.classList.add('lab-phone-cell--modified');
-            setTimeout(() => cell.classList.remove('lab-phone-cell--modified'), 2000);
+        // Only apply to DOM if this experiment is currently being viewed
+        if (resolvedExpId === _activeExpId) {
+          _applyExpCSS(scoped, true);
+          // Glow all visible cells since CSS affects all screens
+          requestAnimationFrame(() => {
+            document.querySelectorAll('.lab-phone-cell').forEach(cell => {
+              cell.classList.add('lab-phone-cell--modified');
+              setTimeout(() => cell.classList.remove('lab-phone-cell--modified'), 2000);
+            });
           });
-        });
+        }
       }
       break;
     }
