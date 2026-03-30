@@ -3031,14 +3031,13 @@ select {
   50%     { opacity: 1;   transform: scale(1.25); }
 }
 .lab-exp-heading {
-  font-family: var(--font-family-rethink); font-size: 20px; font-weight: 700;
-  color: #0D0D0D; text-align: center; line-height: 1.2; margin: 0;
-  letter-spacing: -0.4px;
-  white-space: nowrap;
-  overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--font-family-rethink); font-size: 20px; font-weight: 500;
+  color: #0D0D0D; text-align: center; line-height: 1.3; margin: 0;
+  letter-spacing: -0.3px;
   max-width: 100%;
 }
-.lab-exp-heading em { color: inherit; font-style: normal; font-weight: inherit; }
+.lab-exp-heading em,
+.lab-exp-heading strong { font-weight: inherit; font-style: normal; }
 .lab-exp-tagline {
   font-family: var(--font-family-rethink); font-size: 10px; font-weight: 500;
   color: #C0C8D4; text-align: center; margin: 0;
