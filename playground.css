@@ -3774,32 +3774,51 @@ body.lab-home-mode .tab.active { color: #fcfcfd; border-bottom-color: #3388ff; }
   cursor: pointer;
 }
 
-/* Generating — cycling color border ring + intense glow */
-/* Uses box-shadow ring (0 0 0 Xpx color) — no background override, no transparency */
+/* Generating — all 3 colors visible simultaneously, spinning around the frame */
+/* Directional shadows simulate the conic-gradient rotation: blue/purple/pink at different sides */
 .lab-phone-cell--generating .lab-phone-frame {
   animation: lab-cell-glow-spin 2s linear infinite;
 }
 @keyframes lab-cell-glow-spin {
-  0%, 100% {
+  /* Blue top · Purple right · Pink bottom */
+  0% {
     box-shadow:
-      0 0 0 3px #006aff,
-      0 0 24px 4px rgba(0,106,255,0.70),
-      0 0 56px 12px rgba(0,106,255,0.35),
-      0 0 90px 20px rgba(0,106,255,0.15);
+      0 0 0 2.5px #006aff,
+      0  -18px 40px 6px  rgba(0,106,255,0.85),
+      18px  0  40px 6px  rgba(124,58,237,0.75),
+      0   18px 40px 6px  rgba(236,72,153,0.85),
+      -18px 0  40px 6px  rgba(0,106,255,0.60),
+      0 0 80px 20px      rgba(124,58,237,0.25);
   }
+  /* Purple top · Pink right · Blue bottom */
   33% {
     box-shadow:
-      0 0 0 3px #7c3aed,
-      0 0 24px 4px rgba(124,58,237,0.70),
-      0 0 56px 12px rgba(124,58,237,0.35),
-      0 0 90px 20px rgba(124,58,237,0.15);
+      0 0 0 2.5px #7c3aed,
+      0  -18px 40px 6px  rgba(124,58,237,0.85),
+      18px  0  40px 6px  rgba(236,72,153,0.75),
+      0   18px 40px 6px  rgba(0,106,255,0.85),
+      -18px 0  40px 6px  rgba(124,58,237,0.60),
+      0 0 80px 20px      rgba(236,72,153,0.25);
   }
+  /* Pink top · Blue right · Purple bottom */
   66% {
     box-shadow:
-      0 0 0 3px #ec4899,
-      0 0 24px 4px rgba(236,72,153,0.70),
-      0 0 56px 12px rgba(236,72,153,0.35),
-      0 0 90px 20px rgba(236,72,153,0.15);
+      0 0 0 2.5px #ec4899,
+      0  -18px 40px 6px  rgba(236,72,153,0.85),
+      18px  0  40px 6px  rgba(0,106,255,0.75),
+      0   18px 40px 6px  rgba(124,58,237,0.85),
+      -18px 0  40px 6px  rgba(236,72,153,0.60),
+      0 0 80px 20px      rgba(0,106,255,0.25);
+  }
+  /* Back to blue top */
+  100% {
+    box-shadow:
+      0 0 0 2.5px #006aff,
+      0  -18px 40px 6px  rgba(0,106,255,0.85),
+      18px  0  40px 6px  rgba(124,58,237,0.75),
+      0   18px 40px 6px  rgba(236,72,153,0.85),
+      -18px 0  40px 6px  rgba(0,106,255,0.60),
+      0 0 80px 20px      rgba(124,58,237,0.25);
   }
 }
 
