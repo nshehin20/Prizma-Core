@@ -3051,65 +3051,33 @@ select {
   display: flex; flex-direction: column; align-items: center;
   gap: 14px; width: 560px; max-width: calc(100% - 80px);
 }
+@property --bar-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .lab-exp-bar {
   width: 100%;
   display: flex; align-items: center; gap: 10px;
-  /* Gradient border via background-clip trick */
   background:
     linear-gradient(#fff, #fff) padding-box,
-    conic-gradient(from 210deg, #006AFF, #7C3AED, #EC4899, #7C3AED, #006AFF, #006AFF) border-box;
+    conic-gradient(from var(--bar-angle), #006aff, #7c3aed, #ec4899, #006aff) border-box;
   border: 1.5px solid transparent;
   border-radius: 16px;
   padding: 0 8px 0 16px;
   height: 54px;
-  box-shadow:
-    0 0 16px rgba(0,106,255,0.45),
-    0 0 32px rgba(124,58,237,0.25),
-    0 0 48px rgba(236,72,153,0.12),
-    0 2px 8px rgba(0,0,0,0.05);
-  animation: lab-bar-glow 4s ease-in-out infinite;
+  animation:
+    lab-bar-border-spin 2s linear infinite,
+    lab-bar-glow-spin   2s linear infinite;
 }
-.lab-exp-bar:focus-within {
-  animation: lab-bar-glow-active 2.5s ease-in-out infinite;
+@keyframes lab-bar-border-spin {
+  to { --bar-angle: 360deg; }
 }
-@keyframes lab-bar-glow {
-  0%, 100% {
-    box-shadow:
-      0 0 14px rgba(0,106,255,0.45),
-      0 0 30px rgba(124,58,237,0.22),
-      0 0 50px rgba(236,72,153,0.10),
-      0 2px 8px rgba(0,0,0,0.05);
-  }
-  40% {
-    box-shadow:
-      0 0 20px rgba(124,58,237,0.55),
-      0 0 40px rgba(0,106,255,0.28),
-      0 0 60px rgba(236,72,153,0.18),
-      0 2px 8px rgba(0,0,0,0.05);
-  }
-  70% {
-    box-shadow:
-      0 0 18px rgba(236,72,153,0.45),
-      0 0 36px rgba(124,58,237,0.28),
-      0 0 54px rgba(0,106,255,0.14),
-      0 2px 8px rgba(0,0,0,0.05);
-  }
-}
-@keyframes lab-bar-glow-active {
-  0%, 100% {
-    box-shadow:
-      0 0 22px rgba(0,106,255,0.65),
-      0 0 48px rgba(124,58,237,0.40),
-      0 0 80px rgba(236,72,153,0.20),
-      0 2px 8px rgba(0,0,0,0.05);
-  }
-  50% {
-    box-shadow:
-      0 0 32px rgba(124,58,237,0.75),
-      0 0 64px rgba(0,106,255,0.40),
-      0 0 100px rgba(236,72,153,0.25),
-      0 2px 8px rgba(0,0,0,0.05);
-  }
+@keyframes lab-bar-glow-spin {
+  0%, 100% { box-shadow: 0 0 7px rgba(0,106,255,0.36),   0 0 14px rgba(0,106,255,0.16),   0 2px 8px rgba(0,0,0,0.05); }
+  33%       { box-shadow: 0 0 7px rgba(124,58,237,0.36),  0 0 14px rgba(124,58,237,0.16),  0 2px 8px rgba(0,0,0,0.05); }
+  66%       { box-shadow: 0 0 7px rgba(236,72,153,0.36),  0 0 14px rgba(236,72,153,0.16),  0 2px 8px rgba(0,0,0,0.05); }
 }
 .lab-exp-bar-icon {
   flex-shrink: 0; opacity: 0.85;
@@ -3819,35 +3787,29 @@ body.lab-home-mode .tab.active { color: #fcfcfd; border-bottom-color: #3388ff; }
   cursor: pointer;
 }
 
-/* Generating pulse — breathes while Claude is working */
-.lab-phone-cell--generating .lab-phone-frame {
-  animation: lab-cell-generating 2s ease-in-out infinite;
+/* Generating — spinning gradient border + synced glow */
+@property --cell-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
-@keyframes lab-cell-generating {
-  0%   {
-    box-shadow:
-      0 0 0 2px rgba(0,106,255,0.50),
-      0 0 20px 6px rgba(0,106,255,0.22),
-      0 0 48px 12px rgba(124,58,237,0.10);
-  }
-  33%  {
-    box-shadow:
-      0 0 0 3px rgba(124,58,237,0.75),
-      0 0 36px 12px rgba(124,58,237,0.32),
-      0 0 72px 20px rgba(236,72,153,0.16);
-  }
-  66%  {
-    box-shadow:
-      0 0 0 2px rgba(236,72,153,0.60),
-      0 0 28px 8px rgba(236,72,153,0.24),
-      0 0 60px 16px rgba(0,106,255,0.12);
-  }
-  100% {
-    box-shadow:
-      0 0 0 2px rgba(0,106,255,0.50),
-      0 0 20px 6px rgba(0,106,255,0.22),
-      0 0 48px 12px rgba(124,58,237,0.10);
-  }
+
+.lab-phone-cell--generating .lab-phone-frame {
+  border: 2.3px solid transparent;
+  background:
+    var(--surface-bg, #fff) padding-box,
+    conic-gradient(from var(--cell-angle), #006aff, #7c3aed, #ec4899, #006aff) border-box;
+  animation:
+    lab-cell-border-spin 2s linear infinite,
+    lab-cell-glow-spin   2s linear infinite;
+}
+@keyframes lab-cell-border-spin {
+  to { --cell-angle: 360deg; }
+}
+@keyframes lab-cell-glow-spin {
+  0%, 100% { box-shadow: 0 0 11px rgba(0,106,255,0.36),  0 0 21px rgba(0,106,255,0.16); }
+  33%       { box-shadow: 0 0 11px rgba(124,58,237,0.36), 0 0 21px rgba(124,58,237,0.16); }
+  66%       { box-shadow: 0 0 11px rgba(236,72,153,0.36), 0 0 21px rgba(236,72,153,0.16); }
 }
 
 /* Modified glow — flashes when Claude updates a screen */
