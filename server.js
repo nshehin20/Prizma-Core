@@ -745,6 +745,38 @@ function callClaude(apiKey, messages) {
   });
 }
 
+// ── Keep conversation history bounded so Claude never drifts off-format ────────
+// Preserve any injected prefix (blank-canvas context pair) + last MAX_TURNS turns.
+const MAX_TURNS = 6; // 6 user+assistant pairs = 12 messages
+function trimHistory(messages, prefixCount = 0) {
+  const tail = messages.slice(prefixCount);
+  if (tail.length <= MAX_TURNS * 2) return messages;
+  return [...messages.slice(0, prefixCount), ...tail.slice(-(MAX_TURNS * 2))];
+}
+
+// ── Auto-retry when Claude returns prose instead of JSON ────────────────────────
+async function callClaudeJSON(apiKey, messages) {
+  const { status, body } = await callClaude(apiKey, messages);
+  if (status !== 200) return { status, body, text: '' };
+
+  const raw  = body.content?.[0]?.text || '';
+  const clean = raw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+
+  // Happy path — valid JSON on first try
+  try { JSON.parse(clean); return { status, body, text: clean }; } catch {}
+
+  // Claude returned prose — inject a one-shot correction and retry once
+  const corrected = [
+    ...messages,
+    { role: 'assistant', content: raw },
+    { role: 'user',      content: 'CORRECTION: your last response was not valid JSON. Output ONLY a JSON object with "message" and "actions" fields. No prose, no markdown. JSON only.' },
+  ];
+  const retry = await callClaude(apiKey, corrected);
+  const retryRaw   = retry.body.content?.[0]?.text || '';
+  const retryClean = retryRaw.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+  return { status: retry.status, body: retry.body, text: retryClean, fallback: raw };
+}
+
 // ── Figma export — puppeteer screenshot pipeline ──────────────────────────────
 const _exportCache = new Map(); // exportId → { screens:[{label,index,png:Buffer}], createdAt }
 
@@ -936,14 +968,15 @@ Understood — building a new flow from scratch.
         messages.unshift({ role: 'user', content: ctx });
       }
 
-      // Debug: log messages structure to diagnose empty-content errors
-      console.log('[stream-prompt] messages count:', messages.length, '| roles:', messages.map(m => `${m.role}(${typeof m.content === 'string' ? m.content.slice(0,20).replace(/\n/g,' ') || 'EMPTY' : 'array'})`).join(', '));
+      // Trim history to keep context bounded
+      const streamPrefixCount = moduleId?.startsWith('blank-') ? 2 : 0;
+      const trimmedMessages = trimHistory(messages, streamPrefixCount);
 
       const requestBody = JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 16000,
         system: STREAM_SYSTEM_PROMPT,
-        messages,
+        messages: trimmedMessages,
         stream: true,
       });
 
@@ -1082,19 +1115,22 @@ Understood — building a new flow from scratch.
           return res.end(JSON.stringify({ message: 'No API key found in config.local.js.', actions: [] }));
         }
 
-        const { status, body: claudeBody } = await callClaude(apiKey, messages);
+        // Trim history to keep context bounded, then call with auto-retry on non-JSON
+        const prefixCount = moduleId?.startsWith('blank-') ? 2 : 0;
+        const trimmed = trimHistory(messages, prefixCount);
+        const { status, body: claudeBody, text: clean, fallback } = await callClaudeJSON(apiKey, trimmed);
+
         if (status !== 200) {
           const errMsg = claudeBody?.error?.message || `HTTP ${status}`;
           return res.end(JSON.stringify({ message: `API error: ${errMsg}`, actions: [] }));
         }
 
-        const text = claudeBody.content?.[0]?.text || '';
-        const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
         try {
-          JSON.parse(clean); // validate — throws if Claude returned prose
+          JSON.parse(clean);
           res.end(clean);
         } catch {
-          res.end(JSON.stringify({ message: clean, actions: [] }));
+          // Both attempts returned non-JSON — surface the original prose as a message
+          res.end(JSON.stringify({ message: fallback || clean, actions: [] }));
         }
       } catch (err) {
         res.end(JSON.stringify({ message: `Server error: ${err.message}`, actions: [] }));
