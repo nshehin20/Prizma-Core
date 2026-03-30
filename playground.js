@@ -563,6 +563,64 @@ const _VERIFIED_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="non
 const _BACK_SVG2 = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const _CLOSE_SVG2 = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+// Selfie illustration — inlined so fill="var(--color-brand-500)" reacts to token changes
+// Shirt (opacity 0.1 rect + solid shirt path) and halo gradient stop use the brand color.
+const _SELFIE_SVG = `<svg width="296" height="296" viewBox="0 0 296 296" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_8839_45592)">
+<circle cx="148" cy="148" r="143.5" stroke="url(#paint0_linear_8839_45592)" stroke-width="9"/>
+<mask id="mask0_8839_45592" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="24" y="24" width="248" height="248">
+<circle cx="148" cy="148" r="124" fill="#E9E9EB"/>
+</mask>
+<g mask="url(#mask0_8839_45592)">
+<g clip-path="url(#clip1_8839_45592)">
+<path opacity="0.1" d="M7.99951 0H288V305H7.99951V0Z" fill="var(--color-brand-500)"/>
+<path d="M277.705 260.808C289.41 281.752 296.148 330.054 296.148 330.054H1.06812C1.06812 330.054 7.80823 281.746 19.5106 260.808C31.213 239.87 102.532 220.45 102.532 220.45C108.849 231.862 127.391 242.272 146.372 242.737C166.969 243.242 188.082 232.83 194.649 220.442C194.649 220.442 266.001 239.865 277.705 260.808Z" fill="white"/>
+<path d="M113.924 203.799V204.266C113.796 214.137 105.486 221.56 88.9956 226.534C108.866 240.968 128.737 252.516 148.608 252.516C168.478 252.516 188.35 240.968 208.22 226.534C191.841 221.554 183.532 214.12 183.291 204.232C183.291 200.479 183.304 163.92 183.322 160.167C184.506 160.334 184.405 160.228 183.322 159.927C183.354 147.565 183.407 163.748 183.481 146.854C183.555 129.959 112.777 114.845 113.816 161.234C113.83 165.964 113.858 198.442 113.924 203.799Z" fill="url(#paint1_linear_8839_45592)"/>
+<path d="M112.989 181.133C142.081 178.111 169.471 190.707 169.471 190.707C169.471 190.707 164.041 219.229 112.989 210.94V181.133Z" fill="#CDCDCD"/>
+<path d="M277.705 260.808C289.41 281.752 296.148 330.054 296.148 330.054H1.06812C1.06812 330.054 7.80823 281.746 19.5106 260.808C31.213 239.87 102.532 220.45 102.532 220.45C102.532 233.142 127.133 251.445 146.372 251.771C173.198 251.771 194.649 233.142 194.649 220.442C194.649 220.442 266.001 239.865 277.705 260.808Z" fill="var(--color-brand-500)"/>
+<path d="M89.139 121.453C93.0178 114.983 97.8562 119.432 99.7906 122.466L102.493 151.234C102.398 153.738 100.898 155.328 96.9857 155.823C92.0955 156.442 88.8651 143.124 87.7384 138.152C86.6116 133.181 84.2904 129.541 89.139 121.453Z" fill="url(#paint2_linear_8839_45592)"/>
+<path d="M206.239 123.102C202.422 116.595 197.542 120.999 195.579 124.014L192.605 152.756C192.676 155.26 194.16 156.864 198.068 157.396C202.952 158.061 206.308 144.774 207.482 139.814C208.656 134.853 211.011 131.235 206.239 123.102Z" fill="url(#paint3_linear_8839_45592)"/>
+<path d="M202.386 128.153C202.386 169.759 172.266 203.486 148.758 203.486C123.046 203.486 95.1296 169.759 95.1296 128.153C95.1296 91.0844 98.0877 51.4751 148.758 51.4751C199.428 51.4751 202.386 90.2273 202.386 128.153Z" fill="url(#paint4_linear_8839_45592)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_8839_45592" x1="24.5181" y1="30.759" x2="217.542" y2="256.771" gradientUnits="userSpaceOnUse">
+<animateTransform attributeName="gradientTransform" type="rotate" from="0 148 148" to="360 148 148" dur="6s" repeatCount="indefinite"/>
+<stop stop-color="var(--color-brand-500)"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint1_linear_8839_45592" x1="143.321" y1="164.054" x2="143.321" y2="221.466" gradientUnits="userSpaceOnUse">
+<stop stop-color="#B1B1B1"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint2_linear_8839_45592" x1="99.6002" y1="135.999" x2="90.2678" y2="137.725" gradientUnits="userSpaceOnUse">
+<stop offset="0.171875" stop-color="#BDBDBD"/>
+<stop offset="0.640625" stop-color="#E1E1E1"/>
+<stop offset="1" stop-color="#DDDDDD"/>
+</linearGradient>
+<linearGradient id="paint3_linear_8839_45592" x1="195.641" y1="137.548" x2="204.957" y2="139.362" gradientUnits="userSpaceOnUse">
+<stop offset="0.0416667" stop-color="#B5B5B5"/>
+<stop offset="0.362488" stop-color="#E2E2E2"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<linearGradient id="paint4_linear_8839_45592" x1="101.722" y1="126.77" x2="177.474" y2="127.057" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E0E0E0"/>
+<stop offset="1" stop-color="white"/>
+</linearGradient>
+<clipPath id="clip0_8839_45592"><rect width="296" height="296" fill="white"/></clipPath>
+<clipPath id="clip1_8839_45592"><rect width="324.588" height="324.588" fill="white" transform="translate(-13.686 -0.686035)"/></clipPath>
+</defs>
+</svg>`;
+
+// CSS ring that replaces selfie-ring.svg — reacts to --color-brand-500 token changes
+function _selfieRing(animate) {
+  const spin = animate
+    ? 'animation:prizma-spin 2s linear infinite;transform-origin:center;will-change:transform;'
+    : '';
+  return `<div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 270deg,var(--color-brand-500) 0%,transparent 55%);-webkit-mask:radial-gradient(circle,transparent 78%,black 79%);mask:radial-gradient(circle,transparent 78%,black 79%);${spin}"></div>`;
+}
+
 // DS: .tag-verified component — matches component tab exactly
 const _TAG_LOGO_SVG = `<svg class="tag-verified__logo" width="44" height="12" viewBox="0 0 88 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M79.4916 22.4404C78.0238 22.4404 76.7418 22.1468 75.6458 21.5597C74.5498 20.953 73.6985 20.0722 73.0918 18.9175C72.4851 17.7628 72.1817 16.3732 72.1817 14.7488C72.1817 12.1654 72.7982 10.1984 74.0312 8.84801C75.2838 7.47801 77.0354 6.79301 79.2861 6.79301C80.9106 6.79301 82.2121 7.14529 83.1906 7.84987C84.1888 8.55444 84.9129 9.56237 85.3631 10.8737C85.8328 12.1654 86.0578 13.7115 86.0383 15.5121H74.589L74.2954 12.9874H83.0732L82.3686 14.0442C82.3295 12.4981 82.0555 11.3923 81.5466 10.7269C81.0573 10.0419 80.2647 9.69937 79.1687 9.69937C78.5033 9.69937 77.9161 9.85594 77.4073 10.1691C76.918 10.4627 76.5363 10.9617 76.2623 11.6663C76.0079 12.3709 75.8807 13.3397 75.8807 14.5727C75.8807 16.0992 76.2428 17.2735 76.9669 18.0955C77.6911 18.8979 78.7968 19.2992 80.2843 19.2992C80.891 19.2992 81.4683 19.2404 82.0163 19.123C82.5839 18.986 83.1026 18.8294 83.5723 18.6533C84.0616 18.4772 84.4726 18.3108 84.8053 18.1542V21.4422C84.1203 21.7358 83.3374 21.9707 82.4567 22.1468C81.5956 22.3425 80.6072 22.4404 79.4916 22.4404Z" fill="var(--logo-color)"/><path d="M62.8555 22.4404C61.8378 22.4404 60.869 22.323 59.9492 22.0881C59.0293 21.8532 58.2171 21.4422 57.5125 20.8551C56.8079 20.268 56.2501 19.4557 55.8391 18.4184C55.4477 17.3812 55.252 16.0601 55.252 14.4552C55.252 12.0871 55.8294 10.218 56.9841 8.84801C58.1388 7.47801 59.8904 6.79301 62.239 6.79301C62.5717 6.79301 63.0023 6.83215 63.5307 6.91044C64.0592 6.98872 64.5974 7.12572 65.1454 7.32144C65.7129 7.49758 66.2022 7.78137 66.6132 8.1728L65.7912 9.34708V1.06836H69.4609V18.5359C69.4609 19.2013 69.2652 19.7787 68.8737 20.268C68.5019 20.7572 67.993 21.1682 67.3472 21.501C66.7013 21.8141 65.9869 22.049 65.2041 22.2055C64.4212 22.3621 63.6384 22.4404 62.8555 22.4404ZM62.9729 19.2698C63.7754 19.2698 64.4408 19.1719 64.9692 18.9762C65.5172 18.7805 65.7912 18.4967 65.7912 18.1249V10.6094C65.3607 10.355 64.9007 10.1691 64.4114 10.0517C63.9222 9.93423 63.4524 9.87551 63.0023 9.87551C62.102 9.87551 61.3583 10.0419 60.7712 10.3746C60.184 10.6877 59.7437 11.1966 59.4501 11.9012C59.1565 12.5862 59.0097 13.4669 59.0097 14.5433C59.0097 15.4827 59.1272 16.3047 59.362 17.0093C59.5969 17.7139 59.9981 18.2717 60.5657 18.6827C61.1528 19.0741 61.9552 19.2698 62.9729 19.2698Z" fill="var(--logo-color)"/><path d="M45.9756 22.4404C43.5487 22.4404 41.7286 21.7652 40.5152 20.4147C39.3017 19.0643 38.695 17.1169 38.695 14.5727C38.695 11.8522 39.3115 9.87551 40.5445 8.64251C41.7971 7.40951 43.5977 6.79301 45.9462 6.79301C47.5902 6.79301 48.9602 7.08658 50.0562 7.67372C51.1522 8.2413 51.9645 9.10244 52.4929 10.2572C53.0409 11.4119 53.3149 12.8504 53.3149 14.5727C53.3149 17.1169 52.6788 19.0643 51.4067 20.4147C50.1541 21.7652 48.3437 22.4404 45.9756 22.4404ZM45.9756 19.3872C46.8367 19.3872 47.5315 19.1915 48.06 18.8001C48.608 18.4087 49.0092 17.8607 49.2636 17.1561C49.518 16.4319 49.6452 15.5708 49.6452 14.5727C49.6452 13.4571 49.5082 12.547 49.2342 11.8424C48.9798 11.1379 48.5786 10.6192 48.0306 10.2865C47.5022 9.9538 46.8172 9.78744 45.9756 9.78744C45.1145 9.78744 44.4197 9.96358 43.8912 10.3159C43.3628 10.6682 42.9714 11.1966 42.717 11.9012C42.4821 12.6057 42.3647 13.4962 42.3647 14.5727C42.3647 16.1384 42.6485 17.3322 43.216 18.1542C43.7836 18.9762 44.7035 19.3872 45.9756 19.3872Z" fill="var(--logo-color)"/><path d="M32.1477 22.323C31.1691 22.323 30.2297 22.186 29.3294 21.912C28.4291 21.638 27.6267 21.1976 26.9221 20.5909C26.2175 19.9842 25.6597 19.2013 25.2487 18.2423C24.8377 17.2833 24.6322 16.1188 24.6322 14.7488C24.6322 13.3201 24.828 12.1067 25.2194 11.1085C25.6108 10.1104 26.149 9.29815 26.834 8.67187C27.519 8.02601 28.3117 7.56608 29.212 7.29208C30.1318 6.99851 31.1006 6.85172 32.1183 6.85172C32.9012 6.85172 33.7036 6.93001 34.5256 7.08658C35.3476 7.24315 36.0815 7.46822 36.7274 7.7618V10.9911C36.062 10.6975 35.3965 10.4627 34.7311 10.2865C34.0657 10.0908 33.3807 9.99294 32.6761 9.99294C31.3061 9.99294 30.2395 10.3354 29.4762 11.0204C28.7129 11.7054 28.3313 12.8308 28.3313 14.3965C28.3313 16.0014 28.6738 17.1952 29.3588 17.9781C30.0633 18.7609 31.218 19.1524 32.8229 19.1524C33.547 19.1524 34.2516 19.0447 34.9366 18.8294C35.6216 18.5946 36.2283 18.3402 36.7568 18.0662V21.3248C36.0718 21.6575 35.3574 21.9022 34.6137 22.0587C33.87 22.2349 33.048 22.323 32.1477 22.323Z" fill="var(--logo-color)"/><path d="M8.49521 8.43701C8.90621 8.2413 9.3955 8.04558 9.96307 7.84987C10.5306 7.65415 11.1471 7.4878 11.8126 7.3508C12.478 7.19422 13.1434 7.07679 13.8089 6.99851C14.4939 6.90065 15.1397 6.85172 15.7464 6.85172C17.1164 6.85172 18.2516 7.03765 19.1519 7.40951C20.0717 7.76179 20.7567 8.32937 21.2069 9.11222C21.6766 9.87551 21.9114 10.8834 21.9114 12.136V22H18.2124V12.7819C18.2124 12.41 18.1635 12.0577 18.0656 11.725C17.9678 11.3727 17.8014 11.0694 17.5666 10.8149C17.3317 10.5409 17.0088 10.3354 16.5978 10.1984C16.1868 10.0419 15.6584 9.96358 15.0125 9.96358C14.5232 9.96358 14.0241 10.0125 13.5153 10.1104C13.0064 10.2082 12.5759 10.3354 12.2236 10.492V22H8.49521V8.43701Z" fill="var(--logo-color)"/><path d="M1.14307 22V7.3508H4.87143L4.90079 22H1.14307ZM1.055 5.00222V1.94908H4.9595V5.00222H1.055Z" fill="var(--logo-color)"/></svg>`;
 
@@ -623,7 +681,7 @@ function fcTutorial() {
       </div>
     </div>
     <div style="flex:1;display:flex;align-items:center;justify-content:center">
-      <img src="assets/illustrations/selfie/selfie-animated.svg" style="width:296px;height:296px;object-fit:contain" alt="Selfie illustration" />
+      <div style="width:296px;height:296px;flex-shrink:0">${_SELFIE_SVG}</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="type-body-m-regular" style="padding:12px 0;text-align:center;color:var(--text-secondary)">The photo will be taken automatically</div>
@@ -642,7 +700,7 @@ function fcCamSearching() {
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
-        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px" alt="" />
+        ${_selfieRing(false)}
         <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
           <img src="assets/images/selfie-empty.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
@@ -662,7 +720,7 @@ function fcCamDetected() {
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
-        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px" alt="" />
+        ${_selfieRing(false)}
         <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
           <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
@@ -682,7 +740,7 @@ function fcCamCapturing() {
     ${_navBar('logo-only')}
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px 0">
       <div style="position:relative;width:342px;height:342px;flex-shrink:0">
-        <img src="assets/illustrations/selfie-ring.svg" style="position:absolute;inset:0;width:342px;height:342px;animation:prizma-spin 2s linear infinite;transform-origin:171px 171px;will-change:transform;transform:translateZ(0)" alt="" />
+        ${_selfieRing(true)}
         <div style="position:absolute;top:22px;left:22px;width:298px;height:298px;border-radius:50%;overflow:hidden">
           <img src="assets/images/selfie-filled-ds.png" style="width:100%;height:100%;object-fit:cover" alt="" />
         </div>
