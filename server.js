@@ -1089,11 +1089,12 @@ Understood — building a new flow from scratch.
         }
 
         const text = claudeBody.content?.[0]?.text || '';
+        const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
         try {
-          const clean = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+          JSON.parse(clean); // validate — throws if Claude returned prose
           res.end(clean);
         } catch {
-          res.end(JSON.stringify({ message: text, actions: [] }));
+          res.end(JSON.stringify({ message: clean, actions: [] }));
         }
       } catch (err) {
         res.end(JSON.stringify({ message: `Server error: ${err.message}`, actions: [] }));
