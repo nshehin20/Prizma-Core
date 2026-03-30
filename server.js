@@ -1126,8 +1126,9 @@ Understood — building a new flow from scratch.
         }
 
         try {
-          JSON.parse(clean);
-          res.end(clean);
+          // Parse then re-stringify to normalize encoding — eliminates any
+          // subtle escape issues in Claude's raw JSON string (e.g. inside HTML attributes)
+          res.end(JSON.stringify(JSON.parse(clean)));
         } catch {
           // Both attempts returned non-JSON — surface the original prose as a message
           res.end(JSON.stringify({ message: fallback || clean, actions: [] }));
