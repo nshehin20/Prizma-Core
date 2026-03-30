@@ -3789,51 +3789,54 @@ body.lab-home-mode .tab.active { color: #fcfcfd; border-bottom-color: #3388ff; }
   cursor: pointer;
 }
 
-/* Generating — all 3 colors visible simultaneously, spinning around the frame */
-/* Directional shadows simulate the conic-gradient rotation: blue/purple/pink at different sides */
-.lab-phone-cell--generating .lab-phone-frame {
-  animation: lab-cell-glow-spin 2s linear infinite;
+/* Generating — spinning conic border (same trick as input bar) + soft directional glow */
+@property --cell-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
+
+.lab-phone-cell--generating .lab-phone-frame {
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    conic-gradient(from var(--cell-angle), #006aff, #7c3aed, #ec4899, #006aff) border-box;
+  animation:
+    lab-cell-border-spin 2s linear infinite,
+    lab-cell-glow-spin   2s linear infinite;
+}
+@keyframes lab-cell-border-spin {
+  to { --cell-angle: 360deg; }
+}
+/* Subtle directional glow — all 3 colors visible, soft opacity */
 @keyframes lab-cell-glow-spin {
-  /* Blue top · Purple right · Pink bottom */
   0% {
     box-shadow:
-      0 0 0 2.5px #006aff,
-      0  -18px 40px 6px  rgba(0,106,255,0.85),
-      18px  0  40px 6px  rgba(124,58,237,0.75),
-      0   18px 40px 6px  rgba(236,72,153,0.85),
-      -18px 0  40px 6px  rgba(0,106,255,0.60),
-      0 0 80px 20px      rgba(124,58,237,0.25);
+      0 -14px 28px 2px rgba(0,106,255,0.28),
+      14px 0  28px 2px rgba(124,58,237,0.22),
+      0  14px 28px 2px rgba(236,72,153,0.28),
+      0 0 60px 10px    rgba(124,58,237,0.10);
   }
-  /* Purple top · Pink right · Blue bottom */
   33% {
     box-shadow:
-      0 0 0 2.5px #7c3aed,
-      0  -18px 40px 6px  rgba(124,58,237,0.85),
-      18px  0  40px 6px  rgba(236,72,153,0.75),
-      0   18px 40px 6px  rgba(0,106,255,0.85),
-      -18px 0  40px 6px  rgba(124,58,237,0.60),
-      0 0 80px 20px      rgba(236,72,153,0.25);
+      0 -14px 28px 2px rgba(124,58,237,0.28),
+      14px 0  28px 2px rgba(236,72,153,0.22),
+      0  14px 28px 2px rgba(0,106,255,0.28),
+      0 0 60px 10px    rgba(236,72,153,0.10);
   }
-  /* Pink top · Blue right · Purple bottom */
   66% {
     box-shadow:
-      0 0 0 2.5px #ec4899,
-      0  -18px 40px 6px  rgba(236,72,153,0.85),
-      18px  0  40px 6px  rgba(0,106,255,0.75),
-      0   18px 40px 6px  rgba(124,58,237,0.85),
-      -18px 0  40px 6px  rgba(236,72,153,0.60),
-      0 0 80px 20px      rgba(0,106,255,0.25);
+      0 -14px 28px 2px rgba(236,72,153,0.28),
+      14px 0  28px 2px rgba(0,106,255,0.22),
+      0  14px 28px 2px rgba(124,58,237,0.28),
+      0 0 60px 10px    rgba(0,106,255,0.10);
   }
-  /* Back to blue top */
   100% {
     box-shadow:
-      0 0 0 2.5px #006aff,
-      0  -18px 40px 6px  rgba(0,106,255,0.85),
-      18px  0  40px 6px  rgba(124,58,237,0.75),
-      0   18px 40px 6px  rgba(236,72,153,0.85),
-      -18px 0  40px 6px  rgba(0,106,255,0.60),
-      0 0 80px 20px      rgba(124,58,237,0.25);
+      0 -14px 28px 2px rgba(0,106,255,0.28),
+      14px 0  28px 2px rgba(124,58,237,0.22),
+      0  14px 28px 2px rgba(236,72,153,0.28),
+      0 0 60px 10px    rgba(124,58,237,0.10);
   }
 }
 
