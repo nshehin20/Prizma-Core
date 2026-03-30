@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gradient Glow Test</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background: #F0F2F5;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  /* ── Left column: previews ── */
+  .previews {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    flex: 1;
+    max-width: 480px;
+  }
+
+  /* Section label */
+  .preview-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 4px;
+    align-self: flex-start;
+  }
+  .preview-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* ── Input bar preview ── */
+  .bar-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lab-exp-bar {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      var(--bar-border-gradient) border-box;
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    padding: 0 8px 0 16px;
+    height: 54px;
+    box-shadow: var(--bar-shadow);
+    animation: bar-glow var(--glow-speed, 4s) ease-in-out infinite;
+  }
+  .bar-icon {
+    flex-shrink: 0;
+  }
+  .bar-input {
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: #0D0D0D;
+    outline: none;
+  }
+  .bar-input::placeholder { color: #B0B8C8; }
+  .bar-send {
+    height: 36px;
+    width: 36px;
+    border-radius: 11px;
+    flex-shrink: 0;
+    background: var(--btn-color1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: width 0.24s cubic-bezier(0.34,1.56,0.64,1), background 0.22s ease;
+  }
+  .bar-send:hover {
+    width: 82px;
+    background: linear-gradient(135deg, var(--btn-color1) 0%, var(--btn-color2) 55%, var(--btn-color3) 100%);
+  }
+  .bar-send .send-star { flex-shrink: 0; transition: transform 0.18s ease; }
+  .bar-send:hover .send-star { transform: rotate(15deg) scale(1.1); }
+  .bar-send .send-label {
+    font-size: 13px; font-weight: 600;
+    white-space: nowrap;
+    width: 0; overflow: hidden; opacity: 0;
+    transition: width 0.20s cubic-bezier(0.34,1.56,0.64,1) 0.04s, opacity 0.16s ease 0.08s;
+  }
+  .bar-send:hover .send-label { width: 36px; opacity: 1; }
+
+  @keyframes bar-glow {
+    0%   { box-shadow: var(--shadow-a); }
+    40%  { box-shadow: var(--shadow-b); }
+    70%  { box-shadow: var(--shadow-c); }
+    100% { box-shadow: var(--shadow-a); }
+  }
+
+  /* ── Phone + generating glow preview ── */
+  .phone-wrap {
+    display: flex;
+    justify-content: center;
+  }
+  .phone {
+    width: 200px;
+    height: 400px;
+    background: #1a1a1a;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 0 0 6px #111, 0 24px 56px rgba(0,0,0,0.35);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-screen {
+    width: 188px;
+    height: 388px;
+    background: #0D0D10;
+    border-radius: 28px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+  }
+  .phone-inner svg { opacity: 0.3; }
+
+  /* The frame that gets the glow */
+  .phone-frame {
+    position: absolute;
+    inset: 0;
+    border-radius: 32px;
+    pointer-events: none;
+    animation: cell-generating var(--glow-speed, 4s) ease-in-out infinite;
+  }
+  @keyframes cell-generating {
+    0%   { box-shadow: var(--cell-shadow-a); }
+    33%  { box-shadow: var(--cell-shadow-b); }
+    66%  { box-shadow: var(--cell-shadow-c); }
+    100% { box-shadow: var(--cell-shadow-a); }
+  }
+
+  /* ── Controls ── */
+  .controls {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    width: 300px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-self: flex-start;
+  }
+  .controls h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0D0D0D;
+    letter-spacing: -0.01em;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 2px;
+  }
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .control-row label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+  }
+  .control-row label span {
+    color: #006AFF;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type=range] {
+    width: 100%;
+    accent-color: #006AFF;
+    cursor: pointer;
+  }
+  /* Color pickers row */
+  .color-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .color-row label {
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .color-swatches {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .swatch-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #999;
+    font-weight: 500;
+  }
+  input[type=color] {
+    width: 40px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 2px;
+    background: none;
+  }
+  .divider {
+    height: 1px;
+    background: #F0F2F5;
+  }
+  .btn-copy {
+    width: 100%;
+    padding: 13px;
+    background: #fff;
+    color: #006AFF;
+    border: 1.5px solid #006AFF;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+  .btn-copy:hover { background: #EEF4FF; }
+  .btn-copy.copied { background: #006AFF; color: #fff; border-color: #006AFF; }
+</style>
+</head>
+<body>
+
+<!-- Left: previews -->
+<div class="previews">
+
+  <div class="preview-block">
+    <div class="preview-label">Input bar glow</div>
+    <div class="bar-wrap">
+      <div class="lab-exp-bar">
+        <svg class="bar-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="#006AFF"/>
+        </svg>
+        <input class="bar-input" placeholder="Describe what you want to explore…" />
+        <button class="bar-send" id="bar-send-btn">
+          <svg class="send-star" width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/>
+          </svg>
+          <span class="send-label">Send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-block">
+    <div class="preview-label">Screen generating glow</div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-inner">
+            <svg width="28" height="28" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1L9.6 5.8L14 8L9.6 10.2L8 15L6.4 10.2L2 8L6.4 5.8L8 1Z" fill="white"/>
+            </svg>
+            Generating…
+          </div>
+        </div>
+        <div class="phone-frame" id="phone-frame"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Right: controls -->
+<div class="controls">
+  <h3>Gradient Parameters</h3>
+
+  <!-- Colors -->
+  <div class="control-group">
+    <div class="section-title">Colors</div>
+    <div class="color-row">
+      <div class="color-swatches">
+        <div class="swatch-wrap">
+          <input type="color" id="color1" value="#006AFF">
+          <span>Blue</span>
+        </div>
+        <div class="swatch-wrap">
+          <input type="color" id="color2" value="#7C3AED">
+          <span>Purple</span>
+        </div>
+        <div class="swatch-wrap">
+          <input type="color" id="color3" value="#EC4899">
+          <span>Pink</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Glow intensity -->
+  <div class="control-group">
+    <div class="section-title">Glow intensity</div>
+
+    <div class="control-row">
+      <label>Inner glow <span id="lbl-inner">0.45</span></label>
+      <input type="range" id="inner" min="0" max="1" step="0.01" value="0.45">
+    </div>
+    <div class="control-row">
+      <label>Mid glow <span id="lbl-mid">0.25</span></label>
+      <input type="range" id="mid" min="0" max="1" step="0.01" value="0.25">
+    </div>
+    <div class="control-row">
+      <label>Outer glow <span id="lbl-outer">0.12</span></label>
+      <input type="range" id="outer" min="0" max="1" step="0.01" value="0.12">
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Animation speed -->
+  <div class="control-group">
+    <div class="section-title">Animation</div>
+    <div class="control-row">
+      <label>Speed <span id="lbl-speed">4.0s</span></label>
+      <input type="range" id="speed" min="1" max="10" step="0.5" value="4">
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="btn-copy" id="btn-copy" onclick="copyCss()">Copy CSS values</button>
+</div>
+
+<script>
+  // ── Grab all controls ──────────────────────────────────────────────────────
+  const c1 = document.getElementById('color1');
+  const c2 = document.getElementById('color2');
+  const c3 = document.getElementById('color3');
+  const sInner = document.getElementById('inner');
+  const sMid   = document.getElementById('mid');
+  const sOuter = document.getElementById('outer');
+  const sSpeed = document.getElementById('speed');
+
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `${r},${g},${b}`;
+  }
+
+  function update() {
+    const rgb1  = hexToRgb(c1.value);
+    const rgb2  = hexToRgb(c2.value);
+    const rgb3  = hexToRgb(c3.value);
+    const inner = parseFloat(sInner.value);
+    const mid   = parseFloat(sMid.value);
+    const outer = parseFloat(sOuter.value);
+    const speed = parseFloat(sSpeed.value);
+
+    // Update labels
+    document.getElementById('lbl-inner').textContent = inner.toFixed(2);
+    document.getElementById('lbl-mid').textContent   = mid.toFixed(2);
+    document.getElementById('lbl-outer').textContent = outer.toFixed(2);
+    document.getElementById('lbl-speed').textContent = speed.toFixed(1) + 's';
+
+    // ── Bar border gradient ──
+    const borderGrad = `conic-gradient(from 210deg, ${c1.value}, ${c2.value}, ${c3.value}, ${c2.value}, ${c1.value}, ${c1.value})`;
+
+    // ── Bar shadow keyframes ──
+    const shadowA = `0 0 14px rgba(${rgb1},${inner}), 0 0 30px rgba(${rgb2},${(mid*0.88).toFixed(2)}), 0 0 50px rgba(${rgb3},${(outer*0.83).toFixed(2)}), 0 2px 8px rgba(0,0,0,0.05)`;
+    const shadowB = `0 0 20px rgba(${rgb2},${(inner*1.22).toFixed(2)}), 0 0 40px rgba(${rgb1},${mid}), 0 0 60px rgba(${rgb3},${(outer*1.5).toFixed(2)}), 0 2px 8px rgba(0,0,0,0.05)`;
+    const shadowC = `0 0 18px rgba(${rgb3},${inner}), 0 0 36px rgba(${rgb2},${mid}), 0 0 54px rgba(${rgb1},${(outer*1.17).toFixed(2)}), 0 2px 8px rgba(0,0,0,0.05)`;
+
+    // ── Cell generating shadows ──
+    const cellA = `0 0 0 2px rgba(${rgb1},${(inner*1.1).toFixed(2)}), 0 0 20px 6px rgba(${rgb1},${(mid*0.88).toFixed(2)}), 0 0 48px 12px rgba(${rgb2},${(outer*0.83).toFixed(2)})`;
+    const cellB = `0 0 0 3px rgba(${rgb2},${(inner*1.67).toFixed(2)}), 0 0 36px 12px rgba(${rgb2},${(mid*1.28).toFixed(2)}), 0 0 72px 20px rgba(${rgb3},${(outer*1.33).toFixed(2)})`;
+    const cellC = `0 0 0 2px rgba(${rgb3},${(inner*1.33).toFixed(2)}), 0 0 28px 8px rgba(${rgb3},${(mid*0.96).toFixed(2)}), 0 0 60px 16px rgba(${rgb1},${outer})`;
+
+    // Apply CSS vars
+    const root = document.documentElement;
+    root.style.setProperty('--bar-border-gradient', borderGrad);
+    root.style.setProperty('--bar-shadow', shadowA);
+    root.style.setProperty('--shadow-a', shadowA);
+    root.style.setProperty('--shadow-b', shadowB);
+    root.style.setProperty('--shadow-c', shadowC);
+    root.style.setProperty('--cell-shadow-a', cellA);
+    root.style.setProperty('--cell-shadow-b', cellB);
+    root.style.setProperty('--cell-shadow-c', cellC);
+    root.style.setProperty('--glow-speed', speed + 's');
+    root.style.setProperty('--btn-color1', c1.value);
+    root.style.setProperty('--btn-color2', c2.value);
+    root.style.setProperty('--btn-color3', c3.value);
+
+    // Restart animations so changes are visible immediately
+    const bar = document.querySelector('.lab-exp-bar');
+    const frame = document.getElementById('phone-frame');
+    [bar, frame].forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // reflow
+      el.style.animation = '';
+    });
+  }
+
+  function copyCss() {
+    const rgb1  = hexToRgb(c1.value);
+    const rgb2  = hexToRgb(c2.value);
+    const rgb3  = hexToRgb(c3.value);
+    const inner = parseFloat(sInner.value);
+    const mid   = parseFloat(sMid.value);
+    const outer = parseFloat(sOuter.value);
+    const speed = parseFloat(sSpeed.value);
+
+    const css = `/* ── Gradient Glow CSS — copy into playground.css ── */
+
+/* Colors: ${c1.value} (blue) · ${c2.value} (purple) · ${c3.value} (pink) */
+
+/* Border gradient */
+conic-gradient(from 210deg, ${c1.value}, ${c2.value}, ${c3.value}, ${c2.value}, ${c1.value}, ${c1.value})
+
+/* Input bar glow keyframes */
+@keyframes lab-bar-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 14px rgba(${rgb1},${inner}),
+      0 0 30px rgba(${rgb2},${(mid*0.88).toFixed(2)}),
+      0 0 50px rgba(${rgb3},${(outer*0.83).toFixed(2)}),
+      0 2px 8px rgba(0,0,0,0.05);
+  }
+  40% {
+    box-shadow:
+      0 0 20px rgba(${rgb2},${(inner*1.22).toFixed(2)}),
+      0 0 40px rgba(${rgb1},${mid}),
+      0 0 60px rgba(${rgb3},${(outer*1.5).toFixed(2)}),
+      0 2px 8px rgba(0,0,0,0.05);
+  }
+  70% {
+    box-shadow:
+      0 0 18px rgba(${rgb3},${inner}),
+      0 0 36px rgba(${rgb2},${mid}),
+      0 0 54px rgba(${rgb1},${(outer*1.17).toFixed(2)}),
+      0 2px 8px rgba(0,0,0,0.05);
+  }
+}
+
+/* Animation speed: ${speed}s */
+
+/* Phone cell generating glow */
+@keyframes lab-cell-generating {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(${rgb1},${(inner*1.1).toFixed(2)}),
+      0 0 20px 6px rgba(${rgb1},${(mid*0.88).toFixed(2)}),
+      0 0 48px 12px rgba(${rgb2},${(outer*0.83).toFixed(2)});
+  }
+  33% {
+    box-shadow:
+      0 0 0 3px rgba(${rgb2},${(inner*1.67).toFixed(2)}),
+      0 0 36px 12px rgba(${rgb2},${(mid*1.28).toFixed(2)}),
+      0 0 72px 20px rgba(${rgb3},${(outer*1.33).toFixed(2)});
+  }
+  66% {
+    box-shadow:
+      0 0 0 2px rgba(${rgb3},${(inner*1.33).toFixed(2)}),
+      0 0 28px 8px rgba(${rgb3},${(mid*0.96).toFixed(2)}),
+      0 0 60px 16px rgba(${rgb1},${outer});
+  }
+}`;
+
+    navigator.clipboard.writeText(css).then(() => {
+      const btn = document.getElementById('btn-copy');
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy CSS values';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ── Wire up all inputs ──
+  [c1, c2, c3, sInner, sMid, sOuter, sSpeed].forEach(el => el.addEventListener('input', update));
+
+  // Init
+  update();
+</script>
+</body>
+</html>
