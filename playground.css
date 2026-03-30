@@ -3090,21 +3090,32 @@ select {
 .lab-exp-bar-input::placeholder { color: #B0B8C8; }
 .lab-exp-bar-send {
   height: 36px;
-  padding: 0 16px;
+  width: 36px;
   border-radius: 11px;
   flex-shrink: 0;
   background: linear-gradient(135deg, #006AFF 0%, #7C3AED 55%, #EC4899 100%);
   border: none; color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: width 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.12s ease;
+}
+.lab-exp-bar-send:hover { width: 76px; transform: scale(1.03); }
+.lab-exp-bar-send:disabled {
+  background: #D8DCE6; cursor: not-allowed; transform: none; width: 36px;
+}
+.lab-send-star {
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+.lab-exp-bar-send:hover .lab-send-star { transform: rotate(15deg) scale(1.1); }
+.lab-send-label {
   font-family: var(--font-family-dm);
   font-size: 13px; font-weight: 600;
   white-space: nowrap;
-  display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.15s ease, transform 0.12s ease;
+  width: 0; overflow: hidden; opacity: 0;
+  transition: width 0.20s cubic-bezier(0.34, 1.56, 0.64, 1) 0.04s, opacity 0.16s ease 0.08s;
 }
-.lab-exp-bar-send:hover { opacity: 0.88; transform: scale(1.03); }
-.lab-exp-bar-send:disabled {
-  background: #D8DCE6; cursor: not-allowed; transform: none; opacity: 1;
-}
+.lab-exp-bar-send:hover .lab-send-label { width: 38px; opacity: 1; }
+.lab-exp-bar-send:disabled .lab-send-label { width: 0; opacity: 0; }
 .lab-exp-bar-send .prompt-spinner {
   width: 13px; height: 13px;
   border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
@@ -3763,29 +3774,33 @@ body.lab-home-mode .tab.active { color: #fcfcfd; border-bottom-color: #3388ff; }
   cursor: pointer;
 }
 
-/* Generating — spinning gradient border + synced glow */
-@property --cell-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
+/* Generating — cycling color border ring + intense glow */
+/* Uses box-shadow ring (0 0 0 Xpx color) — no background override, no transparency */
 .lab-phone-cell--generating .lab-phone-frame {
-  border: 2.3px solid transparent;
-  background:
-    var(--surface-bg, #fff) padding-box,
-    conic-gradient(from var(--cell-angle), #006aff, #7c3aed, #ec4899, #006aff) border-box;
-  animation:
-    lab-cell-border-spin 2s linear infinite,
-    lab-cell-glow-spin   2s linear infinite;
-}
-@keyframes lab-cell-border-spin {
-  to { --cell-angle: 360deg; }
+  animation: lab-cell-glow-spin 2s linear infinite;
 }
 @keyframes lab-cell-glow-spin {
-  0%, 100% { box-shadow: 0 0 11px rgba(0,106,255,0.36),  0 0 21px rgba(0,106,255,0.16); }
-  33%       { box-shadow: 0 0 11px rgba(124,58,237,0.36), 0 0 21px rgba(124,58,237,0.16); }
-  66%       { box-shadow: 0 0 11px rgba(236,72,153,0.36), 0 0 21px rgba(236,72,153,0.16); }
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px #006aff,
+      0 0 24px 4px rgba(0,106,255,0.70),
+      0 0 56px 12px rgba(0,106,255,0.35),
+      0 0 90px 20px rgba(0,106,255,0.15);
+  }
+  33% {
+    box-shadow:
+      0 0 0 3px #7c3aed,
+      0 0 24px 4px rgba(124,58,237,0.70),
+      0 0 56px 12px rgba(124,58,237,0.35),
+      0 0 90px 20px rgba(124,58,237,0.15);
+  }
+  66% {
+    box-shadow:
+      0 0 0 3px #ec4899,
+      0 0 24px 4px rgba(236,72,153,0.70),
+      0 0 56px 12px rgba(236,72,153,0.35),
+      0 0 90px 20px rgba(236,72,153,0.15);
+  }
 }
 
 /* Modified glow — flashes when Claude updates a screen */
